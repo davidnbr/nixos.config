@@ -177,11 +177,6 @@
     '';
   };
 
-  xdg.configFile."nvim" = {
-    source = ./nvim;
-    recursive = true;
-  };
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
