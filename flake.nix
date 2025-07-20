@@ -16,6 +16,11 @@
     
     # Hardware optimizations (optional but recommended)
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    oh-my-tmux = {
+      url = "github:gpakosz/.tmux";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 

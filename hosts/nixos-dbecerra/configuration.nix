@@ -236,6 +236,7 @@
     dejavu_fonts
     noto-fonts
     noto-fonts-emoji
+    nerd-fonts.hack
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

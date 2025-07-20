@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -159,7 +159,7 @@
     enable = true;
     sensibleOnTop = false;
     extraConfig = ''
-      source-file ${oh-my-tmux}/.tmux.conf
+      source-file ${inputs.oh-my-tmux}/.tmux.conf
       ${builtins.readFile ./tmux.conf.local}
     '';
   };
