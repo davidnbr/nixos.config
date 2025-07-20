@@ -149,7 +149,7 @@
         identityFile = "~/.ssh/id_ed25519";  # Path to your existing key
         identitiesOnly = true;  # Only use the specified key
       };
-    }
+    };
 
     extraConfig = ''
       AddKeysToAgent yes

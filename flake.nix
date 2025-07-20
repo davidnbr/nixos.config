@@ -57,7 +57,7 @@
             
             # Global configuration
             {
-              networking.hostName = nixos-dbecerra;
+              networking.hostName = hostname;
               nix.settings.experimental-features = [ "nix-command" "flakes" ];
               nixpkgs.config.allowUnfree = true;
               
@@ -109,5 +109,8 @@
           echo "  nix flake update"
         '';
       };
+      ## Commands for updates outside of the directory
+      #sudo nixhome-manager switch --flake ~/nixos-config#$(whoami)
+      #home-manager switch --flake ~/nixos-config#$(whoami)
     };
 }
