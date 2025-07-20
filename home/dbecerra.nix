@@ -88,6 +88,9 @@
     enableCompletion = true;
     
     shellAliases = {
+      z = "zoxide";
+      zi = "zoxide query -i";
+
       ll = "ls -l";
       la = "ls -la";
       ls = "ls";
@@ -110,6 +113,9 @@
       # Load any additional configurations
       if [ -f ~/.bashrc.local ]; then
         source ~/.bashrc.local
+      fi
+      if [[ -f ${pkgs.blesh}/share/blesh/ble.sh ]]; then
+        source ${pkgs.blesh}/share/blesh/ble.sh --noattach
       fi
     '';
   };
@@ -168,6 +174,11 @@
     enable = true;
     enableBashIntegration = true;
     settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
   };
 
   # Let Home Manager install and manage itself.
