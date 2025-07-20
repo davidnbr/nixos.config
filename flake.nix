@@ -21,6 +21,11 @@
       url = "github:gpakosz/.tmux";
       flake = false;
     };
+
+    lazy-nvim = {
+      url = "github:LazyVim/starter";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -154,6 +154,32 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+
+    extraPackages = with pkgs; [
+      git
+      gcc
+      nodejs
+      python3
+      lua-language-server
+      nil
+      ripgrep
+      fd
+    ];
+
+    # Just bootstrap lazy.nvim
+    extraLuaConfig = ''
+      -- Detect if we're on NixOS
+      vim.g.is_nixos = vim.fn.executable("nix") == 1 and vim.fn.isdirectory("/nix/store") == 1
+
+      -- Set leader key
+      vim.g.mapleader = " "
+      vim.g.maplocalleader = " "
+    '';
+  };
+
+  xdg.configFile."nvim" = {
+    source = ./nvim;
+    recursive = true;
   };
 
   programs.direnv = {
