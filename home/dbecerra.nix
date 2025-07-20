@@ -19,7 +19,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "HackNerdFontMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -34,7 +34,6 @@
     ansible
     google-chrome
     firefox
-    microsoft-edge
 
     python311
     python311Packages.pip
@@ -46,6 +45,7 @@
     fzf
     bat
     jq
+    blesh
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -104,32 +104,7 @@
       gl = "git log --oneline";
     };
     
-    bashrcExtra = ''
-      # Custom prompt
-      export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      
-      # History settings
-      export HISTCONTROL=ignoredups:erasedups
-      export HISTSIZE=10000
-      export HISTFILESIZE=20000
-      shopt -s histappend
-      
-      # Better directory navigation
-      shopt -s autocd
-      shopt -s cdspell
-      shopt -s dirspell
-      
-      # FZF key bindings and completion
-      if command -v fzf >/dev/null 2>&1; then
-        source ${pkgs.fzf}/share/fzf/key-bindings.bash
-        source ${pkgs.fzf}/share/fzf/completion.bash
-      fi
-      
-      # Set editor
-      export EDITOR=nvim
-      export VISUAL=nvim
-    '';
-    
+    bashrcExtra = builtins.readFile ./.bashrc;
     # Bash initialization that runs for interactive shells
     initExtra = ''
       # Load any additional configurations
@@ -178,6 +153,21 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  programs.tmux = {
+    enable = true;
+    sensibleOnTop = false;
+    extraConfig = ''
+      source-file ${oh-my-tmux}/.tmux.conf
+      ${builtins.readFile ./tmux.conf.local}
+    '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
   };
 
   # Let Home Manager install and manage itself.
