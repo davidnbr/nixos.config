@@ -4,7 +4,7 @@
 
 # Ble.sh initialization file with interactive sessions
 # Add this lines at the top of .bashrc:
-[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
+[[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
 
 # If not running interactively, don't do anything
 case $- in
