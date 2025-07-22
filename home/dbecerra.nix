@@ -164,6 +164,7 @@
       nil
       ripgrep
       fd
+      wpsoffice
     ];
 
     # Just bootstrap lazy.nvim
