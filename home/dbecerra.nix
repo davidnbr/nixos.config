@@ -167,7 +167,6 @@
 
   programs.tmux = {
     enable = true;
-    sensibleOnTop = false;
     extraConfig = ''
       source-file ${inputs.oh-my-tmux}/.tmux.conf
       ${builtins.readFile ./tmux.conf.local}
