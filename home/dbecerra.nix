@@ -163,28 +163,6 @@
       nodejs
       python3
       
-      lua-language-server
-      nil                    # Nix LSP
-      bash-language-server
-      pyright                # Python
-      nodePackages.typescript-language-server
-      rust-analyzer          # Rust
-      gopls                  # Go
-      clang-tools           # C/C++
-      
-      # Formatters and linters
-      stylua                # Lua formatter
-      nixpkgs-fmt           # Nix formatter
-      black                 # Python formatter
-      python3Packages.isort # Python import formatter
-      nodePackages.prettier              # JS/TS/JSON/CSS formatter
-      shfmt                 # Shell formatter
-      
-      # Tools that LazyVim plugins need
-      ripgrep               # telescope grep
-      fd                    # telescope file finder
-      lazygit               # LazyVim git integration
-      
       # Additional useful tools
       curl
       wget
