@@ -4,7 +4,7 @@
 
 # Ble.sh initialization file with interactive sessions
 # Add this lines at the top of .bashrc:
-[[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
+#[[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
 
 # If not running interactively, don't do anything
 case $- in
@@ -159,7 +159,7 @@ eval "$(starship init bash)"
 . ~/.config/.aliases/aliases.sh
 
 # Add nvim PATH
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+#export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
 # Add window title with Starship
 function set_win_title() {
