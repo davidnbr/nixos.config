@@ -158,6 +158,11 @@
       if [[ -f ${pkgs.blesh}/share/blesh/ble.sh ]]; then
         source ${pkgs.blesh}/share/blesh/ble.sh --noattach
       fi
+      # Essential tools
+      eval "$(direnv hook bash)"
+    
+      # Starship LAST (after ble.sh is ready)
+      eval "$(starship init bash)"
     '';
     
     bashrcExtra = ''
@@ -236,9 +241,6 @@
       awsxp() {
         aws-vault exec $(aws-vault list | awk 'NR > 2 && $3!= "-" && $1!= "-" {print $1}')
       }
-      
-      # Direnv hook
-      eval "$(direnv hook bash)"
       
       # Load custom aliases
       if [ -f ~/.config/.aliases/aliases.sh ]; then
