@@ -167,17 +167,10 @@
 
   programs.tmux = {
     enable = true;
-    extraConfig = ''
-      source-file ${inputs.oh-my-tmux}/.tmux.conf
-      ${builtins.readFile ./tmux.conf.local}
-    '';
-    sensibleOnTop = false;
-    terminal = null;
-    keyMode = null;
-    customPaneNavigationAndResize = false;
   };
-    home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
-
+  home.file.".config/tmux/tmux.conf".source = "${oh-my-tmux}/.tmux.conf";
+  home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
+  home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
 
   programs.starship = {
     enable = true;
