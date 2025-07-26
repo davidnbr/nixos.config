@@ -97,6 +97,11 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lah'
 
+alias z="zoxide"
+alias zi="zoxide query -i"
+alias cat="bat"
+alias top="htop"
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -198,9 +203,6 @@ alias cdSW='cd ~/Documents/Stackbuilders/Projects/Spireworks/'
 alias cdDurst='cd ~/Documents/Stackbuilders/Projects/Durst/'
 alias cdDevops='cd ~/Documents/DevOps/'
 alias cdNix='cd ~/Documents/Nix/'
-
-# Add path to z.sh
-. ~/.local/bin/z/z/z.sh
 
 # Add Terraform alias
 alias tf='terraform'

@@ -89,27 +89,6 @@
     enable = true;
     enableCompletion = true;
     
-    shellAliases = {
-      z = "zoxide";
-      zi = "zoxide query -i";
-
-      ll = "ls -l";
-      la = "ls -la";
-      ls = "ls";
-      lh = "ls -alh";
-      cat = "bat";
-      top = "htop";
-      
-      # Git aliases
-      gs = "git status";
-      ga = "git add";
-      gaa = "git add --all";
-      gc = "git commit";
-      gp = "git push";
-      gl = "git log --oneline";
-    };
-    
-    bashrcExtra = builtins.readFile ./.bashrc;
     # Bash initialization that runs for interactive shells
     initExtra = ''
       # Load any additional configurations
@@ -120,6 +99,7 @@
         source ${pkgs.blesh}/share/blesh/ble.sh --noattach
       fi
     '';
+    bashrcExtra = builtins.readFile ./.bashrc;
   };
 
   programs.ssh = {
