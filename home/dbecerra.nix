@@ -95,9 +95,6 @@
       if [ -f ~/.bashrc.local ]; then
         source ~/.bashrc.local
       fi
-      #if [[ -f ${pkgs.blesh}/share/blesh/ble.sh ]]; then
-      #  source ${pkgs.blesh}/share/blesh/ble.sh --noattach
-      #fi
     '';
     
     bashrcExtra = ''
@@ -108,9 +105,6 @@
 
       # Ble.sh final attachment - MUST be last
       [[ ! ''${BLE_VERSION-} ]] || ble-attach
-      
-      # Starship init                      
-      # eval "$(starship init bash)"         
     '';
   };
 
