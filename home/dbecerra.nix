@@ -51,6 +51,7 @@
     blesh
     tree
     xclip
+    tmux
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -165,9 +166,6 @@
     nix-direnv.enable = true;
   };
 
-  programs.tmux = {
-    enable = true;
-  };
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
   home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
   home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
