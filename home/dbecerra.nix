@@ -158,11 +158,6 @@
       if [[ -f ${pkgs.blesh}/share/blesh/ble.sh ]]; then
         source ${pkgs.blesh}/share/blesh/ble.sh --noattach
       fi
-      # Essential tools
-      eval "$(direnv hook bash)"
-    
-      # Starship LAST (after ble.sh is ready)
-      eval "$(starship init bash)"
     '';
     
     bashrcExtra = ''
@@ -349,8 +344,8 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    settings = lib.importTOML ./starship.toml;
   };
+  xdg.configFile."starship.toml".source = ./starship.toml;
 
   programs.zoxide = {
     enable = true;
