@@ -28,10 +28,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     vscode
-    awscli2
-    gh
-    terraform
-    ansible
     google-chrome
     firefox
     wpsoffice
@@ -40,7 +36,13 @@
     python311Packages.pip
     go
     nodejs_20
-    
+
+    awscli2
+    gh
+    terraform
+    ansible
+    aws-vault
+    lazydocker
     ripgrep
     htop
     fzf
