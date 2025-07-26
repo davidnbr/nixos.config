@@ -48,6 +48,7 @@
     jq
     blesh
     tree
+    xclip
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -186,11 +187,6 @@
         xterm-color|*-256color) color_prompt=yes ;;
       esac
       
-      if [ "$color_prompt" = yes ]; then
-        PS1='$${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      else
-        PS1='$${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-      fi
       unset color_prompt force_color_prompt
       
       # Terminal title
@@ -236,9 +232,6 @@
         git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
       }
       
-      # Override PS1 with git branch
-      export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
-      
       # aws-vault profile selection
       awsxp() {
         aws-vault exec $(aws-vault list | awk 'NR > 2 && $3!= "-" && $1!= "-" {print $1}')
@@ -246,9 +239,6 @@
       
       # Direnv hook
       eval "$(direnv hook bash)"
-      
-      # Starship init
-      eval "$(starship init bash)"
       
       # Load custom aliases
       if [ -f ~/.config/.aliases/aliases.sh ]; then
@@ -284,6 +274,9 @@
       
       # Ble.sh final attachment - MUST be last
       [[ ! ''${BLE_VERSION-} ]] || ble-attach
+      
+      # Starship init                      
+      eval "$(starship init bash)"         
     '';
   };
 
@@ -354,7 +347,7 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+    settings = lib.importTOML ./starship.toml;
   };
 
   programs.zoxide = {
