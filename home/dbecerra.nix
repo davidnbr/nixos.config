@@ -172,7 +172,13 @@
       source-file ${inputs.oh-my-tmux}/.tmux.conf
       ${builtins.readFile ./tmux.conf.local}
     '';
+    sensibleOnTop = false;
+    terminal = null;
+    keyMode = null;
+    customPaneNavigationAndResize = false;
   };
+    home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
+
 
   programs.starship = {
     enable = true;
