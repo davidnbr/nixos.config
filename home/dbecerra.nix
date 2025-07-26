@@ -34,6 +34,7 @@
     ansible
     google-chrome
     firefox
+    wpsoffice
 
     python311
     python311Packages.pip
@@ -46,6 +47,7 @@
     bat
     jq
     blesh
+    tree
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -80,7 +82,7 @@
   #  /etc/profiles/per-user/dbecerra/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   programs.bash = {
@@ -160,22 +162,36 @@
       gcc
       nodejs
       python3
+      
       lua-language-server
-      nil
-      ripgrep
-      fd
-      wpsoffice
+      nil                    # Nix LSP
+      bash-language-server
+      pyright                # Python
+      nodePackages.typescript-language-server
+      rust-analyzer          # Rust
+      gopls                  # Go
+      clang-tools           # C/C++
+      
+      # Formatters and linters
+      stylua                # Lua formatter
+      nixpkgs-fmt           # Nix formatter
+      black                 # Python formatter
+      python3Packages.isort # Python import formatter
+      nodePackages.prettier              # JS/TS/JSON/CSS formatter
+      shfmt                 # Shell formatter
+      
+      # Tools that LazyVim plugins need
+      ripgrep               # telescope grep
+      fd                    # telescope file finder
+      lazygit               # LazyVim git integration
+      
+      # Additional useful tools
+      curl
+      wget
+      unzip
+      gnutar
+      gzip
     ];
-
-    # Just bootstrap lazy.nvim
-    extraLuaConfig = ''
-      -- Detect if we're on NixOS
-      vim.g.is_nixos = vim.fn.executable("nix") == 1 and vim.fn.isdirectory("/nix/store") == 1
-
-      -- Set leader key
-      vim.g.mapleader = " "
-      vim.g.maplocalleader = " "
-    '';
   };
 
   programs.direnv = {
