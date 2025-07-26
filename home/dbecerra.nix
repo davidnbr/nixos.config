@@ -168,7 +168,7 @@
   programs.tmux = {
     enable = true;
   };
-  home.file.".config/tmux/tmux.conf".source = "${oh-my-tmux}/.tmux.conf";
+  home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
   home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
   home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
 
