@@ -181,6 +181,22 @@
     enableBashIntegration = true;
   };
 
+  programs.pre-commit = {
+    enable = true;
+  }
+
+  programs.git = {
+      enable = true;
+      hooks = {
+        pre-commit = pkgs.writeShellScrip "pre-commit-custom" ''
+          #!/usr/bin/env bash
+          set -ex
+
+          ${pkgs.pre-commit}/bin/pre-commit run --config "config.yaml" "$@"
+        '';
+      }
+    }
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
