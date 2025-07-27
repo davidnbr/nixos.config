@@ -186,15 +186,16 @@
     enable = true;
   };
 
-  programs.git = {
+  programs.git-hooks = {
     enable = true;
     hooks = {
-      pre-commit = pkgs.writeShellScrip "pre-commit-custom" ''
-        #!/usr/bin/env bash
-        set -ex
-
-        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
-      '';
+      pre-commit-custom = {
+        enable = true;
+        name = "Pre-commit with custom config"
+        entry = "${pkgs.pre-commit}/bin/pre-commit run --config pre-commit-config.yaml"
+        language = "system";
+        pass_filenames = false;
+      };
     };
   };
 
