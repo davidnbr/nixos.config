@@ -195,7 +195,7 @@
 
         ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
       '';
-    }
+    };
   };
 
   # Let Home Manager install and manage itself.
