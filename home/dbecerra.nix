@@ -184,19 +184,19 @@
 
   programs.pre-commit = {
     enable = true;
-  }
+  };
 
   programs.git = {
-      enable = true;
-      hooks = {
-        pre-commit = pkgs.writeShellScrip "pre-commit-custom" ''
-          #!/usr/bin/env bash
-          set -ex
+    enable = true;
+    hooks = {
+      pre-commit = pkgs.writeShellScrip "pre-commit-custom" ''
+        #!/usr/bin/env bash
+        set -ex
 
-          ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
-        '';
-      }
+        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
+      '';
     }
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
