@@ -52,6 +52,7 @@
     tree
     xclip
     tmux
+    pre-commit
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -182,20 +183,15 @@
     enableBashIntegration = true;
   };
 
-  programs.pre-commit = {
-    enable = true;
-  };
-
-  programs.git-hooks = {
+  programs.git = {
     enable = true;
     hooks = {
-      pre-commit-custom = {
-        enable = true;
-        name = "Pre-commit with custom config"
-        entry = "${pkgs.pre-commit}/bin/pre-commit run --config pre-commit-config.yaml"
-        language = "system";
-        pass_filenames = false;
-      };
+      pre-commit-custom = pkgs.writeShellScript "pre-commit-custom" ''
+        #!/usr/bin/env bash
+        set -ex
+
+        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
+      '';
     };
   };
 

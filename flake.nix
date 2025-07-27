@@ -26,14 +26,9 @@
       url = "github:LazyVim/starter";
       flake = false;
     };
-
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, git-hooks, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 
     let
       system = "x86_64-linux";
       hostname = "nixos-dbecerra";
@@ -105,7 +100,6 @@
               
               programs.home-manager.enable = true;
             }
-            git-hooks.homeManagerModules.git-hooks
           ];
         };
       };
