@@ -1,0 +1,91 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0 # Use the ref you want to point at
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ["--multi", "--unsafe"]
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: detect-aws-credentials
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: no-commit-to-branch
+        args: [--branch, staging, --branch, main, --branch, production]
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.5
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+        args:
+          - --hook-config=--path-to-file=README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=true
+      - id: terraform_tflint
+        args:
+          - --args=--only=terraform_deprecated_interpolation
+          - --args=--only=terraform_deprecated_index
+          - --args=--only=terraform_unused_declarations
+          - --args=--only=terraform_comment_syntax
+          - --args=--only=terraform_documented_outputs
+          - --args=--only=terraform_documented_variables
+          - --args=--only=terraform_typed_variables
+          - --args=--only=terraform_module_pinned_source
+          - --args=--only=terraform_naming_convention
+          - --args=--only=terraform_required_version
+          - --args=--only=terraform_required_providers
+          - --args=--only=terraform_workspace_remote
+      - id: terraform_tfsec
+        args:
+          - --args=--minimum-severity=HIGH
+      - id: terraform_checkov
+        args:
+          - --args=--framework terraform
+          - --args=--skip-check CKV_AWS_79,CKV_AWS_61
+          - --args=--compact
+          - --args=--quiet
+
+  # Shell script linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        description: Lint shell scripts with ShellCheck
+        args: [--severity=warning, --shell=bash]
+
+  # Docker linter
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        args: ["--ignore", "DL3008", "--ignore", "DL3009"]
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.24.2
+    hooks:
+      - id: gitleaks
+#  - repo: https://github.com/mxab/pre-commit-trivy.git
+#    rev: v0.15.0
+#    hooks:
+#      - id: trivyfs-docker
+#        args:
+#          - --skip-dirs
+#          - "./tests"
+#          - --skip-dirs
+#          - "**/.terraform"
+#          - --exit-code
+#          - "0"
+#          - . # last arg indicates the path/file to scan
+#      - id: trivyconfig-docker
+#        args:
+#          - --skip-dirs
+#          - "**/.terraform"
+#          - --misconfig-scanners=terraform,dockerfile
+#          - --severity
+#          - HIGH,CRITICAL
+#          - --exit-code
+#          - "0"
+#          - . # last arg indicates the path/file to scan

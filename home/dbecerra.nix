@@ -151,6 +151,7 @@
       gcc
       nodejs
       python3
+      ruby
       
       # Additional useful tools
       curl
@@ -192,7 +193,7 @@
           #!/usr/bin/env bash
           set -ex
 
-          ${pkgs.pre-commit}/bin/pre-commit run --config "config.yaml" "$@"
+          ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
         '';
       }
     }
