@@ -123,25 +123,25 @@
               button-layout = "appmenu:minimize,maximize,close";
             };
 
-	    "org/gnome/desktop/wm/keybindings" = {
-	      #maximize = ["<Super>Up"];
-	      unmaximize = ["<Super>Down"];
-	      toggle-maximized = ["<Super>Up"];
-	      move-to-side-w = "disabled";
-	      move-to-side-e = "disabled";
-	      move-to-workspace-left = ["<Super><Shift>Left"];
-	      move-to-workspace-right = ["<Super><Shift>Right"];
-	    };
-	    
-	    "org/gnome/mutter" = {
-	      edge-tiling = true;
-	      overlay-key = "Super_L";
-	    };
+	          "org/gnome/desktop/wm/keybindings" = {
+	            #maximize = ["<Super>Up"];
+	            unmaximize = ["<Super>Down"];
+	            toggle-maximized = ["<Super>Up"];
+	            move-to-side-w = "disabled";
+	            move-to-side-e = "disabled";
+	            move-to-workspace-left = ["<Super><Shift>Left"];
+	            move-to-workspace-right = ["<Super><Shift>Right"];
+	          };
+	          
+	          "org/gnome/mutter" = {
+	            edge-tiling = true;
+	            overlay-key = "Super_L";
+	          };
 
-	    "org/gnome/mutter/keybindings" = {
-	      toggle-tiled-left = ["<Super>Left"];
-	      toggle-tiled-right = ["<Super>Right"];
-	    };
+	          "org/gnome/mutter/keybindings" = {
+	            toggle-tiled-left = ["<Super>Left"];
+	            toggle-tiled-right = ["<Super>Right"];
+	          };
 
             # Enable GNOME Shell extensions
             "org/gnome/shell" = {
@@ -160,24 +160,24 @@
               extend-height = true;
               dock-fixed = true;
               #show-apps-at-top = true;
-	      show-running = true;
-	      show-favorites = true;
-	      isolate-workspaces = false;
+      	      show-running = true;
+	            show-favorites = true;
+	            isolate-workspaces = false;
               #transparency-mode = "FIXED";
               dash-max-icon-size = lib.gvariant.mkInt32 48;
               #unity-backlit-items = true;
               #running-indicator-style = "DOTS";
               #apply-custom-theme = false;
-              #autohide = false;
-	      #intellihide = false;
+              autohide = false;
+	            #intellihide = false;
               #require-pressure-to-show = false;
             };
 
-	    #"org/gnome/shell/extensions/pop-shell" = {
-	    #  tile-by-default = false;
-	    #  show-title = true;
-	    #  active-hint = true;
-	    #};
+	          #"org/gnome/shell/extensions/pop-shell" = {
+	          #  tile-by-default = false;
+	          #  show-title = true;
+	          #  active-hint = true;
+	          #};
 
             # AppIndicator settings
             "org/gnome/shell/extensions/appindicator" = {
