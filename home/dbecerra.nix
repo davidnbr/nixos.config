@@ -53,6 +53,7 @@ in
     xclip
     tmux
     pre-commit
+    nix-prefetch-github
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -371,7 +372,19 @@ in
 
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
   home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
-  home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
+  #home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
+  home.file.".config/tmux/plugins/catppuccin" = {
+    source = pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "tmux";
+      rev = "v2.1.2";
+      hash = "sha256-vBYBvZrMGLpMU059a+Z4SEekWdQD0GrDqBQyqfkEHPg=";
+    };
+    recursive = true;
+  };
+  home.sessionVariables = {
+    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+  };
 
   programs.starship = {
     enable = true;
