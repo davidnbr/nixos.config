@@ -42,6 +42,7 @@ in
     ansible
     ansible-lint
     aws-vault
+    starship
     lazydocker
     ripgrep
     htop
@@ -386,10 +387,6 @@ in
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
   };
 
-  programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
-  };
   xdg.configFile."starship.toml".source = ./starship.toml;
 
   programs.zoxide = {
