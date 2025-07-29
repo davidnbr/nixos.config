@@ -29,6 +29,7 @@ in
     google-chrome
     firefox
     wpsoffice
+    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     python311
     python311Packages.pip
