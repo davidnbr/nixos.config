@@ -25,6 +25,8 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    _1password
+    _1password-gui
     vscode
     google-chrome
     firefox
