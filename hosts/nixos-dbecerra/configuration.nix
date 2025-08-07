@@ -43,7 +43,28 @@
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
+    videoDrivers = [ "nvidia" "intel" ];
   };
+  
+  # Enable hardware acceleration
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # NVIDIA driver with Sync mode
+  hardware.nvidia = {
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    prime = {
+      sync.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
