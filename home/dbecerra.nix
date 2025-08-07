@@ -35,6 +35,7 @@ in
 
     python311
     python311Packages.pip
+    uv
     go
     nodejs_20
 
