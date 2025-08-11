@@ -1,24 +1,31 @@
-
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 5;
+  boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable flakes and modern nix commands
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking.hostName = "nixos-dbecerra"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -43,9 +50,12 @@
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    videoDrivers = [ "nvidia" "intel" ];
+    videoDrivers = [
+      "nvidia"
+      "intel"
+    ];
   };
-  
+
   # Enable hardware acceleration
   hardware.graphics = {
     enable = true;
@@ -65,20 +75,23 @@
     };
   };
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-    cheese
-    gnome-music
-    epiphany
-    geary
-    gedit
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
- 
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
+      gnome-photos
+      gnome-tour
+      cheese
+      gnome-music
+      epiphany
+      geary
+      gedit
+      tali
+      iagno
+      hitori
+      atomix
+    ]
+  );
+
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -96,7 +109,11 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dbecerra = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ]; # Enable ‘sudo’ for the user.
     shell = pkgs.bash;
   };
   nixpkgs.config.allowUnfree = true;
@@ -122,14 +139,14 @@
     gnome-browser-connector
 
     # Ubuntu-like extensions
-    gnomeExtensions.dash-to-dock        # Dock sidebar
-    gnomeExtensions.appindicator        # System tray
-    gnomeExtensions.user-themes         # Themes
-    
+    gnomeExtensions.dash-to-dock # Dock sidebar
+    gnomeExtensions.appindicator # System tray
+    gnomeExtensions.user-themes # Themes
+
     # Additional useful extensions
     #gnomeExtensions.pop-shell           # Tiling (optional)
-    gnomeExtensions.caffeine           # Prevent sleep
-    gnomeExtensions.vitals             # System monitor
+    gnomeExtensions.caffeine # Prevent sleep
+    gnomeExtensions.vitals # System monitor
   ];
 
   programs.dconf = {
@@ -137,32 +154,32 @@
     profiles = {
       user.databases = [
         {
-	  lockAll = true;
+          lockAll = true;
           settings = {
             # Window controls (minimize, maximize, close)
             "org/gnome/desktop/wm/preferences" = {
               button-layout = "appmenu:minimize,maximize,close";
             };
 
-	          "org/gnome/desktop/wm/keybindings" = {
-	            #maximize = ["<Super>Up"];
-	            unmaximize = ["<Super>Down"];
-	            toggle-maximized = ["<Super>Up"];
-	            move-to-side-w = "disabled";
-	            move-to-side-e = "disabled";
-	            move-to-workspace-left = ["<Super><Shift>Left"];
-	            move-to-workspace-right = ["<Super><Shift>Right"];
-	          };
-	          
-	          "org/gnome/mutter" = {
-	            edge-tiling = true;
-	            overlay-key = "Super_L";
-	          };
+            "org/gnome/desktop/wm/keybindings" = {
+              #maximize = ["<Super>Up"];
+              unmaximize = [ "<Super>Down" ];
+              toggle-maximized = [ "<Super>Up" ];
+              move-to-side-w = "disabled";
+              move-to-side-e = "disabled";
+              move-to-workspace-left = [ "<Super><Shift>Left" ];
+              move-to-workspace-right = [ "<Super><Shift>Right" ];
+            };
 
-	          "org/gnome/mutter/keybindings" = {
-	            toggle-tiled-left = ["<Super>Left"];
-	            toggle-tiled-right = ["<Super>Right"];
-	          };
+            "org/gnome/mutter" = {
+              edge-tiling = true;
+              overlay-key = "Super_L";
+            };
+
+            "org/gnome/mutter/keybindings" = {
+              toggle-tiled-left = [ "<Super>Left" ];
+              toggle-tiled-right = [ "<Super>Right" ];
+            };
 
             # Enable GNOME Shell extensions
             "org/gnome/shell" = {
@@ -181,24 +198,24 @@
               extend-height = true;
               dock-fixed = true;
               #show-apps-at-top = true;
-      	      show-running = true;
-	            show-favorites = true;
-	            isolate-workspaces = false;
+              show-running = true;
+              show-favorites = true;
+              isolate-workspaces = false;
               #transparency-mode = "FIXED";
               dash-max-icon-size = lib.gvariant.mkInt32 48;
               #unity-backlit-items = true;
               #running-indicator-style = "DOTS";
               #apply-custom-theme = false;
               autohide = false;
-	            #intellihide = false;
+              #intellihide = false;
               #require-pressure-to-show = false;
             };
 
-	          #"org/gnome/shell/extensions/pop-shell" = {
-	          #  tile-by-default = false;
-	          #  show-title = true;
-	          #  active-hint = true;
-	          #};
+            #"org/gnome/shell/extensions/pop-shell" = {
+            #  tile-by-default = false;
+            #  show-title = true;
+            #  active-hint = true;
+            #};
 
             # AppIndicator settings
             "org/gnome/shell/extensions/appindicator" = {
@@ -209,7 +226,11 @@
 
             # Vitals extension settings
             "org/gnome/shell/extensions/vitals" = {
-              hot-sensors = ["_processor_usage_" "_memory_usage_" "_storage_free_"];
+              hot-sensors = [
+                "_processor_usage_"
+                "_memory_usage_"
+                "_storage_free_"
+              ];
               show-storage = true;
               show-network = true;
               show-processor = true;
@@ -245,7 +266,7 @@
   #  toggle-maximized=['<Super>Up']
   #  move-to-workspace-left = ["<Super><Shift>Left"];
   #  move-to-workspace-right = ["<Super><Shift>Right"];
-  #  
+  #
   #  [org/gnome/mutter/keybindings]
   #  toggle-tiled-left=['<Super>Left']
   #  toggle-tiled-right=['<Super>Right']
@@ -277,13 +298,13 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
-  
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";     # Copy the NixOS configuration file and link it from the resulting system
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";  # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   #system.copySystemConfiguration = true;
-  
+
   virtualisation.docker.enable = true;
 
   system.autoUpgrade = {
@@ -297,6 +318,10 @@
     options = "--delete-older-than 30d";
   };
 
+  nix.extraOptions = ''
+    extra-substituters = https://devenv.cachix.org
+    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+  '';
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
