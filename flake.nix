@@ -3,14 +3,14 @@
 
   inputs = {
     # NixOS stable release
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
     # NixOS unstable (optional, for newer packages)
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
@@ -18,6 +18,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     oh-my-tmux = {
       url = "github:gpakosz/.tmux";
@@ -31,6 +36,7 @@
 
     claude-desktop = {
       url = "github:k3d3/claude-desktop-linux-flake";
+      #url = "github:davidnbr/claude-desktop-linux-flake/fix-desktop-icon-fhs";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
