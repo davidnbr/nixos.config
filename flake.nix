@@ -3,17 +3,17 @@
 
   inputs = {
     # NixOS stable release
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+
     # NixOS unstable (optional, for newer packages)
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     # Hardware optimizations (optional but recommended)
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -42,12 +42,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nixos-hardware,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       hostname = "nixos-dbecerra";
       username = "dbecerra";
-      
+
       # Create pkgs with overlays for unstable packages
       pkgs = import nixpkgs {
         inherit system;
@@ -55,7 +63,10 @@
         overlays = [
           # Add unstable packages overlay
           (final: prev: {
-            unstable = nixpkgs-unstable.legacyPackages.${system};
+            unstable = import nixpkgs-unstable {
+              inherit system;
+              config.allowUnfree = true;
+            };
           })
         ];
       };
@@ -65,7 +76,7 @@
       nixosConfigurations = {
         ${hostname} = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { 
+          specialArgs = {
             inherit inputs;
             inherit nixpkgs-unstable;
           };
@@ -73,18 +84,30 @@
             # Your system configuration
             ./hosts/${hostname}/configuration.nix
             ./hosts/${hostname}/hardware-configuration.nix
-            
+
             # Hardware optimizations (optional)
             # Uncomment and adjust for your hardware:
             # nixos-hardware.nixosModules.common-cpu-intel
             # nixos-hardware.nixosModules.common-pc-ssd
-            
+
             # Global configuration
             {
               networking.hostName = hostname;
-              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nix.settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
               nixpkgs.config.allowUnfree = true;
-              
+              # Make the overlay available system-wide
+              nixpkgs.overlays = [
+                (final: prev: {
+                  unstable = import nixpkgs-unstable {
+                    inherit system;
+                    config.allowUnfree = true;
+                  };
+                })
+              ];
+
               environment.systemPackages = with pkgs; [
                 git
                 vim
@@ -96,11 +119,11 @@
         };
       };
 
-      # Home Manager configurations  
+      # Home Manager configurations
       homeConfigurations = {
         ${username} = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs;
-          extraSpecialArgs = { 
+          extraSpecialArgs = {
             inherit inputs;
             inherit nixpkgs-unstable;
           };
@@ -109,9 +132,7 @@
             {
               home.username = username;
               home.homeDirectory = "/home/${username}";
-              
               home.stateVersion = "25.05"; # Match your NixOS version
-              
               programs.home-manager.enable = true;
             }
           ];

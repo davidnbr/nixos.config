@@ -24,7 +24,7 @@ in
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     #(pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
-    pkgs.nerd-fonts.hack
+    nerd-fonts.hack
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -32,42 +32,65 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    _1password
-    _1password-gui
-    vscode
-    google-chrome
-    firefox
+    unstable._1password
+    unstable._1password-gui
+    unstable.vscode
+    unstable.google-chrome
+    unstable.firefox
     #wpsoffice
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
-    python311
-    python311Packages.pip
-    uv
-    go
-    nodejs_20
+    unstable.python311
+    unstable.python311Packages.pip
+    unstable.uv
+    unstable.go
+    unstable.nodejs_20
 
-    awscli2
-    gh
-    terraform
-    terragrunt
+    unstable.awscli2
+    unstable.gh
+    unstable.terraform
+    unstable.terragrunt
     ansible
     ansible-lint
-    aws-vault
+    unstable.aws-vault
     lazydocker
     ripgrep
     htop
     fzf
     bat
     jq
-    blesh
+    unstable.blesh
     tree
     xclip
-    tmux
-    pre-commit
+    unstable.tmux
+    unstable.pre-commit
     nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
+    unstable.claude-code
   ];
-  fonts.fontconfig.enable = true;
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [
+        "Hack Nerd Font"
+        "DejaVu Sans Mono"
+      ];
+      sansSerif = [
+        "DejaVu Sans"
+        "Liberation Sans"
+      ];
+      serif = [
+        "DejaVu Serif"
+        "Liberation Serif"
+      ];
+    };
+  };
+
+  home.activation.rebuildFontCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $VERBOSE_ECHO "Rebuilding font cache..."
+    $DRY_RUN_CMD ${pkgs.fontconfig}/bin/fc-cache -rf
+  '';
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -102,6 +125,8 @@ in
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+
   };
 
   programs.bash = {
@@ -137,7 +162,6 @@ in
         identitiesOnly = true; # Only use the specified key
       };
     };
-
     extraConfig = ''
       AddKeysToAgent yes
     '';
@@ -396,9 +420,6 @@ in
       hash = "sha256-vBYBvZrMGLpMU059a+Z4SEekWdQD0GrDqBQyqfkEHPg=";
     };
     recursive = true;
-  };
-  home.sessionVariables = {
-    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
   };
 
   programs.starship = {
