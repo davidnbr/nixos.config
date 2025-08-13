@@ -39,10 +39,11 @@ in
     unstable.firefox
     #wpsoffice
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
-
-    unstable.python311
-    unstable.python311Packages.pip
-    unstable.python311Packages.httpx
+    
+    (unstable.python311.withPackages(ps: with ps; [
+      pip
+      httpx
+    ]))
     unstable.uv
     unstable.go
     unstable.nodejs_20
