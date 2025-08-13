@@ -42,6 +42,7 @@ in
 
     unstable.python311
     unstable.python311Packages.pip
+    unstable.python311Packages.httpx
     unstable.uv
     unstable.go
     unstable.nodejs_20
