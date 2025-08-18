@@ -37,6 +37,7 @@ in
     unstable.vscode
     unstable.google-chrome
     unstable.firefox
+    unstable.slack
     #wpsoffice
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
     

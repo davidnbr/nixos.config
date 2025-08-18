@@ -120,6 +120,7 @@
 
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    desktop-file-utils
     pciutils
     vim
     wget
