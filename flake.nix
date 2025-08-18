@@ -68,6 +68,13 @@
               config.allowUnfree = true;
             };
           })
+          # Add wrapper for asdf2nix
+          (final: prev: {
+            asdf2nix-wrapper = prev.writeShellScriptBin "asdf2nix" ''
+              #!/usr/bin/env bash
+              exec ${inputs.nixpkgs.legacyPackages.${system}.nix}/bin/nix run github:brokenpip3/asdf2nix -- "$@"
+            '';
+          })
         ];
       };
     in

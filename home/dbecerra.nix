@@ -47,6 +47,8 @@ in
     unstable.uv
     unstable.go
     unstable.nodejs_20
+    unstable.ruby_3_4
+    unstable.elixir_1_18
 
     unstable.awscli2
     unstable.gh
@@ -66,9 +68,11 @@ in
     xclip
     unstable.tmux
     unstable.pre-commit
+    unstable.tldr
     nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
     unstable.claude-code
+    asdf2nix-wrapper
   ];
 
   fonts.fontconfig = {
