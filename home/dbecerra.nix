@@ -11,11 +11,7 @@
     nerd-fonts.hack
     
     # GUI Applications
-    unstable._1password
-    unstable._1password-gui
     unstable.vscode
-    unstable.google-chrome
-    unstable.firefox
     
     # Languages and Runtimes
     (unstable.python311.withPackages(ps: with ps; [ pip httpx ]))
