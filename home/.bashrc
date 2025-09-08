@@ -4,7 +4,7 @@
 
 # Ble.sh initialization file with interactive sessions
 # Add this lines at the top of .bashrc:
-#[[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
+[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
 
 # If not running interactively, don't do anything
 case $- in
@@ -97,11 +97,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lah'
 
-alias z="zoxide"
-alias zi="zoxide query -i"
-alias cat="bat"
-alias top="htop"
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -133,8 +128,8 @@ fi
 complete -C /usr/bin/terraform terraform 2>/dev/null
 
 # Add path to bash
-#export PATH="/home/$USER/bin:$PATH"
 export PATH="/home/$USER/.local/bin:$PATH"
+export PATH="/usr/local/bin/:$PATH"
 
 # Add alias to lazydocker
 alias lzd='lazydocker'
@@ -159,7 +154,7 @@ eval "$(starship init bash)"
 . ~/.config/.aliases/aliases.sh
 
 # Add nvim PATH
-#export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
 # Add window title with Starship
 function set_win_title() {
@@ -195,7 +190,8 @@ spf() {
 export PATH="$PATH:~/.nix-profile/bin"
 
 # Add cursor alias
-alias cursor='~/apps/cursor-0.48.9.AppImage --no-sandbox &'
+#alias cursor='/usr/bin/cursor --user-data-dir=/opt/.config/cursor --extensions-dir=/opt/.config/extensions --crash-reporter-directory=/opt/.config/crashes'
+#'~/apps/cursor-0.48.9.AppImage --no-sandbox &' #--user-data-dir=/opt/.config/cursor --extensions-dir=/opt/.config/extensions --crash-reporter-directory=/opt/.config/crashes &'
 
 # Add aliases to PROJECTS
 alias cdGRC='cd ~/Documents/Stackbuilders/Projects/GRC/'
@@ -204,9 +200,37 @@ alias cdDurst='cd ~/Documents/Stackbuilders/Projects/Durst/'
 alias cdDevops='cd ~/Documents/DevOps/'
 alias cdNix='cd ~/Documents/Nix/'
 
-# Add Terraform alias
+# Add path to z.sh
+. ~/.local/bin/z/z/z.sh
+
+# Add terraform alias
 alias tf='terraform'
+
+# Add docker compose alias
+alias dckc='docker compose'
+alias dck='docker'
+
+# Added by Amplify CLI binary installer
+export PATH="$HOME/.amplify/bin:$PATH"
+
+# Added for patrol_cli
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
+# NeoVim shorter path config
+export XDG_CACHE_HOME="$HOME/nc"
+export XDG_DATA_HOME="$HOME/nd"
+
+mkdir -p "$XDG_CACHE_HOME"
+mkdir -p "$XDG_DATA_HOME"
+
+# Disable Lua compilation entirely
+#export NVIM_LUA_NOCOMPILE=1
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
+
