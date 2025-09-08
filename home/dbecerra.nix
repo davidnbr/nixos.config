@@ -23,6 +23,7 @@
     
     # DevOps Tools
     unstable.awscli2
+    unstable.ssm-session-manager-plugin
     unstable.gh
     unstable.terraform
     unstable.terragrunt
