@@ -201,7 +201,7 @@ alias cdDevops='cd ~/Documents/DevOps/'
 alias cdNix='cd ~/Documents/Nix/'
 
 # Add path to z.sh
-. ~/.local/bin/z/z/z.sh
+. ~/.local/bin/z/z.sh
 
 # Add terraform alias
 alias tf='terraform'
