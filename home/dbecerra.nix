@@ -48,7 +48,6 @@
 
     unstable.tmux
     unstable.starship
-    unstable.blesh
     unstable.neovim
     unstable.pre-commit
     unstable.tldr
