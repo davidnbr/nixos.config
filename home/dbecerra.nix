@@ -9,10 +9,10 @@
   home.packages = with pkgs; [
     # Fonts
     nerd-fonts.hack
-    
+
     # GUI Applications
     unstable.vscode
-    
+
     # Languages and Runtimes
     (unstable.python311.withPackages(ps: with ps; [ pip httpx ]))
     unstable.uv
@@ -20,7 +20,7 @@
     unstable.nodejs_20
     unstable.ruby_3_4
     unstable.elixir_1_18
-    
+
     # DevOps Tools
     unstable.awscli2
     unstable.ssm-session-manager-plugin
@@ -30,7 +30,7 @@
     ansible
     ansible-lint
     unstable.aws-vault
-    
+
     # Development Tools
     lazydocker
     ripgrep
@@ -56,15 +56,16 @@
     inputs.devenv.packages.${pkgs.system}.devenv
     unstable.claude-code
     asdf2nix-wrapper
-    
+
     # Language servers (LazyVim will find them)
     nil                # Nix LSP
     lua-language-server # Lua LSP
     nodePackages.typescript-language-server # JS/TS LSP
-    gopls              # Go LSP  
+    gopls              # Go LSP
     pyright            # Python LSP
     terraform-ls       # Terraform LSP
     yaml-language-server # YAML LSP
+    erlang-ls # Erlang LSP
   ];
 
   # Font configuration
@@ -91,7 +92,7 @@
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
-  
+
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
