@@ -57,15 +57,19 @@
     unstable.claude-code
     asdf2nix-wrapper
 
+    # Build tools for Mason LSPs
+    cargo
+    rustc
+
     # Language servers (LazyVim will find them)
-    nil                # Nix LSP
-    lua-language-server # Lua LSP
-    nodePackages.typescript-language-server # JS/TS LSP
-    gopls              # Go LSP
-    pyright            # Python LSP
-    terraform-ls       # Terraform LSP
-    yaml-language-server # YAML LSP
-    erlang-ls # Erlang LSP
+    #nil                # Nix LSP
+    #lua-language-server # Lua LSP
+    #nodePackages.typescript-language-server # JS/TS LSP
+    #gopls              # Go LSP
+    #pyright            # Python LSP
+    #terraform-ls       # Terraform LSP
+    #yaml-language-server # YAML LSP
+    #erlang-ls # Erlang LSP
   ];
 
   # Font configuration
