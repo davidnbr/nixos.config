@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   home.username = "dbecerra";
@@ -20,7 +26,12 @@
     unstable.vscode
 
     # Languages and Runtimes
-    (unstable.python311.withPackages(ps: with ps; [ pip httpx ]))
+    (unstable.python311.withPackages (
+      ps: with ps; [
+        pip
+        httpx
+      ]
+    ))
     unstable.uv
     unstable.go
     unstable.nodejs_20
@@ -31,6 +42,7 @@
     unstable.awscli2
     unstable.ssm-session-manager-plugin
     unstable.gh
+    unstable.act
     unstable.terraform
     unstable.terragrunt
     ansible
@@ -39,6 +51,10 @@
 
     # Development Tools
     lazydocker
+    mqttui
+    tcpdump
+    trivy
+    smem
     ripgrep
     htop
     fzf
@@ -52,6 +68,12 @@
     wget
     curl
     fd
+
+    shfmt
+    tflint
+    tfsec
+    shellcheck
+    nixfmt
 
     unstable.tmux
     unstable.starship
@@ -82,9 +104,18 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "Hack Nerd Font" "DejaVu Sans Mono" ];
-      sansSerif = [ "DejaVu Sans" "Liberation Sans" ];
-      serif = [ "DejaVu Serif" "Liberation Serif" ];
+      monospace = [
+        "Hack Nerd Font"
+        "DejaVu Sans Mono"
+      ];
+      sansSerif = [
+        "DejaVu Sans"
+        "Liberation Sans"
+      ];
+      serif = [
+        "DejaVu Serif"
+        "Liberation Serif"
+      ];
     };
   };
 
