@@ -15,6 +15,7 @@
       url = "github:gpakosz/.tmux";
       flake = false;
     };
+    iecs.url = "github:sestrella/iecs";
   };
 
   nixConfig = {

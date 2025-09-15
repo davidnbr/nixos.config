@@ -82,6 +82,7 @@
     unstable.tldr
     nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
+    inputs.iecs.packages.${system}.default
     unstable.claude-code
     asdf2nix-wrapper
 
