@@ -68,6 +68,7 @@
     wget
     curl
     fd
+    graphviz
 
     shfmt
     tflint
