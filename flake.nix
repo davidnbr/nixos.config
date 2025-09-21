@@ -38,7 +38,8 @@
 
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";
-      url = "github:davidnbr/claude-desktop-linux-flake/549d0783f882b6d7aa48d93111c98644c03185f8";
+      url =
+        "github:davidnbr/claude-desktop-linux-flake/adac0a33a60210d0e573516f1de0cbd053858fb9";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -57,14 +58,7 @@
     ];
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      nixos-hardware,
-      ...
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ...
     }@inputs:
     let
       system = "x86_64-linux";
@@ -87,13 +81,14 @@
           (final: prev: {
             asdf2nix-wrapper = prev.writeShellScriptBin "asdf2nix" ''
               #!/usr/bin/env bash
-              exec ${inputs.nixpkgs.legacyPackages.${system}.nix}/bin/nix run github:brokenpip3/asdf2nix -- "$@"
+              exec ${
+                inputs.nixpkgs.legacyPackages.${system}.nix
+              }/bin/nix run github:brokenpip3/asdf2nix -- "$@"
             '';
           })
         ];
       };
-    in
-    {
+    in {
       # NixOS system configurations
       nixosConfigurations = {
         ${hostname} = nixpkgs.lib.nixosSystem {
@@ -115,10 +110,7 @@
             # Global configuration
             {
               networking.hostName = hostname;
-              nix.settings.experimental-features = [
-                "nix-command"
-                "flakes"
-              ];
+              nix.settings.experimental-features = [ "nix-command" "flakes" ];
               nixpkgs.config.allowUnfree = true;
               # Make the overlay available system-wide
               nixpkgs.overlays = [
@@ -130,12 +122,7 @@
                 })
               ];
 
-              environment.systemPackages = with pkgs; [
-                git
-                vim
-                wget
-                curl
-              ];
+              environment.systemPackages = with pkgs; [ git vim wget curl ];
             }
           ];
         };

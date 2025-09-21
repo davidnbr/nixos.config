@@ -32,16 +32,17 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    unstable._1password
+    unstable._1password-cli
     unstable._1password-gui
     unstable.vscode
     unstable.google-chrome
     unstable.firefox
     unstable.slack
     #wpsoffice
-    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
+# Temporarily commenting out claude-desktop due to version mismatch issue
+    # inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
     
-    (unstable.python311.withPackages(ps: with ps; [
+    (pkgs.python311.withPackages(ps: with ps; [
       pip
       httpx
     ]))
@@ -84,7 +85,7 @@ in
     tfsec
     checkov
     shellcheck
-    nixfmt
+    nixfmt-classic
 
     unstable.tmux
     unstable.pre-commit
@@ -359,7 +360,7 @@ in
           opts.formatters_by_ft.toml = { "taplo" }
           opts.formatters_by_ft.sh = { "shfmt" }
           opts.formatters_by_ft.bash = { "shfmt" }
-          opts.formatters_by_ft.nix = { "nixfmt" }
+          opts.formatters_by_ft.nix = { "nixfmt-classic" }
           
           return opts
         end,
