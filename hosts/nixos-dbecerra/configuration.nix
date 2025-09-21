@@ -1,11 +1,6 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -19,13 +14,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable flakes and modern nix commands
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    trusted-users = [ "root" "dbecerra" "@wheel" ];
+    experimental-features = [ "nix-command" "flakes" ];
+  };
 
   networking.hostName = "nixos-dbecerra"; # Define your hostname.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -50,10 +46,7 @@
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    videoDrivers = [
-      "nvidia"
-      "intel"
-    ];
+    videoDrivers = [ "nvidia" "intel" ];
   };
 
   # Enable hardware acceleration
@@ -75,22 +68,19 @@
     };
   };
 
-  environment.gnome.excludePackages = (
-    with pkgs;
-    [
-      gnome-photos
-      gnome-tour
-      cheese
-      gnome-music
-      epiphany
-      geary
-      gedit
-      tali
-      iagno
-      hitori
-      atomix
-    ]
-  );
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+    cheese
+    gnome-music
+    epiphany
+    geary
+    gedit
+    tali
+    iagno
+    hitori
+    atomix
+  ]);
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -109,11 +99,8 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dbecerra = {
     isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-    ]; # Enable ‘sudo’ for the user.
+    extraGroups =
+      [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.bash;
   };
   nixpkgs.config.allowUnfree = true;
@@ -154,108 +141,101 @@
   programs.dconf = {
     enable = true;
     profiles = {
-      user.databases = [
-        {
-          lockAll = true;
-          settings = {
-            # Window controls (minimize, maximize, close)
-            "org/gnome/desktop/wm/preferences" = {
-              button-layout = "appmenu:minimize,maximize,close";
-            };
-
-            "org/gnome/desktop/wm/keybindings" = {
-              #maximize = ["<Super>Up"];
-              unmaximize = [ "<Super>Down" ];
-              toggle-maximized = [ "<Super>Up" ];
-              move-to-side-w = "disabled";
-              move-to-side-e = "disabled";
-              move-to-workspace-left = [ "<Super><Shift>Left" ];
-              move-to-workspace-right = [ "<Super><Shift>Right" ];
-            };
-
-            "org/gnome/mutter" = {
-              edge-tiling = true;
-              overlay-key = "Super_L";
-            };
-
-            "org/gnome/mutter/keybindings" = {
-              toggle-tiled-left = [ "<Super>Left" ];
-              toggle-tiled-right = [ "<Super>Right" ];
-            };
-
-            # Enable GNOME Shell extensions
-            "org/gnome/shell" = {
-              enabled-extensions = [
-                "dash-to-dock@micxgx.gmail.com"
-                "appindicatorsupport@rgcjonas.gmail.com"
-                "user-theme@gnome-shell-extensions.gcampax.github.com"
-                "Vitals@CoreCoding.com"
-                "caffeine@patapon.info"
-              ];
-            };
-
-            # Dash to Dock configuration
-            "org/gnome/shell/extensions/dash-to-dock" = {
-              dock-position = "LEFT";
-              extend-height = true;
-              dock-fixed = true;
-              #show-apps-at-top = true;
-              show-running = true;
-              show-favorites = true;
-              isolate-workspaces = false;
-              #transparency-mode = "FIXED";
-              dash-max-icon-size = lib.gvariant.mkInt32 48;
-              #unity-backlit-items = true;
-              #running-indicator-style = "DOTS";
-              #apply-custom-theme = false;
-              autohide = false;
-              #intellihide = false;
-              #require-pressure-to-show = false;
-            };
-
-            #"org/gnome/shell/extensions/pop-shell" = {
-            #  tile-by-default = false;
-            #  show-title = true;
-            #  active-hint = true;
-            #};
-
-            # AppIndicator settings
-            "org/gnome/shell/extensions/appindicator" = {
-              icon-size = lib.gvariant.mkInt32 22;
-              icon-spacing = lib.gvariant.mkInt32 12;
-              tray-pos = "right";
-            };
-
-            # Vitals extension settings
-            "org/gnome/shell/extensions/vitals" = {
-              hot-sensors = [
-                "_processor_usage_"
-                "_memory_usage_"
-                "_storage_free_"
-              ];
-              show-storage = true;
-              show-network = true;
-              show-processor = true;
-              show-memory = true;
-            };
-
-            # Additional GNOME settings for Ubuntu-like experience
-            "org/gnome/desktop/interface" = {
-              show-battery-percentage = true;
-              clock-show-weekday = true;
-              enable-hot-corners = false;
-            };
-
-            "org/gnome/shell/overrides" = {
-              dynamic-workspaces = true;
-            };
-
-            "org/gnome/desktop/session" = {
-              idle-delay = lib.gvariant.mkUint32 300;
-            };
+      user.databases = [{
+        lockAll = true;
+        settings = {
+          # Window controls (minimize, maximize, close)
+          "org/gnome/desktop/wm/preferences" = {
+            button-layout = "appmenu:minimize,maximize,close";
           };
-        }
-      ];
+
+          "org/gnome/desktop/wm/keybindings" = {
+            #maximize = ["<Super>Up"];
+            unmaximize = [ "<Super>Down" ];
+            toggle-maximized = [ "<Super>Up" ];
+            move-to-side-w = "disabled";
+            move-to-side-e = "disabled";
+            move-to-workspace-left = [ "<Super><Shift>Left" ];
+            move-to-workspace-right = [ "<Super><Shift>Right" ];
+          };
+
+          "org/gnome/mutter" = {
+            edge-tiling = true;
+            overlay-key = "Super_L";
+          };
+
+          "org/gnome/mutter/keybindings" = {
+            toggle-tiled-left = [ "<Super>Left" ];
+            toggle-tiled-right = [ "<Super>Right" ];
+          };
+
+          # Enable GNOME Shell extensions
+          "org/gnome/shell" = {
+            enabled-extensions = [
+              "dash-to-dock@micxgx.gmail.com"
+              "appindicatorsupport@rgcjonas.gmail.com"
+              "user-theme@gnome-shell-extensions.gcampax.github.com"
+              "Vitals@CoreCoding.com"
+              "caffeine@patapon.info"
+            ];
+          };
+
+          # Dash to Dock configuration
+          "org/gnome/shell/extensions/dash-to-dock" = {
+            dock-position = "LEFT";
+            extend-height = true;
+            dock-fixed = true;
+            #show-apps-at-top = true;
+            show-running = true;
+            show-favorites = true;
+            isolate-workspaces = false;
+            #transparency-mode = "FIXED";
+            dash-max-icon-size = lib.gvariant.mkInt32 48;
+            #unity-backlit-items = true;
+            #running-indicator-style = "DOTS";
+            #apply-custom-theme = false;
+            autohide = false;
+            #intellihide = false;
+            #require-pressure-to-show = false;
+          };
+
+          #"org/gnome/shell/extensions/pop-shell" = {
+          #  tile-by-default = false;
+          #  show-title = true;
+          #  active-hint = true;
+          #};
+
+          # AppIndicator settings
+          "org/gnome/shell/extensions/appindicator" = {
+            icon-size = lib.gvariant.mkInt32 22;
+            icon-spacing = lib.gvariant.mkInt32 12;
+            tray-pos = "right";
+          };
+
+          # Vitals extension settings
+          "org/gnome/shell/extensions/vitals" = {
+            hot-sensors =
+              [ "_processor_usage_" "_memory_usage_" "_storage_free_" ];
+            show-storage = true;
+            show-network = true;
+            show-processor = true;
+            show-memory = true;
+          };
+
+          # Additional GNOME settings for Ubuntu-like experience
+          "org/gnome/desktop/interface" = {
+            show-battery-percentage = true;
+            clock-show-weekday = true;
+            enable-hot-corners = false;
+          };
+
+          "org/gnome/shell/overrides" = { dynamic-workspaces = true; };
+
+          "org/gnome/desktop/session" = {
+            idle-delay = lib.gvariant.mkUint32 300;
+          };
+        };
+      }];
     };
   };
 

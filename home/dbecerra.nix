@@ -1,14 +1,6 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}:
-let
-  sqlls = pkgs.nodePackages.sql-language-server or null;
-in
-{
+{ config, pkgs, inputs, lib, ... }:
+let sqlls = pkgs.nodePackages.sql-language-server or null;
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "dbecerra";
@@ -39,13 +31,9 @@ in
     unstable.firefox
     unstable.slack
     #wpsoffice
-# Temporarily commenting out claude-desktop due to version mismatch issue
-    # inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
-    
-    (pkgs.python311.withPackages(ps: with ps; [
-      pip
-      httpx
-    ]))
+    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
+
+    (pkgs.python311.withPackages (ps: with ps; [ pip httpx ]))
     unstable.uv
     unstable.go
     unstable.nodejs_20
@@ -61,7 +49,7 @@ in
     ansible
     ansible-lint
     unstable.aws-vault
-    
+
     lazydocker
     mqttui
     tcpdump
@@ -104,25 +92,17 @@ in
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [
-        "Hack Nerd Font"
-        "DejaVu Sans Mono"
-      ];
-      sansSerif = [
-        "DejaVu Sans"
-        "Liberation Sans"
-      ];
-      serif = [
-        "DejaVu Serif"
-        "Liberation Serif"
-      ];
+      monospace = [ "Hack Nerd Font" "DejaVu Sans Mono" ];
+      sansSerif = [ "DejaVu Sans" "Liberation Sans" ];
+      serif = [ "DejaVu Serif" "Liberation Serif" ];
     };
   };
 
-  home.activation.rebuildFontCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    $VERBOSE_ECHO "Rebuilding font cache..."
-    $DRY_RUN_CMD ${pkgs.fontconfig}/bin/fc-cache -rf
-  '';
+  home.activation.rebuildFontCache =
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $VERBOSE_ECHO "Rebuilding font cache..."
+      $DRY_RUN_CMD ${pkgs.fontconfig}/bin/fc-cache -rf
+    '';
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -205,10 +185,7 @@ in
     enableBashIntegration = true;
     git = true;
     icons = "auto";
-    extraOptions = [
-      "--group-directories-first"
-      "--header"
-    ];
+    extraOptions = [ "--group-directories-first" "--header" ];
   };
 
   programs.neovim = {
@@ -217,8 +194,7 @@ in
     viAlias = true;
     vimAlias = true;
 
-    extraPackages =
-      with pkgs;
+    extraPackages = with pkgs;
       [
         git
         gcc
@@ -289,11 +265,9 @@ in
         gzip
         jq # JSON processor
         yq # YAML processor
-      ]
-      ++ pkgs.lib.optionals (sqlls != null) [ sqlls ]; # SQL (lang.sql) - if available
-    plugins = with pkgs.vimPlugins; [
-      lazy-nvim
-    ];
+      ] ++ pkgs.lib.optionals (sqlls != null)
+      [ sqlls ]; # SQL (lang.sql) - if available
+    plugins = with pkgs.vimPlugins; [ lazy-nvim ];
   };
 
   xdg.configFile."nvim/lua/plugins/mason.lua".text = ''

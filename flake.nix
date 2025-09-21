@@ -39,7 +39,7 @@
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";
       url =
-        "github:davidnbr/claude-desktop-linux-flake/adac0a33a60210d0e573516f1de0cbd053858fb9";
+        "github:davidnbr/claude-desktop-linux-flake/20c21cea8da23ab1b941afdbfda21c26a050604c";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
