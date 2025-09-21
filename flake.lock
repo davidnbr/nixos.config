@@ -42,17 +42,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1758481741,
-        "narHash": "sha256-F/qFSK+wOC5+KO/U8A62Hgn6sJMJQYG/Pi4QFbdG3kk=",
+        "lastModified": 1758488831,
+        "narHash": "sha256-awHyO1BzGdNkfBpLMkeWIrH1KSAtadwKmruNCyNiO/k=",
         "owner": "davidnbr",
         "repo": "claude-desktop-linux-flake",
-        "rev": "20c21cea8da23ab1b941afdbfda21c26a050604c",
+        "rev": "9a573471258aca69020ebad798cbe3ed736bd3a5",
         "type": "github"
       },
       "original": {
         "owner": "davidnbr",
         "repo": "claude-desktop-linux-flake",
-        "rev": "20c21cea8da23ab1b941afdbfda21c26a050604c",
+        "rev": "9a573471258aca69020ebad798cbe3ed736bd3a5",
         "type": "github"
       }
     },
