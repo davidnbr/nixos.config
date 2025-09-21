@@ -52,13 +52,20 @@ in
     unstable.elixir_1_18
 
     unstable.awscli2
+    unstable.ssm-session-manager-plugin
     unstable.gh
+    unstable.act
     unstable.terraform
     unstable.terragrunt
     ansible
     ansible-lint
     unstable.aws-vault
+    
     lazydocker
+    mqttui
+    tcpdump
+    trivy
+    smem
     ripgrep
     htop
     fzf
@@ -67,13 +74,30 @@ in
     unstable.blesh
     tree
     xclip
+    gcc
+    unzip
+    fd
+    graphviz
+
+    shfmt
+    tflint
+    tfsec
+    checkov
+    shellcheck
+    nixfmt
+
     unstable.tmux
     unstable.pre-commit
     unstable.tldr
     nix-prefetch-github
+    inputs.iecs.packages.${pkgs.system}.default
     inputs.devenv.packages.${pkgs.system}.devenv
     unstable.claude-code
     asdf2nix-wrapper
+
+    # Build tools for LSPs
+    cargo
+    rustc
   ];
 
   fonts.fontconfig = {
