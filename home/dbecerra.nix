@@ -273,8 +273,8 @@ in {
   xdg.configFile."nvim/lua/plugins/mason.lua".text = ''
     return {
       -- Disable Mason completely
-      { "williamboman/mason.nvim", enabled = false },
-      { "williamboman/mason-lspconfig.nvim", enabled = false },
+      { "mason-org/mason.nvim", enabled = false },
+      { "mason-org/mason-lspconfig.nvim", enabled = false },
       
       -- Configure LSP to not use Mason for all your language extras
       {
