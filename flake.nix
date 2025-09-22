@@ -10,12 +10,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
+
     devenv.url = "github:cachix/devenv";
     oh-my-tmux = {
       url = "github:gpakosz/.tmux";
       flake = false;
     };
     iecs.url = "github:sestrella/iecs";
+    claude-desktop = {
+      #url = "github:k3d3/claude-desktop-linux-flake";
+      url = "github:davidnbr/claude-desktop-linux-flake/9a573471258aca69020ebad798cbe3ed736bd3a5";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   nixConfig = {

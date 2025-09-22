@@ -48,6 +48,7 @@
     ansible
     ansible-lint
     unstable.aws-vault
+    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     # Development Tools
     lazydocker
