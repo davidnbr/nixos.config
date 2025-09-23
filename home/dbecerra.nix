@@ -34,7 +34,6 @@ in {
     unstable.libreoffice-fresh
     unstable.hunspell
     unstable.hunspellDicts.en_US
-    unstable.hunspellDicts.en_GB
     unstable.hunspellDicts.es_ES
     # Microsoft-compatible fonts for perfect .docx rendering
     corefonts # Arial, Times New Roman, etc.
