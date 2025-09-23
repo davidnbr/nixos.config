@@ -34,10 +34,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ 
-      m17n
-      uniemoji
-    ];
+    ibus.engines = with pkgs.ibus-engines; [ m17n uniemoji ];
   };
   # console = {
   #   font = "Lat2-Terminus16";
@@ -56,7 +53,7 @@
     videoDrivers = [ "nvidia" "intel" ];
     xkb = {
       layout = "us";
-      variant = "altgr-intl";  # US international with dead keys
+      variant = "altgr-intl"; # US international with dead keys
     };
   };
 
@@ -123,9 +120,9 @@
 
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    autokey              # For Alt+numpad automation
-    espanso             # Alternative text expander
-    xdotool             # X11 automation tool
+    autokey # For Alt+numpad automation
+    espanso # Alternative text expander
+    xdotool # X11 automation tool
 
     desktop-file-utils
     pciutils

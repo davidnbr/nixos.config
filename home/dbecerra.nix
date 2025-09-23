@@ -30,6 +30,21 @@ in {
     unstable.google-chrome
     unstable.firefox
     unstable.slack
+
+    unstable.libreoffice-fresh
+    unstable.hunspell
+    unstable.hunspellDicts.en_US
+    unstable.hunspellDicts.en_GB
+    unstable.hunspellDicts.es_ES
+    # Microsoft-compatible fonts for perfect .docx rendering
+    corefonts # Arial, Times New Roman, etc.
+    vistafonts # Calibri, Cambria, etc.
+    liberation_ttf # Metric-compatible alternatives
+    carlito # Calibri replacement
+    caladea # Cambria replacement
+    dejavu_fonts
+    noto-fonts
+
     #wpsoffice
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
@@ -92,9 +107,10 @@ in {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "Hack Nerd Font" "DejaVu Sans Mono" ];
-      sansSerif = [ "DejaVu Sans" "Liberation Sans" ];
-      serif = [ "DejaVu Serif" "Liberation Serif" ];
+      monospace =
+        [ "Hack Nerd Font" "DejaVu Sans Mono" "Liberation Mono" "Courier New" ];
+      sansSerif = [ "DejaVu Sans" "Liberation Sans" "Arial" ];
+      serif = [ "DejaVu Serif" "Liberation Serif" "Times New Roman" ];
     };
   };
 
@@ -103,6 +119,21 @@ in {
       $VERBOSE_ECHO "Rebuilding font cache..."
       $DRY_RUN_CMD ${pkgs.fontconfig}/bin/fc-cache -rf
     '';
+
+  # MIME associations - .docx files open with LibreOffice automatically
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" =
+        "libreoffice-writer.desktop";
+      "application/msword" = "libreoffice-writer.desktop";
+    };
+  };
+
+  # System integration settings
+  home.sessionVariables = {
+    SAL_USE_VCLPLUGIN = "gtk3"; # Better desktop integration
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
