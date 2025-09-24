@@ -134,6 +134,21 @@
     enableBashIntegration = true;
   };
 
+  home.file.".local/share/applications/claude-desktop.desktop".text = ''
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Claude Desktop
+    Comment=AI assistant by Anthropic
+    Exec=${
+      inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
+    }/bin/claude-desktop --disable-gpu --disable-gpu-sandbox --disable-web-security --disable-site-isolation-trials --disable-features=VizDisplayCompositor --no-sandbox --no-zygote %F
+    Icon=claude-desktop
+    StartupNotify=true
+    Categories=Office;Development;
+    StartupWMClass=Claude Desktop
+  '';
+
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
 
