@@ -29,7 +29,11 @@
     (unstable.python311.withPackages (
       ps: with ps; [
         pip
+        pip-audit
+        safety
+        wheel
         httpx
+        mcp
       ]
     ))
     unstable.uv
