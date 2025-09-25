@@ -70,6 +70,7 @@
     curl
     fd
     graphviz
+    unstable.ffmpeg
 
     shfmt
     tflint
