@@ -20,10 +20,12 @@
     iecs.url = "github:sestrella/iecs";
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";
-      url = "github:davidnbr/claude-desktop-linux-flake/bc43951f8409dd6e461a037b82ca4765b9f1f40d";
+      #url = "github:davidnbr/claude-desktop-linux-flake/bc43951f8409dd6e461a037b82ca4765b9f1f40d"; ## Workaround graphics with uv fix
+      url = "github:davidnbr/claude-desktop-linux-flake/8d2f7bf9a468d7bb4ec34c3aa717b65e948fc2c5"; # # Fixed graphics
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    #terramaid.url = "github:RoseSecurity/Terramaid";
   };
 
   nixConfig = {

@@ -145,9 +145,7 @@
     Type=Application
     Name=Claude Desktop
     Comment=AI assistant by Anthropic
-    Exec=${
-      inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
-    }/bin/claude-desktop --disable-gpu --disable-gpu-sandbox --disable-web-security --disable-site-isolation-trials --disable-features=VizDisplayCompositor --no-sandbox --no-zygote %F
+    Exec=${inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs}/bin/claude-desktop %F
     Icon=claude-desktop
     StartupNotify=true
     Categories=Office;Development;
