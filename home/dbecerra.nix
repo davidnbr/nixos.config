@@ -32,6 +32,9 @@ in {
     unstable.slack
 
     unstable.libreoffice-fresh
+    kdePackages.okular
+    pdfarranger
+    pdftk
     unstable.hunspell
     unstable.hunspellDicts.en_US
     unstable.hunspellDicts.es_ES
@@ -43,6 +46,11 @@ in {
     caladea # Cambria replacement
     dejavu_fonts
     noto-fonts
+
+    gimp
+    imagemagick
+    inkscape
+    krita
 
     #wpsoffice
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
@@ -126,6 +134,9 @@ in {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" =
         "libreoffice-writer.desktop";
       "application/msword" = "libreoffice-writer.desktop";
+      "application/pdf" = "org.kde.okular.desktop";
+      "image/png" = "org.gimp.GIMP.desktop";
+      "image/jpeg" = "org.gimp.GIMP.desktop";
     };
   };
 
