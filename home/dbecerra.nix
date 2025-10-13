@@ -39,6 +39,7 @@
     unstable.uv
     unstable.go
     unstable.nodejs_20
+    unstable.yarn
     unstable.ruby_3_4
     unstable.elixir_1_18
 
@@ -75,6 +76,7 @@
     fd
     graphviz
     unstable.ffmpeg
+    unstable.imagemagick
 
     shfmt
     tflint
@@ -98,7 +100,7 @@
     rustc
 
     # Language servers (LazyVim will find them)
-    #nil                # Nix LSP
+    nil # Nix LSP
     #lua-language-server # Lua LSP
     #nodePackages.typescript-language-server # JS/TS LSP
     #gopls              # Go LSP
