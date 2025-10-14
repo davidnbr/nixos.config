@@ -49,7 +49,7 @@
     unstable.gh
     unstable.act
     unstable.terraform
-    inputs.terraform-local
+    terraform-local
     unstable.terragrunt
     ansible
     ansible-lint
