@@ -53,6 +53,9 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+
+        terraform-local = pkgs.callPackage ./pkgs/terraform-local.nix { };
+
         overlays = [
           (final: prev: {
             unstable = import nixpkgs {

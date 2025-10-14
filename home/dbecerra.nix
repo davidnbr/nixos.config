@@ -49,6 +49,7 @@
     unstable.gh
     unstable.act
     unstable.terraform
+    inputs.terraform-local
     unstable.terragrunt
     ansible
     ansible-lint
@@ -139,6 +140,13 @@
     enable = true;
     nix-direnv.enable = true;
     enableBashIntegration = true;
+  };
+
+  # For terraform-local
+  programs.bash.shellAliases = {
+    localstack-start = "docker run -d -p 4566:4566 -p 4571:4571 --name localstack localstack/localstack";
+    localstack-stop = "docker stop localstack && docker rm localstack";
+    localstack-logs = "docker logs -f localstack";
   };
 
   home.file.".local/share/applications/claude-desktop.desktop".text = ''
