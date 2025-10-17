@@ -38,7 +38,8 @@
     ))
     unstable.uv
     unstable.go
-    unstable.nodejs_20
+    unstable.nodejs_22
+    unstable.volta
     unstable.yarn
     unstable.ruby_3_4
     unstable.elixir_1_18
