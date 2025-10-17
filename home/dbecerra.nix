@@ -26,7 +26,7 @@
     unstable.vscode
 
     # Languages and Runtimes
-    (unstable.python311.withPackages (
+    (unstable.python313.withPackages (
       ps: with ps; [
         pip
         pip-audit
