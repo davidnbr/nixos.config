@@ -21,7 +21,6 @@
 
     devenv = {
       url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     oh-my-tmux = {
@@ -38,8 +37,8 @@
 
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";
-      url =
-        "github:davidnbr/claude-desktop-linux-flake/9a573471258aca69020ebad798cbe3ed736bd3a5";
+      #url = "github:davidnbr/claude-desktop-linux-flake/9a573471258aca69020ebad798cbe3ed736bd3a5"; ## Fixed graphics
+      url = "github:davidnbr/claude-desktop-linux-flake/43b96c5233a39fdb537bec75dae83f4dafe1cd98"; ## Fixed python3 tkinter
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
