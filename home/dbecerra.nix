@@ -54,7 +54,7 @@
     unstable.terragrunt
     ansible
     ansible-lint
-    unstable.aws-vault
+    unstable.nginx
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     # Development Tools
@@ -85,7 +85,9 @@
     tfsec
     shellcheck
     nixfmt
+    unstable.hadolint
 
+    unstable.aws-vault
     unstable.tmux
     unstable.starship
     unstable.neovim
