@@ -87,7 +87,9 @@
     nixfmt
     unstable.hadolint
 
+    unstable.awscli2
     unstable.aws-vault
+    unstable.azure-cli
     unstable.tmux
     unstable.starship
     unstable.neovim
