@@ -90,6 +90,17 @@
     unstable.awscli2
     unstable.aws-vault
     unstable.azure-cli
+    unstable.azure-cli-extensions.containerapp
+    unstable.azure-cli-extensions.ad
+    unstable.azure-cli-extensions.vme
+    unstable.azure-cli-extensions.fzf
+    unstable.azure-cli-extensions.alb
+    unstable.azure-cli-extensions.portal
+    unstable.azure-cli-extensions.terraform
+    unstable.azure-cli-extensions.azure-devops
+    unstable.azure-cli-extensions.rdbms-connect
+    unstable.azure-cli-extensions.log-analytics
+    unstable.azure-cli-extensions.network-analytics
     unstable.tmux
     unstable.starship
     unstable.neovim
