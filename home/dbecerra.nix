@@ -117,6 +117,7 @@ in {
     unstable.pre-commit
     unstable.tldr
     nix-prefetch-github
+    nix-prefetch-git
     inputs.iecs.packages.${pkgs.system}.default
     inputs.devenv.packages.${pkgs.system}.devenv
     unstable.claude-code

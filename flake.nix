@@ -36,7 +36,7 @@
       #url = "github:k3d3/claude-desktop-linux-flake";
       #url = "github:davidnbr/claude-desktop-linux-flake/9a573471258aca69020ebad798cbe3ed736bd3a5"; ## Fixed graphics
       url =
-        "github:davidnbr/claude-desktop-linux-flake/43b96c5233a39fdb537bec75dae83f4dafe1cd98"; # # Fixed python3 tkinter
+        "github:davidnbr/claude-desktop-linux-flake/e11a21013f35dd44a1b88e82b41b4e39abbc00d4"; # # Fixed python3 tkinter
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
