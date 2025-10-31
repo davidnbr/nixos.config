@@ -5,62 +5,6 @@
   lib,
   ...
 }:
-
-let
-  python312WithPip = pkgs.stable.python312.withPackages (ps: with ps; [
-    pip
-    virtualenv
-    setuptools
-    wheel
-  ]);
-
-  azure-cli-patched = pkgs.writeShellScriptBin "az-real" ''
-    export PATH="${python312WithPip}/bin:$PATH"
-
-    exec ${pkgs.stable.azure-cli}/bin/az "$@"
-  '';
-
-  azure-cli-fhs = pkgs.buildFHSEnv {
-    name = "az";
-
-    targetPkgs = pkgs: with pkgs; [
-      azure-cli-patched
-      python312WithPip
-
-      gcc
-      stdenv.cc.cc.lib
-      zlib
-      openssl
-      libffi
-      git
-    ];
-
-    profile = ''
-      export AZURE_EXTENSION_DIR="$HOME/.azure/cliextensions"
-      export PIP_USER=1
-
-      # Critical: Ensure our Python with pip is found
-      export PATH="${python312WithPip}/bin:$PATH"
-
-      # Create a wrapper for python3.12 that Azure CLI will find
-      mkdir -p /tmp/az-python-wrapper
-      cat > /tmp/az-python-wrapper/python3.12 << 'EOF'
-#!/bin/sh
-exec ${python312WithPip}/bin/python3.12 "$@"
-EOF
-      chmod +x /tmp/az-python-wrapper/python3.12
-
-      # Put the wrapper FIRST in PATH so subprocess calls find it
-      export PATH="/tmp/az-python-wrapper:$PATH"
-    '';
-
-    runScript = "az";
-
-    meta = {
-      description = "Azure CLI with FHS environment for extension support";
-    };
-  };
-in
 {
   home.username = "dbecerra";
   home.homeDirectory = "/home/dbecerra";
@@ -78,10 +22,10 @@ in
     nerd-fonts.hack
 
     # GUI Applications
-    unstable.vscode
+    vscode
 
     # Languages and Runtimes
-    (unstable.python313.withPackages (
+    (python313.withPackages (
       ps: with ps; [
         pip
         pip-audit
@@ -91,25 +35,25 @@ in
         mcp
       ]
     ))
-    unstable.uv
-    unstable.go
-    unstable.nodejs_22
-    unstable.volta
-    unstable.yarn
-    unstable.ruby_3_4
-    unstable.elixir_1_18
+    uv
+    go
+    nodejs_22
+    volta
+    yarn
+    ruby_3_4
+    elixir_1_18
 
     # DevOps Tools
-    unstable.awscli2
-    unstable.ssm-session-manager-plugin
-    unstable.gh
-    unstable.act
-    unstable.terraform
+    awscli2
+    ssm-session-manager-plugin
+    gh
+    act
+    terraform
     terraform-local
-    unstable.terragrunt
-    ansible
-    ansible-lint
-    unstable.nginx
+    terragrunt
+    stable.ansible
+    stable.ansible-lint
+    nginx
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     # Development Tools
@@ -132,19 +76,18 @@ in
     curl
     fd
     graphviz
-    unstable.ffmpeg
-    unstable.imagemagick
+    ffmpeg
+    imagemagick
 
-    shfmt
-    tflint
-    tfsec
-    shellcheck
-    nixfmt
-    unstable.hadolint
+    stable.shfmt
+    stable.tflint
+    stable.tfsec
+    stable.shellcheck
+    stable.nixfmt
+    hadolint
 
-    unstable.awscli2
-    unstable.aws-vault
-    azure-cli-fhs
+    awscli2
+    aws-vault
     #unstable.azure-cli
     #unstable.azure-cli-extensions.containerapp
     #unstable.azure-cli-extensions.ad
@@ -157,20 +100,20 @@ in
     #unstable.azure-cli-extensions.rdbms-connect
     #unstable.azure-cli-extensions.log-analytics
     #unstable.azure-cli-extensions.network-analytics
-    unstable.tmux
-    unstable.starship
-    unstable.neovim
-    unstable.pre-commit
-    unstable.tldr
-    nix-prefetch-github
+    tmux
+    starship
+    neovim
+    pre-commit
+    tldr
+    stable.nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
     inputs.iecs.packages.${system}.default
-    unstable.claude-code
+    claude-code
     asdf2nix-wrapper
 
     # Build tools for Mason LSPs
-    cargo
-    rustc
+    stable.cargo
+    stable.rustc
 
     # Language servers (LazyVim will find them)
     nil # Nix LSP
