@@ -6,46 +6,61 @@
   ...
 }:
 
-#let
-#  azure-cli-working = pkgs.azure-cli.overrideAttrs (oldAttrs: rec {
-#    version = "2.76.0";
-#    # Note: This is a temporary fix until nixpkgs updates
-#  });
-#
-#  azure-cli-fhs = pkgs.buildFHSEnv {
-#    name = "az";
-#
-#    targetPkgs = pkgs: with pkgs; [
-#      #unstable.azure-cli          # Base Azure CLI
-#      azure-cli-working
-#      unstable.python313            # Python runtime
-#      unstable.python313Packages.pip
-#      unstable.python313Packages.virtualenv
-#
-#      unstable.gcc
-#      unstable.stdenv.cc.cc.lib
-#      unstable.zlib
-#      unstable.openssl
-#      unstable.libffi
-#      unstable.git
-#      unstable.curl
-#      unstable.wget
-#    ];
-#
-#    # Profile script - runs when entering the environment
-#    # Sets up extension directory in user's home
-#    profile = ''
-#      export AZURE_EXTENSION_DIR="$HOME/.azure/cliextensions"
-#      export PIP_USER=1
-#    '';
-#
-#    runScript = "az";
-#
-#    meta = {
-#      description = "Azure CLI with FHS environment for extension support";
-#    };
-#  };
-#in
+let
+  python312WithPip = pkgs.stable.python312.withPackages (ps: with ps; [
+    pip
+    virtualenv
+    setuptools
+    wheel
+  ]);
+
+  azure-cli-patched = pkgs.writeShellScriptBin "az-real" ''
+    export PATH="${python312WithPip}/bin:$PATH"
+
+    exec ${pkgs.stable.azure-cli}/bin/az "$@"
+  '';
+
+  azure-cli-fhs = pkgs.buildFHSEnv {
+    name = "az";
+
+    targetPkgs = pkgs: with pkgs; [
+      azure-cli-patched
+      python312WithPip
+
+      gcc
+      stdenv.cc.cc.lib
+      zlib
+      openssl
+      libffi
+      git
+    ];
+
+    profile = ''
+      export AZURE_EXTENSION_DIR="$HOME/.azure/cliextensions"
+      export PIP_USER=1
+
+      # Critical: Ensure our Python with pip is found
+      export PATH="${python312WithPip}/bin:$PATH"
+
+      # Create a wrapper for python3.12 that Azure CLI will find
+      mkdir -p /tmp/az-python-wrapper
+      cat > /tmp/az-python-wrapper/python3.12 << 'EOF'
+#!/bin/sh
+exec ${python312WithPip}/bin/python3.12 "$@"
+EOF
+      chmod +x /tmp/az-python-wrapper/python3.12
+
+      # Put the wrapper FIRST in PATH so subprocess calls find it
+      export PATH="/tmp/az-python-wrapper:$PATH"
+    '';
+
+    runScript = "az";
+
+    meta = {
+      description = "Azure CLI with FHS environment for extension support";
+    };
+  };
+in
 {
   home.username = "dbecerra";
   home.homeDirectory = "/home/dbecerra";
@@ -129,18 +144,19 @@
 
     unstable.awscli2
     unstable.aws-vault
-    unstable.azure-cli
-    unstable.azure-cli-extensions.containerapp
-    unstable.azure-cli-extensions.ad
-    unstable.azure-cli-extensions.vme
-    unstable.azure-cli-extensions.fzf
-    unstable.azure-cli-extensions.alb
-    unstable.azure-cli-extensions.portal
-    unstable.azure-cli-extensions.terraform
-    unstable.azure-cli-extensions.azure-devops
-    unstable.azure-cli-extensions.rdbms-connect
-    unstable.azure-cli-extensions.log-analytics
-    unstable.azure-cli-extensions.network-analytics
+    azure-cli-fhs
+    #unstable.azure-cli
+    #unstable.azure-cli-extensions.containerapp
+    #unstable.azure-cli-extensions.ad
+    #unstable.azure-cli-extensions.vme
+    #unstable.azure-cli-extensions.fzf
+    #unstable.azure-cli-extensions.alb
+    #unstable.azure-cli-extensions.portal
+    #unstable.azure-cli-extensions.terraform
+    #unstable.azure-cli-extensions.azure-devops
+    #unstable.azure-cli-extensions.rdbms-connect
+    #unstable.azure-cli-extensions.log-analytics
+    #unstable.azure-cli-extensions.network-analytics
     unstable.tmux
     unstable.starship
     unstable.neovim
