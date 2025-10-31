@@ -6,6 +6,46 @@
   ...
 }:
 
+#let
+#  azure-cli-working = pkgs.azure-cli.overrideAttrs (oldAttrs: rec {
+#    version = "2.76.0";
+#    # Note: This is a temporary fix until nixpkgs updates
+#  });
+#
+#  azure-cli-fhs = pkgs.buildFHSEnv {
+#    name = "az";
+#
+#    targetPkgs = pkgs: with pkgs; [
+#      #unstable.azure-cli          # Base Azure CLI
+#      azure-cli-working
+#      unstable.python313            # Python runtime
+#      unstable.python313Packages.pip
+#      unstable.python313Packages.virtualenv
+#
+#      unstable.gcc
+#      unstable.stdenv.cc.cc.lib
+#      unstable.zlib
+#      unstable.openssl
+#      unstable.libffi
+#      unstable.git
+#      unstable.curl
+#      unstable.wget
+#    ];
+#
+#    # Profile script - runs when entering the environment
+#    # Sets up extension directory in user's home
+#    profile = ''
+#      export AZURE_EXTENSION_DIR="$HOME/.azure/cliextensions"
+#      export PIP_USER=1
+#    '';
+#
+#    runScript = "az";
+#
+#    meta = {
+#      description = "Azure CLI with FHS environment for extension support";
+#    };
+#  };
+#in
 {
   home.username = "dbecerra";
   home.homeDirectory = "/home/dbecerra";
