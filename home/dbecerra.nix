@@ -180,6 +180,9 @@
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
 
+  # Neovim configuration
+  home.file.".config/nvim/lua/plugins".source = ./config/nvim/plugins;
+
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
