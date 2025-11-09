@@ -84,6 +84,7 @@ in {
     unstable.act
     unstable.terraform
     unstable.terragrunt
+    unstable.azure-cli
     ansible
     ansible-lint
     unstable.aws-vault
