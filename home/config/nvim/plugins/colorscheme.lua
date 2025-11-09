@@ -4,58 +4,9 @@ return {
     "olimorris/onedarkpro.nvim",
     priority = 1000, -- Ensure it loads first
     opts = {
-      colors = {}, -- Override default colors
-      highlights = {
-        -- Better cursor line visibility
-        CursorLine = { bg = "${bg2}" },
-        CursorLineNr = { fg = "${purple}", bg = "${bg2}", bold = true },
-
-        -- Better visual selection
-        Visual = { bg = "${selection}" },
-
-        -- Better search highlighting
-        Search = { bg = "${yellow}", fg = "${bg}" },
-        IncSearch = { bg = "${orange}", fg = "${bg}" },
-        CurSearch = { bg = "${orange}", fg = "${bg}", bold = true },
-
-        -- Better window separator
-        WinSeparator = { fg = "${gray}", bold = false },
-        VertSplit = { fg = "${gray}" },
-
-        -- Dimmed inactive windows (works with focus.nvim)
-        NormalNC = { bg = "${bg}", fg = "${gray}" },
-
-        -- Better floating windows
-        NormalFloat = { bg = "${bg2}" },
-        FloatBorder = { fg = "${cyan}", bg = "${bg2}" },
-
-        -- Better completion menu
-        Pmenu = { bg = "${bg2}" },
-        PmenuSel = { bg = "${selection}", bold = true },
-        PmenuBorder = { fg = "${cyan}", bg = "${bg2}" },
-
-        -- Better status line
-        StatusLine = { bg = "${bg2}" },
-        StatusLineNC = { bg = "${bg}", fg = "${gray}" },
-
-        -- Better tab line / bufferline
-        TabLine = { bg = "${bg}", fg = "${gray}" },
-        TabLineFill = { bg = "${bg}" },
-        TabLineSel = { bg = "${bg2}", fg = "${fg}", bold = true },
-
-        -- Better Neo-tree
-        NeoTreeNormal = { bg = "${bg}" },
-        NeoTreeNormalNC = { bg = "${bg}" },
-        NeoTreeCursorLine = { bg = "${bg2}" },
-
-        -- Illuminate - word highlighting under cursor
-        IlluminatedWordText = { bg = "${bg2}", underline = true },
-        IlluminatedWordRead = { bg = "${bg2}", underline = true },
-        IlluminatedWordWrite = { bg = "${bg2}", underline = true },
-      },
       options = {
         cursorline = true,
-        transparency = false, -- Set to true if you want transparent background
+        transparency = false,
         terminal_colors = true,
         lualine_transparency = false,
         highlight_inactive_windows = true,
@@ -71,6 +22,36 @@ return {
     config = function(_, opts)
       require("onedarkpro").setup(opts)
       vim.cmd("colorscheme onedark")
+
+      -- Apply custom highlights after colorscheme loads
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "onedark",
+        callback = function()
+          -- Better cursor line visibility
+          vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#c678dd", bold = true })
+
+          -- Better search highlighting
+          vim.api.nvim_set_hl(0, "Search", { bg = "#e5c07b", fg = "#282c34" })
+          vim.api.nvim_set_hl(0, "IncSearch", { bg = "#d19a66", fg = "#282c34" })
+
+          -- Better window separator
+          vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#4b5263" })
+
+          -- Dimmed inactive windows (subtle)
+          vim.api.nvim_set_hl(0, "NormalNC", { bg = "#282c34", fg = "#5c6370" })
+
+          -- Better floating windows
+          vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#56b6c2", bg = "#2c323c" })
+
+          -- Illuminate - word highlighting under cursor
+          vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#3e4451", underline = false })
+          vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#3e4451", underline = false })
+          vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#3e4451", underline = false })
+        end,
+      })
+
+      -- Apply immediately
+      vim.cmd("doautocmd ColorScheme onedark")
     end,
   },
   {
