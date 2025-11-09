@@ -62,9 +62,10 @@ local function get_linters()
   end
 
   -- Add mypy as a type checker (runs alongside the main linter)
-  if has_tool("mypy") then
-    table.insert(linters, "mypy")
-  end
+  -- DISABLED: Run mypy manually when needed (mypy --config-file=mypy.ini .)
+  -- if has_tool("mypy") then
+  --   table.insert(linters, "mypy")
+  -- end
 
   return linters
 end
@@ -277,12 +278,14 @@ return {
             },
           },
           pylint = {
-            cmd = "pylint",
+            cmd = "sh",
             stdin = false,
             args = function()
-              -- Get the current file being linted
               local filename = vim.api.nvim_buf_get_name(0)
-              local args = {
+              local root = find_project_root(filename)
+
+              -- Build pylint args
+              local pylint_args = {
                 "--output-format=text",
                 "--score=no",
                 "--msg-template='{path}:{line}:{column}: {msg_id} {msg} ({symbol})'",
@@ -292,26 +295,30 @@ return {
               local config_names = { ".pylintrc", "pylintrc", "pyproject.toml", "setup.cfg" }
               local pylintrc = find_config(filename, config_names, validate_pylint_config)
               if pylintrc then
-                table.insert(args, "--rcfile=" .. pylintrc)
+                table.insert(pylint_args, "--rcfile=" .. pylintrc)
               end
 
-              table.insert(args, filename)
-              return args
+              table.insert(pylint_args, filename)
+
+              -- Create a shell command that runs from the project root
+              local cmd = string.format("cd %s && pylint %s",
+                vim.fn.shellescape(root),
+                table.concat(vim.tbl_map(vim.fn.shellescape, pylint_args), " "))
+
+              return { "-c", cmd }
             end,
-            -- Set working directory to project root (critical for import resolution)
-            cwd = function()
-              local filename = vim.api.nvim_buf_get_name(0)
-              -- Find the project root (where .pylintrc or .git is)
-              local root = find_project_root(filename)
-              return root
-            end,
+            stream = "stdout",
+            ignore_exitcode = true,
           },
           mypy = {
-            cmd = "mypy",
+            cmd = "sh",
             stdin = false,
             args = function()
               local filename = vim.api.nvim_buf_get_name(0)
-              local args = {
+              local root = find_project_root(filename)
+
+              -- Build mypy args
+              local mypy_args = {
                 "--show-column-numbers",
                 "--show-error-codes",
                 "--no-error-summary",
@@ -322,18 +329,20 @@ return {
               local config_names = { "mypy.ini", ".mypy.ini", "pyproject.toml", "setup.cfg" }
               local mypy_config = find_config(filename, config_names, validate_mypy_config)
               if mypy_config then
-                table.insert(args, "--config-file=" .. mypy_config)
+                table.insert(mypy_args, "--config-file=" .. mypy_config)
               end
 
-              table.insert(args, filename)
-              return args
+              table.insert(mypy_args, filename)
+
+              -- Create a shell command that runs from the project root
+              local cmd = string.format("cd %s && mypy %s",
+                vim.fn.shellescape(root),
+                table.concat(vim.tbl_map(vim.fn.shellescape, mypy_args), " "))
+
+              return { "-c", cmd }
             end,
-            -- Set working directory to project root (critical for import resolution)
-            cwd = function()
-              local filename = vim.api.nvim_buf_get_name(0)
-              local root = find_project_root(filename)
-              return root
-            end,
+            stream = "stdout",
+            ignore_exitcode = true,
           },
           flake8 = {
             cmd = "flake8",
