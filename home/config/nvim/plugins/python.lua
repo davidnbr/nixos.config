@@ -298,6 +298,13 @@ return {
               table.insert(args, filename)
               return args
             end,
+            -- Set working directory to project root (critical for import resolution)
+            cwd = function()
+              local filename = vim.api.nvim_buf_get_name(0)
+              -- Find the project root (where .pylintrc or .git is)
+              local root = find_project_root(filename)
+              return root
+            end,
           },
           mypy = {
             cmd = "mypy",
@@ -320,6 +327,12 @@ return {
 
               table.insert(args, filename)
               return args
+            end,
+            -- Set working directory to project root (critical for import resolution)
+            cwd = function()
+              local filename = vim.api.nvim_buf_get_name(0)
+              local root = find_project_root(filename)
+              return root
             end,
           },
           flake8 = {
