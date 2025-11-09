@@ -6,14 +6,7 @@ local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 -- Buffer Management
--- Smart quit (close buffer first, then vim if last buffer)
-keymap.set("n", "<leader>q", "<cmd>SmartQuit<cr>", { desc = "Smart quit (close buffer or vim)" })
-
--- Close current buffer
-keymap.set("n", "<leader>bd", function()
-  require("mini.bufremove").delete(0, false)
-end, { desc = "Delete buffer" })
-
+-- Note: <leader>q for smart quit is defined in bufferline.lua
 -- Close all buffers except current
 keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", { desc = "Delete other buffers" })
 
