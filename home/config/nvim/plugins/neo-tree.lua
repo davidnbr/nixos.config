@@ -28,6 +28,67 @@ return {
     },
     opts = {
       close_if_last_window = true,
+      popup_border_style = "rounded",
+      enable_git_status = true,
+      enable_diagnostics = true,
+
+      -- Better icons and visuals
+      default_component_configs = {
+        container = {
+          enable_character_fade = true,
+        },
+        indent = {
+          indent_size = 2,
+          padding = 1,
+          with_markers = true,
+          indent_marker = "│",
+          last_indent_marker = "└",
+          highlight = "NeoTreeIndentMarker",
+        },
+        icon = {
+          folder_closed = "",
+          folder_open = "",
+          folder_empty = "",
+          default = "",
+          highlight = "NeoTreeFileIcon",
+        },
+        modified = {
+          symbol = "[+]",
+          highlight = "NeoTreeModified",
+        },
+        name = {
+          trailing_slash = false,
+          use_git_status_colors = true,
+          highlight = "NeoTreeFileName",
+        },
+        git_status = {
+          symbols = {
+            -- Change type
+            added     = "✚",
+            modified  = "",
+            deleted   = "✖",
+            renamed   = "󰁕",
+            -- Status type
+            untracked = "",
+            ignored   = "",
+            unstaged  = "󰄱",
+            staged    = "",
+            conflict  = "",
+          },
+        },
+        file_size = {
+          enabled = true,
+          required_width = 64,
+        },
+        type = {
+          enabled = true,
+          required_width = 122,
+        },
+        last_modified = {
+          enabled = true,
+          required_width = 88,
+        },
+      },
 
       filesystem = {
         filtered_items = {
@@ -40,11 +101,27 @@ return {
         never_show = {},
         follow_current_file = {
           enabled = true,
+          leave_dirs_open = false,
         },
+        group_empty_dirs = false,
+        use_libuv_file_watcher = true,
       },
+
       window = {
         position = "left",
         width = 20,
+        mapping_options = {
+          noremap = true,
+          nowait = true,
+        },
+        mappings = {
+          ["<space>"] = "none",
+          ["l"] = "open",
+          ["h"] = "close_node",
+          ["<cr>"] = "open",
+          ["S"] = "split_with_window_picker",
+          ["s"] = "vsplit_with_window_picker",
+        },
       },
     },
   },
