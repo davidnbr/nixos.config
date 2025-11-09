@@ -70,6 +70,7 @@
     stable.shellcheck
     stable.nixfmt
     stable.statix # Nix linter
+    stable.sqlfluff
     hadolint
 
     awscli2
