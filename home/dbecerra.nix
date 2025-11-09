@@ -182,6 +182,7 @@
 
   # Neovim configuration
   home.file.".config/nvim/lua/plugins".source = ./config/nvim/plugins;
+  home.file.".config/nvim/lua/config".source = ./config/nvim/config;
 
   programs.zoxide = {
     enable = true;
