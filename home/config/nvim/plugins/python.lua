@@ -10,7 +10,7 @@ local function has_tool(tool_name)
   local check_files = {
     root .. "/pyproject.toml",
     root .. "/requirements.txt",
-    root .. "/requirements-dev.txt",
+    root .. "/requirements/dev.txt",
     root .. "/setup.py",
   }
 

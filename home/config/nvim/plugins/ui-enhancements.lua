@@ -5,7 +5,6 @@ return {
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
     opts = {
       lsp = {
@@ -56,10 +55,9 @@ return {
         view_history = "messages",
         view_search = "virtualtext",
       },
-      -- Notifications in corner
+      -- IMPORTANT: Disable noice's notify to avoid conflicts with LazyVim's nvim-notify
       notify = {
-        enabled = true,
-        view = "notify",
+        enabled = false,
       },
       -- Better popups
       popupmenu = {
@@ -73,6 +71,37 @@ return {
         inc_rename = false,
         lsp_doc_border = true, -- Borders on LSP docs
       },
+      routes = {
+        {
+          -- Filter out "written" messages
+          filter = {
+            event = "msg_show",
+            kind = "",
+            find = "written",
+          },
+          opts = { skip = true },
+        },
+      },
+    },
+  },
+
+  -- Configure nvim-notify (LazyVim already has it, just customize)
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      timeout = 3000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.75)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { zindex = 100 })
+      end,
+      background_colour = "#000000",
+      render = "compact",
+      stages = "fade_in_slide_out",
     },
   },
 
