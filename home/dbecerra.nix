@@ -68,7 +68,7 @@
     stable.tflint
     stable.tfsec
     stable.shellcheck
-    stable.nixfmt
+    nixfmt-rfc-style
     stable.statix # Nix linter
     stable.sqlfluff
     hadolint

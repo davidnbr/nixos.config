@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd ~/nixos-config
+cd ~/nixos.config
 echo "Updating flake inputs..."
 nix flake update
 git add flake.lock

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd ~/nixos-config
+cd ~/nixos.config
 git add .
 echo "Testing system configuration..."
 sudo nixos-rebuild test --flake .#$(hostname)

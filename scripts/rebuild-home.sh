@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd ~/nixos-config
+cd ~/nixos.config
 git add .
 echo "Applying home manager configuration..."
 home-manager switch --flake .#$(whoami)
