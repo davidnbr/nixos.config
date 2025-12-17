@@ -395,7 +395,7 @@ in {
           opts.formatters_by_ft.toml = { "taplo" }
           opts.formatters_by_ft.sh = { "shfmt" }
           opts.formatters_by_ft.bash = { "shfmt" }
-          opts.formatters_by_ft.nix = { "nixfmt-classic" }
+          opts.formatters_by_ft.nix = { "nixfmt-rfc-style" }
           
           return opts
         end,

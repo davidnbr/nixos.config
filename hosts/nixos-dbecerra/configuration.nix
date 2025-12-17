@@ -139,7 +139,6 @@
     pciutils
     vim
     wget
-    git
     htop
     btop
     killall
@@ -281,6 +280,15 @@
   #  toggle-tiled-left=['<Super>Left']
   #  toggle-tiled-right=['<Super>Right']
   #'';
+  #
+  programs.git = {
+    enable = true;
+    config = {
+      push = {
+        autoSetupRemote = true;
+      };
+    };
+  };
 
   fonts.packages = with pkgs; [
     ubuntu_font_family
