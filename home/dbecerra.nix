@@ -124,6 +124,7 @@ in {
     unstable.claude-code
     asdf2nix-wrapper
     gemini-cli
+    fabric-ai
 
     # Build tools for LSPs
     cargo
