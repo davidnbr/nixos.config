@@ -12,6 +12,7 @@ This is a NixOS configuration repository using Home Manager for user environment
 - **User Configuration**: `home/dbecerra.nix` - Main Home Manager configuration with packages and settings
 - **Shell Prompt**: `home/starship.nix` - Starship prompt configuration with Catppuccin theming
 - **Code Quality**: `home/pre-commit-config.yaml` - Pre-commit hooks for various linters and security checks
+- **Python Tooling**: `pyproject.toml` - Python project configuration including linting and formatting tools
 
 ## Common Commands
 
@@ -72,6 +73,37 @@ nix flake show
 - Tmux configuration sourced from oh-my-tmux input
 - Starship uses Catppuccin Mocha color scheme
 - Pre-commit hooks cover Terraform, shell scripts, Docker, and security scanning
+
+## Python Development
+
+### Python Tooling Configuration
+This repository uses `pyproject.toml` to configure Python development tools. Check this file to determine which linting and formatting tools are configured for Python projects.
+
+### Required Python Tools
+The Python development environment requires the following tools:
+- **mypy**: Static type checker for Python
+- **pylint**: Comprehensive Python linter for code quality
+- **black**: Opinionated code formatter for consistent style
+
+### Checking Python Tool Configuration
+```bash
+# View pyproject.toml to see configured tools
+cat pyproject.toml
+
+# Check which tools are available
+which mypy pylint black
+
+# Run linters manually
+mypy .
+pylint **/*.py
+black --check .
+```
+
+### Python Tool Usage
+When working with Python code in this repository:
+1. Ensure pyproject.toml exists and contains configurations for mypy, pylint, and black
+2. Pre-commit hooks should automatically run these tools before commits
+3. Tools can be run manually for immediate feedback during development
 
 ## Nix Development Patterns
 
