@@ -1,4 +1,11 @@
-{ config, pkgs, inputs, lib, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
+{
   home.username = "dbecerra";
   home.homeDirectory = "/home/dbecerra";
   home.stateVersion = "25.05";
@@ -18,8 +25,16 @@
     vscode
 
     # Languages and Runtimes
-    (python313.withPackages
-      (ps: with ps; [ pip pip-audit safety wheel httpx mcp ]))
+    (python313.withPackages (
+      ps: with ps; [
+        pip
+        pip-audit
+        safety
+        wheel
+        httpx
+        mcp
+      ]
+    ))
     uv
     go
     nodejs_22
@@ -117,9 +132,18 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "Hack Nerd Font" "DejaVu Sans Mono" ];
-      sansSerif = [ "DejaVu Sans" "Liberation Sans" ];
-      serif = [ "DejaVu Serif" "Liberation Serif" ];
+      monospace = [
+        "Hack Nerd Font"
+        "DejaVu Sans Mono"
+      ];
+      sansSerif = [
+        "DejaVu Sans"
+        "Liberation Sans"
+      ];
+      serif = [
+        "DejaVu Serif"
+        "Liberation Serif"
+      ];
     };
   };
 
@@ -137,8 +161,7 @@
 
   # For terraform-local
   programs.bash.shellAliases = {
-    localstack-start =
-      "docker run -d -p 4566:4566 -p 4571:4571 --name localstack localstack/localstack";
+    localstack-start = "docker run -d -p 4566:4566 -p 4571:4571 --name localstack localstack/localstack";
     localstack-stop = "docker stop localstack && docker rm localstack";
     localstack-logs = "docker logs -f localstack";
   };
@@ -149,9 +172,7 @@
     Type=Application
     Name=Claude Desktop
     Comment=AI assistant by Anthropic
-    Exec=${
-      inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
-    }/bin/claude-desktop %F
+    Exec=${inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs}/bin/claude-desktop %F
     Icon=claude-desktop
     StartupNotify=true
     Categories=Office;Development;
