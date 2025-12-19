@@ -219,14 +219,8 @@ in {
     recursive = true;
   };
 
-  # Copy custom plugin configurations from home/config/nvim/
-  home.file.".config/nvim/lua/plugins/dap.lua".source = ./config/nvim/lua/plugins/dap.lua;
-  home.file.".config/nvim/lua/plugins/formatters.lua".source = ./config/nvim/lua/plugins/formatters.lua;
-  home.file.".config/nvim/lua/plugins/go.lua".source = ./config/nvim/lua/plugins/go.lua;
-  home.file.".config/nvim/lua/plugins/linters.lua".source = ./config/nvim/lua/plugins/linters.lua;
-  home.file.".config/nvim/lua/plugins/lsp-config.lua".source = ./config/nvim/lua/plugins/lsp-config.lua;
-  home.file.".config/nvim/lua/plugins/python.lua".source = ./config/nvim/lua/plugins/python.lua;
-  home.file.".config/nvim/lua/plugins/treesitter.lua".source = ./config/nvim/lua/plugins/treesitter.lua;
+  # Add custom plugin configurations here if needed
+  # Example: home.file.".config/nvim/lua/plugins/custom.lua".source = ./config/nvim/custom.lua;
 
   programs.ssh = {
     enable = true;
