@@ -130,6 +130,8 @@ in {
     asdf2nix-wrapper
     pkgs-unstable.gemini-cli
     pkgs-unstable.fabric-ai
+    pkgs-unstable.neovim
+
 
     # Build tools for LSPs
     cargo
@@ -209,7 +211,21 @@ in {
 
   home.file.".bashrc".source = ./config/bashrc;
 
+  # LazyVim configuration
+  # Copy LazyVim starter as the base config
+  home.file.".config/nvim" = {
+    source = inputs.lazy-nvim;
+    recursive = true;
+  };
 
+  # Copy custom plugin configurations from home/config/nvim/
+  home.file.".config/nvim/lua/plugins/dap.lua".source = ./config/nvim/lua/plugins/dap.lua;
+  home.file.".config/nvim/lua/plugins/formatters.lua".source = ./config/nvim/lua/plugins/formatters.lua;
+  home.file.".config/nvim/lua/plugins/go.lua".source = ./config/nvim/lua/plugins/go.lua;
+  home.file.".config/nvim/lua/plugins/linters.lua".source = ./config/nvim/lua/plugins/linters.lua;
+  home.file.".config/nvim/lua/plugins/lsp-config.lua".source = ./config/nvim/lua/plugins/lsp-config.lua;
+  home.file.".config/nvim/lua/plugins/python.lua".source = ./config/nvim/lua/plugins/python.lua;
+  home.file.".config/nvim/lua/plugins/treesitter.lua".source = ./config/nvim/lua/plugins/treesitter.lua;
 
   programs.ssh = {
     enable = true;
@@ -236,101 +252,9 @@ in {
     extraOptions = [ "--group-directories-first" "--header" ];
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
 
-    extraPackages = with pkgs-unstable;
-      [
-        git
-        gcc
-        nodejs
-        python3
-        ruby
 
-        # Core LSP servers based on your extras
-        nil # Nix LSP (lang.nix)
-        lua-language-server # Lua LSP
-        nodePackages.typescript-language-server # TypeScript/JavaScript LSP
-        nodePackages.bash-language-server # Bash LSP
 
-        # Language-specific LSP servers for your extras
-
-        cmake-language-server # CMake (lang.cmake)
-        dockerfile-language-server # Docker (lang.docker)
-        gopls # Go (lang.go)
-        nodePackages.vscode-json-languageserver # JSON (lang.json)
-        marksman # Markdown (lang.markdown)
-        pyright # Python (lang.python)
-        terraform-ls # Terraform (lang.terraform)
-        taplo # TOML (lang.toml)
-        vue-language-server # Vue (lang.vue)
-        yaml-language-server # YAML (lang.yaml)
-
-        # Additional LSP servers
-        jsonnet-language-server # For various config files
-        helm-ls # Helm charts
-
-        # Formatters and linters
-        black # Python formatter
-        isort # Python import sorter
-        ruff # Python linter/formatter
-        gofumpt # Go formatter
-        gotools # Go tools (goimports, etc)
-        golangci-lint # Go linter
-        stylua # Lua formatter
-        nodePackages.prettier # General formatter (JS/TS/JSON/MD/YAML)
-        nodePackages.eslint # JavaScript/TypeScript linter
-        rubocop # Ruby linter/formatter
-        shfmt # Shell script formatter
-        shellcheck # Shell script linter
-        hadolint # Dockerfile linter
-        tflint # Terraform linter
-        tfsec # Terraform security scanner
-        yamllint # YAML linter
-        ansible-lint # Ansible linter
-        markdownlint-cli2 # Markdown linter
-
-        # Tools for telescope and other features
-        ripgrep # For telescope
-        fd # For telescope
-        fzf # Fuzzy finder
-        tree-sitter # For treesitter
-
-        # Git tools (lang.git extra)
-        gh # GitHub CLI
-        glab # GitLab CLI
-        delta # Git diff tool
-        lazygit # Git TUI (util.gitui)
-
-        # Additional useful tools
-        curl
-        wget
-        unzip
-        gnutar
-        gzip
-        jq # JSON processor
-        yq # YAML processor
-      ] ++ pkgs.lib.optionals (sqlls != null)
-      [ sqlls ]; # SQL (lang.sql) - if available
-    plugins = with pkgs.vimPlugins; [];
-  };
-
-  xdg.configFile =
-    let
-      lazyVimConfig = pkgs.linkFarm "lazyvim-config" [
-        { name = "nvim"; path = inputs.lazy-nvim; }
-        { name = "nvim/lua/plugins"; path = ./config; }
-      ];
-    in
-    {
-      "nvim" = {
-        source = lazyVimConfig;
-        recursive = true;
-      };
-    };
 
 
   programs.direnv = {

@@ -3,8 +3,8 @@
 # for examples
 
 # Ble.sh initialization file with interactive sessions
-# Add this lines at the top of .bashrc:
-#[[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
+# MUST be at the top for interactive shells
+[[ $- == *i* ]] && source /home/dbecerra/.nix-profile/share/blesh/ble.sh --attach=none
 
 # If not running interactively, don't do anything
 case $- in
