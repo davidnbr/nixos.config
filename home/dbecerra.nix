@@ -219,8 +219,24 @@ in {
     recursive = true;
   };
 
-  # Add custom plugin configurations here if needed
-  # Example: home.file.".config/nvim/lua/plugins/custom.lua".source = ./config/nvim/custom.lua;
+  # Custom Neovim configurations
+  # Config files
+  home.file.".config/nvim/lua/config/autocmds.lua".source = ./config/nvim/config/autocmds.lua;
+  home.file.".config/nvim/lua/config/keymaps.lua".source = ./config/nvim/config/keymaps.lua;
+  home.file.".config/nvim/lua/config/lazy.lua".source = ./config/nvim/config/lazy.lua;
+  home.file.".config/nvim/lua/config/options.lua".source = ./config/nvim/config/options.lua;
+
+  # Plugin configurations
+  home.file.".config/nvim/lua/plugins/bufferline.lua".source = ./config/nvim/plugins/bufferline.lua;
+  home.file.".config/nvim/lua/plugins/claudecode.lua".source = ./config/nvim/plugins/claudecode.lua;
+  home.file.".config/nvim/lua/plugins/colorscheme.lua".source = ./config/nvim/plugins/colorscheme.lua;
+  home.file.".config/nvim/lua/plugins/fix-vscode-paths.lua".source = ./config/nvim/plugins/fix-vscode-paths.lua;
+  home.file.".config/nvim/lua/plugins/ghaction.lua".source = ./config/nvim/plugins/ghaction.lua;
+  home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ./config/nvim/plugins/neo-tree.lua;
+  home.file.".config/nvim/lua/plugins/python.lua".source = ./config/nvim/plugins/python.lua;
+  home.file.".config/nvim/lua/plugins/ui-enhancements.lua".source = ./config/nvim/plugins/ui-enhancements.lua;
+  home.file.".config/nvim/lua/plugins/vue-fix.lua".source = ./config/nvim/plugins/vue-fix.lua;
+  home.file.".config/nvim/lua/plugins/window-focus.lua".source = ./config/nvim/plugins/window-focus.lua;
 
   programs.ssh = {
     enable = true;
