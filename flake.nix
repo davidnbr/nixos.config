@@ -64,28 +64,14 @@
       hostname = "nixos-dbecerra";
       username = "dbecerra";
 
-      # Create pkgs with overlays for unstable packages
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [
-          # Add unstable packages overlay
-          (final: prev: {
-            unstable = import nixpkgs-unstable {
-              inherit system;
-              config.allowUnfree = true;
-            };
-          })
-          # Add wrapper for asdf2nix
-          (final: prev: {
-            asdf2nix-wrapper = prev.writeShellScriptBin "asdf2nix" ''
-              #!/usr/bin/env bash
-              exec ${
-                inputs.nixpkgs.legacyPackages.${system}.nix
-              }/bin/nix run github:brokenpip3/asdf2nix -- "$@"
-            '';
-          })
-        ];
+      };
+
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
       };
     in {
       # NixOS system configurations
@@ -94,7 +80,7 @@
           inherit system;
           specialArgs = {
             inherit inputs;
-            inherit nixpkgs-unstable;
+            pkgs-unstable = pkgs-unstable;
           };
           modules = [
             # Your system configuration
@@ -111,15 +97,6 @@
               networking.hostName = hostname;
               nix.settings.experimental-features = [ "nix-command" "flakes" ];
               nixpkgs.config.allowUnfree = true;
-              # Make the overlay available system-wide
-              nixpkgs.overlays = [
-                (final: prev: {
-                  unstable = import nixpkgs-unstable {
-                    inherit system;
-                    config.allowUnfree = true;
-                  };
-                })
-              ];
 
               environment.systemPackages = with pkgs; [ git vim wget curl ];
             }
@@ -133,7 +110,7 @@
           pkgs = pkgs;
           extraSpecialArgs = {
             inherit inputs;
-            inherit nixpkgs-unstable;
+            pkgs-unstable = pkgs-unstable;
           };
           modules = [
             ./home/${username}.nix

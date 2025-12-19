@@ -1,5 +1,10 @@
-{ config, pkgs, inputs, lib, ... }:
-let sqlls = pkgs.nodePackages.sql-language-server or null;
+{ config, pkgs, pkgs-unstable, inputs, lib, ... }:
+let
+  sqlls = pkgs.nodePackages.sql-language-server or null;
+  asdf2nix-wrapper = pkgs.writeShellScriptBin "asdf2nix" ''
+    #!/usr/bin/env bash
+    exec ${inputs.nixpkgs.legacyPackages.${pkgs.system}.nix}/bin/nix run github:brokenpip3/asdf2nix -- "$@"
+  '';
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -40,20 +45,20 @@ in {
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    unstable._1password-cli
-    unstable._1password-gui
-    unstable.vscode
-    unstable.google-chrome
-    unstable.firefox
-    unstable.slack
+    pkgs-unstable._1password-cli
+    pkgs-unstable._1password-gui
+    pkgs-unstable.vscode
+    pkgs-unstable.google-chrome
+    pkgs-unstable.firefox
+    pkgs-unstable.slack
 
-    unstable.libreoffice-fresh
+    pkgs-unstable.libreoffice-fresh
     kdePackages.okular
     pdfarranger
     pdftk
-    unstable.hunspell
-    unstable.hunspellDicts.en_US
-    unstable.hunspellDicts.es_ES
+    pkgs-unstable.hunspell
+    pkgs-unstable.hunspellDicts.en_US
+    pkgs-unstable.hunspellDicts.es_ES
     # Microsoft-compatible fonts for perfect .docx rendering
     corefonts # Arial, Times New Roman, etc.
     vistafonts # Calibri, Cambria, etc.
@@ -72,22 +77,22 @@ in {
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     (pkgs.python311.withPackages (ps: with ps; [ pip httpx ]))
-    unstable.uv
-    unstable.go
-    unstable.nodejs_20
-    unstable.ruby_3_4
-    unstable.elixir_1_18
+    pkgs-unstable.uv
+    pkgs-unstable.go
+    pkgs-unstable.nodejs_20
+    pkgs-unstable.ruby_3_4
+    pkgs-unstable.elixir_1_18
 
-    unstable.awscli2
-    unstable.ssm-session-manager-plugin
-    unstable.gh
-    unstable.act
-    unstable.terraform
-    unstable.terragrunt
-    unstable.azure-cli
+    pkgs-unstable.awscli2
+    pkgs-unstable.ssm-session-manager-plugin
+    pkgs-unstable.gh
+    pkgs-unstable.act
+    pkgs-unstable.terraform
+    pkgs-unstable.terragrunt
+    pkgs-unstable.azure-cli
     ansible
     ansible-lint
-    unstable.aws-vault
+    pkgs-unstable.aws-vault
 
     lazydocker
     mqttui
@@ -99,7 +104,7 @@ in {
     fzf
     bat
     jq
-    unstable.blesh
+    pkgs-unstable.blesh
     tree
     xclip
     gcc
@@ -114,17 +119,17 @@ in {
     shellcheck
     nixfmt-classic
 
-    unstable.tmux
-    unstable.pre-commit
-    unstable.tldr
+    pkgs-unstable.tmux
+    pkgs-unstable.pre-commit
+    pkgs-unstable.tldr
     nix-prefetch-github
     nix-prefetch-git
     inputs.iecs.packages.${pkgs.system}.default
     inputs.devenv.packages.${pkgs.system}.devenv
-    unstable.claude-code
+    pkgs-unstable.claude-code
     asdf2nix-wrapper
-    unstable.gemini-cli
-    unstable.fabric-ai
+    pkgs-unstable.gemini-cli
+    pkgs-unstable.fabric-ai
 
     # Build tools for LSPs
     cargo
@@ -215,7 +220,7 @@ in {
 
     bashrcExtra = ''
       # Ble.sh early initialization - MUST be first for interactive shells
-      [[ $- == *i* ]] && [[ -f ${pkgs.blesh}/share/blesh/ble.sh ]] && source ${pkgs.blesh}/share/blesh/ble.sh --attach=none
+      [[ $- == *i* ]] && [[ -f ${pkgs-unstable.blesh}/share/blesh/ble.sh ]] && source ${pkgs-unstable.blesh}/share/blesh/ble.sh --attach=none
 
       ${builtins.readFile ./.bashrc}
 
@@ -255,7 +260,7 @@ in {
     viAlias = true;
     vimAlias = true;
 
-    extraPackages = with pkgs;
+    extraPackages = with pkgs-unstable;
       [
         git
         gcc
@@ -270,7 +275,7 @@ in {
         nodePackages.bash-language-server # Bash LSP
 
         # Language-specific LSP servers for your extras
-        ansible-language-server # Ansible (lang.ansible)
+
         cmake-language-server # CMake (lang.cmake)
         dockerfile-language-server-nodejs # Docker (lang.docker)
         gopls # Go (lang.go)
