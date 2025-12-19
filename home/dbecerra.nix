@@ -318,15 +318,19 @@ in {
     plugins = with pkgs.vimPlugins; [];
   };
 
-  home.file.".config/nvim/lua/plugins/nvim-dap.lua".source = ./config/nvim-dap.lua;
-  home.file.".config/nvim/lua/plugins/nvim-python.lua".source = ./config/nvim-python.lua;
-  home.file.".config/nvim/lua/plugins/nvim-go.lua".source = ./config/nvim-go.lua;
-  home.file.".config/nvim/lua/plugins/nvim-treesitter.lua".source = ./config/nvim-treesitter.lua;
-  home.file.".config/nvim/lua/plugins/nvim-linters.lua".source = ./config/nvim-linters.lua;
-  home.file.".config/nvim/lua/plugins/nvim-formatters.lua".source = ./config/nvim-formatters.lua;
-  home.file.".config/nvim/lua/plugins/nvim-lsp-config.lua".source = ./config/nvim-lsp-config.lua;
-  home.file.".config/nvim".recursive = true;
-  home.file.".config/nvim".source = inputs.lazy-nvim;
+  xdg.configFile =
+    let
+      lazyVimConfig = pkgs.linkFarm "lazyvim-config" [
+        { name = "nvim"; path = inputs.lazy-nvim; }
+        { name = "nvim/lua/plugins"; path = ./config; }
+      ];
+    in
+    {
+      "nvim" = {
+        source = lazyVimConfig;
+        recursive = true;
+      };
+    };
 
 
   programs.direnv = {
