@@ -207,12 +207,9 @@ in {
 
   };
 
-  home.file.".bashrc".source = "${config.home.homeDirectory}/config/bashrc";
+  home.file.".bashrc".source = ./config/bashrc;
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = false;
-  };
+
 
   programs.ssh = {
     enable = true;
@@ -262,7 +259,7 @@ in {
         # Language-specific LSP servers for your extras
 
         cmake-language-server # CMake (lang.cmake)
-        dockerfile-language-server-nodejs # Docker (lang.docker)
+        dockerfile-language-server # Docker (lang.docker)
         gopls # Go (lang.go)
         nodePackages.vscode-json-languageserver # JSON (lang.json)
         marksman # Markdown (lang.markdown)
@@ -321,13 +318,13 @@ in {
     plugins = with pkgs.vimPlugins; [];
   };
 
-  home.file.".config/nvim/lua/plugins/nvim-dap.lua".source = "${config.home.homeDirectory}/config/nvim-dap.lua";
-  home.file.".config/nvim/lua/plugins/nvim-python.lua".source = "${config.home.homeDirectory}/config/nvim-python.lua";
-  home.file.".config/nvim/lua/plugins/nvim-go.lua".source = "${config.home.homeDirectory}/config/nvim-go.lua";
-  home.file.".config/nvim/lua/plugins/nvim-treesitter.lua".source = "${config.home.homeDirectory}/config/nvim-treesitter.lua";
-  home.file.".config/nvim/lua/plugins/nvim-linters.lua".source = "${config.home.homeDirectory}/config/nvim-linters.lua";
-  home.file.".config/nvim/lua/plugins/nvim-formatters.lua".source = "${config.home.homeDirectory}/config/nvim-formatters.lua";
-  home.file.".config/nvim/lua/plugins/nvim-lsp-config.lua".source = "${config.home.homeDirectory}/config/nvim-lsp-config.lua";
+  home.file.".config/nvim/lua/plugins/nvim-dap.lua".source = ./config/nvim-dap.lua;
+  home.file.".config/nvim/lua/plugins/nvim-python.lua".source = ./config/nvim-python.lua;
+  home.file.".config/nvim/lua/plugins/nvim-go.lua".source = ./config/nvim-go.lua;
+  home.file.".config/nvim/lua/plugins/nvim-treesitter.lua".source = ./config/nvim-treesitter.lua;
+  home.file.".config/nvim/lua/plugins/nvim-linters.lua".source = ./config/nvim-linters.lua;
+  home.file.".config/nvim/lua/plugins/nvim-formatters.lua".source = ./config/nvim-formatters.lua;
+  home.file.".config/nvim/lua/plugins/nvim-lsp-config.lua".source = ./config/nvim-lsp-config.lua;
   home.file.".config/nvim".recursive = true;
   home.file.".config/nvim".source = inputs.lazy-nvim;
 
