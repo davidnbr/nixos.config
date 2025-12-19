@@ -123,8 +123,8 @@ in {
     inputs.devenv.packages.${pkgs.system}.devenv
     unstable.claude-code
     asdf2nix-wrapper
-    gemini-cli
-    fabric-ai
+    unstable.gemini-cli
+    unstable.fabric-ai
 
     # Build tools for LSPs
     cargo
