@@ -207,26 +207,11 @@ in {
 
   };
 
+  home.file.".bashrc".source = "${config.home.homeDirectory}/config/bashrc";
+
   programs.bash = {
     enable = true;
     enableCompletion = false;
-
-    initExtra = ''
-      # Load any additional configurations  
-      if [ -f ~/.bashrc.local ]; then
-        source ~/.bashrc.local
-      fi
-    '';
-
-    bashrcExtra = ''
-      # Ble.sh early initialization - MUST be first for interactive shells
-      [[ $- == *i* ]] && [[ -f ${pkgs-unstable.blesh}/share/blesh/ble.sh ]] && source ${pkgs-unstable.blesh}/share/blesh/ble.sh --attach=none
-
-      ${builtins.readFile ./.bashrc}
-
-      # Ble.sh final attachment - MUST be last
-      [[ ! ''${BLE_VERSION-} ]] || ble-attach
-    '';
   };
 
   programs.ssh = {
@@ -333,148 +318,19 @@ in {
         yq # YAML processor
       ] ++ pkgs.lib.optionals (sqlls != null)
       [ sqlls ]; # SQL (lang.sql) - if available
-    plugins = with pkgs.vimPlugins; [ lazy-nvim ];
+    plugins = with pkgs.vimPlugins; [];
   };
 
-  xdg.configFile."nvim/lua/plugins/mason.lua".text = ''
-    return {
-      -- Disable Mason completely
-      { "mason-org/mason.nvim", enabled = false },
-      { "mason-org/mason-lspconfig.nvim", enabled = false },
-      
-      -- Configure LSP to not use Mason for all your language extras
-      {
-        "neovim/nvim-lspconfig",
-        opts = function(_, opts)
-          opts.servers = opts.servers or {}
-          
-          -- Disable Mason for all servers and configure them
-          local servers = {
-            -- Core
-            "nil_ls",           -- Nix
-            "lua_ls",           -- Lua
-            "tsserver",         -- TypeScript/JavaScript
-            "bashls",           -- Bash
-            
-            -- Your enabled language extras
-            "ansiblels",        -- Ansible
-            "cmake",            -- CMake
-            "dockerls",         -- Docker
-            "gopls",            -- Go
-            "jsonls",           -- JSON
-            "marksman",         -- Markdown
-            "pyright",          -- Python
-            "sqlls",            -- SQL
-            "terraformls",      -- Terraform
-            "taplo",            -- TOML
-            "volar",            -- Vue
-            "yamlls",           -- YAML
-          }
-          
-          for _, server in ipairs(servers) do
-            opts.servers[server] = { mason = false }
-          end
-          
-          return opts
-        end,
-      },
-      
-      -- Configure formatters for all your languages
-      {
-        "stevearc/conform.nvim",
-        opts = function(_, opts)
-          opts.formatters_by_ft = opts.formatters_by_ft or {}
-          
-          -- Configure formatters based on your extras
-          opts.formatters_by_ft.lua = { "stylua" }
-          opts.formatters_by_ft.python = { "black", "isort" }
-          opts.formatters_by_ft.go = { "gofumpt", "goimports" }
-          opts.formatters_by_ft.ruby = { "rubocop" }
-          opts.formatters_by_ft.javascript = { "prettier" }
-          opts.formatters_by_ft.typescript = { "prettier" }
-          opts.formatters_by_ft.vue = { "prettier" }
-          opts.formatters_by_ft.json = { "prettier" }
-          opts.formatters_by_ft.yaml = { "prettier" }
-          opts.formatters_by_ft.markdown = { "prettier" }
-          opts.formatters_by_ft.terraform = { "terraform_fmt" }
-          opts.formatters_by_ft.toml = { "taplo" }
-          opts.formatters_by_ft.sh = { "shfmt" }
-          opts.formatters_by_ft.bash = { "shfmt" }
-          opts.formatters_by_ft.nix = { "nixfmt-rfc-style" }
-          
-          return opts
-        end,
-      },
-      
-      -- Configure linters for all your languages
-      {
-        "mfussenegger/nvim-lint",
-        opts = function(_, opts)
-          opts.linters_by_ft = opts.linters_by_ft or {}
-          
-          -- Configure linters based on your extras
-          opts.linters_by_ft.python = { "ruff" }
-          opts.linters_by_ft.go = { "golangci-lint" }
-          opts.linters_by_ft.ruby = { "rubocop" }
-          opts.linters_by_ft.javascript = { "eslint" }
-          opts.linters_by_ft.typescript = { "eslint" }
-          opts.linters_by_ft.vue = { "eslint" }
-          opts.linters_by_ft.dockerfile = { "hadolint" }
-          opts.linters_by_ft.terraform = { "tflint", "tfsec" }
-          opts.linters_by_ft.yaml = { "yamllint" }
-          opts.linters_by_ft.ansible = { "ansible-lint" }
-          opts.linters_by_ft.sh = { "shellcheck" }
-          opts.linters_by_ft.bash = { "shellcheck" }
-          
-          return opts
-        end,
-      },
-    }
-  '';
+  home.file.".config/nvim/lua/plugins/nvim-dap.lua".source = "${config.home.homeDirectory}/config/nvim-dap.lua";
+  home.file.".config/nvim/lua/plugins/nvim-python.lua".source = "${config.home.homeDirectory}/config/nvim-python.lua";
+  home.file.".config/nvim/lua/plugins/nvim-go.lua".source = "${config.home.homeDirectory}/config/nvim-go.lua";
+  home.file.".config/nvim/lua/plugins/nvim-treesitter.lua".source = "${config.home.homeDirectory}/config/nvim-treesitter.lua";
+  home.file.".config/nvim/lua/plugins/nvim-linters.lua".source = "${config.home.homeDirectory}/config/nvim-linters.lua";
+  home.file.".config/nvim/lua/plugins/nvim-formatters.lua".source = "${config.home.homeDirectory}/config/nvim-formatters.lua";
+  home.file.".config/nvim/lua/plugins/nvim-lsp-config.lua".source = "${config.home.homeDirectory}/config/nvim-lsp-config.lua";
+  home.file.".config/nvim".recursive = true;
+  home.file.".config/nvim".source = inputs.lazy-nvim;
 
-  xdg.configFile."nvim/lua/plugins/treesitter.lua".text = ''
-    return {
-      {
-        "nvim-treesitter/nvim-treesitter",
-        opts = {
-          auto_install = false,  -- Don't auto-install parsers
-          ensure_installed = {}, -- Let Nix handle this
-        },
-      },
-    }
-  '';
-
-  xdg.configFile."nvim/lua/plugins/extras-config.lua".text = ''
-    return {
-      -- Go extra configuration
-      {
-        "ray-x/go.nvim",
-        opts = {
-          goimports = "goimports", -- Use system goimports
-          fillstruct = "fillstruct",
-          dap_debug = false, -- Disable DAP for now
-        },
-      },
-      
-      -- Python extra configuration  
-      {
-        "linux-cultist/venv-selector.nvim",
-        opts = {
-          auto_refresh = true,
-        },
-      },
-      
-      -- Disable any DAP configurations that might conflict
-      {
-        "mfussenegger/nvim-dap",
-        enabled = false, -- Disable for now, can enable later with proper Nix setup
-      },
-      {
-        "rcarriga/nvim-dap-ui", 
-        enabled = false,
-      },
-    }
-  '';
 
   programs.direnv = {
     enable = true;
@@ -482,7 +338,7 @@ in {
   };
 
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
-  home.file.".config/tmux/tmux.conf.local".source = ./tmux.conf.local;
+  home.file.".config/tmux/tmux.conf.local".source = ./config/tmux.conf.local;
   #home.shellAliases.tmux = "tmux -f ~/.config/tmux/tmux.conf";
   home.file.".config/tmux/plugins/catppuccin" = {
     source = pkgs.fetchFromGitHub {
