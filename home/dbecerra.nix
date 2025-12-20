@@ -3,7 +3,9 @@ let
   sqlls = pkgs.nodePackages.sql-language-server or null;
   asdf2nix-wrapper = pkgs.writeShellScriptBin "asdf2nix" ''
     #!/usr/bin/env bash
-    exec ${inputs.nixpkgs.legacyPackages.${pkgs.system}.nix}/bin/nix run github:brokenpip3/asdf2nix -- "$@"
+    exec ${
+      inputs.nixpkgs.legacyPackages.${pkgs.system}.nix
+    }/bin/nix run github:brokenpip3/asdf2nix -- "$@"
   '';
 in {
   # Home Manager needs a bit of information about you and the paths it should
@@ -32,19 +34,8 @@ in {
   };
 
   home.packages = with pkgs; [
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    #(pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
     nerd-fonts.hack
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
     pkgs-unstable._1password-cli
     pkgs-unstable._1password-gui
     pkgs-unstable.vscode
@@ -107,7 +98,12 @@ in {
     pkgs-unstable.blesh
     tree
     xclip
+
     gcc
+    tree-sitter
+    ripgrep
+    wget
+    curl
     unzip
     fd
     graphviz
@@ -118,6 +114,7 @@ in {
     checkov
     shellcheck
     nixfmt-classic
+    statix # Nix linter/formatter
 
     pkgs-unstable.tmux
     pkgs-unstable.pre-commit
@@ -132,10 +129,13 @@ in {
     pkgs-unstable.fabric-ai
     pkgs-unstable.neovim
 
-
     # Build tools for LSPs
     cargo
     rustc
+
+    # LSP servers (NixOS packages for better compatibility)
+    pkgs-unstable.lua-language-server
+    pkgs-unstable.nil # Nix LSP
   ];
 
   fonts.fontconfig = {
@@ -172,37 +172,8 @@ in {
     SAL_USE_VCLPLUGIN = "gtk3"; # Better desktop integration
   };
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+  home.file = { };
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/dbecerra/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     EDITOR = "nvim";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
@@ -221,22 +192,40 @@ in {
 
   # Custom Neovim configurations
   # Config files
-  home.file.".config/nvim/lua/config/autocmds.lua".source = ./config/nvim/config/autocmds.lua;
-  home.file.".config/nvim/lua/config/keymaps.lua".source = ./config/nvim/config/keymaps.lua;
-  home.file.".config/nvim/lua/config/lazy.lua".source = ./config/nvim/config/lazy.lua;
-  home.file.".config/nvim/lua/config/options.lua".source = ./config/nvim/config/options.lua;
+  home.file.".config/nvim/lua/config/autocmds.lua".source =
+    ./config/nvim/config/autocmds.lua;
+  home.file.".config/nvim/lua/config/keymaps.lua".source =
+    ./config/nvim/config/keymaps.lua;
+  home.file.".config/nvim/lua/config/lazy.lua".source =
+    ./config/nvim/config/lazy.lua;
+  home.file.".config/nvim/lua/config/options.lua".source =
+    ./config/nvim/config/options.lua;
 
   # Plugin configurations
-  home.file.".config/nvim/lua/plugins/bufferline.lua".source = ./config/nvim/plugins/bufferline.lua;
-  home.file.".config/nvim/lua/plugins/claudecode.lua".source = ./config/nvim/plugins/claudecode.lua;
-  home.file.".config/nvim/lua/plugins/colorscheme.lua".source = ./config/nvim/plugins/colorscheme.lua;
-  home.file.".config/nvim/lua/plugins/fix-vscode-paths.lua".source = ./config/nvim/plugins/fix-vscode-paths.lua;
-  home.file.".config/nvim/lua/plugins/ghaction.lua".source = ./config/nvim/plugins/ghaction.lua;
-  home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ./config/nvim/plugins/neo-tree.lua;
-  home.file.".config/nvim/lua/plugins/python.lua".source = ./config/nvim/plugins/python.lua;
-  home.file.".config/nvim/lua/plugins/ui-enhancements.lua".source = ./config/nvim/plugins/ui-enhancements.lua;
-  home.file.".config/nvim/lua/plugins/vue-fix.lua".source = ./config/nvim/plugins/vue-fix.lua;
-  home.file.".config/nvim/lua/plugins/window-focus.lua".source = ./config/nvim/plugins/window-focus.lua;
+  home.file.".config/nvim/lua/plugins/bufferline.lua".source =
+    ./config/nvim/plugins/bufferline.lua;
+  home.file.".config/nvim/lua/plugins/claudecode.lua".source =
+    ./config/nvim/plugins/claudecode.lua;
+  home.file.".config/nvim/lua/plugins/colorscheme.lua".source =
+    ./config/nvim/plugins/colorscheme.lua;
+  home.file.".config/nvim/lua/plugins/fix-vscode-paths.lua".source =
+    ./config/nvim/plugins/fix-vscode-paths.lua;
+  home.file.".config/nvim/lua/plugins/ghaction.lua".source =
+    ./config/nvim/plugins/ghaction.lua;
+  home.file.".config/nvim/lua/plugins/neo-tree.lua".source =
+    ./config/nvim/plugins/neo-tree.lua;
+  home.file.".config/nvim/lua/plugins/python.lua".source =
+    ./config/nvim/plugins/python.lua;
+  home.file.".config/nvim/lua/plugins/lsp-nixos.lua".source =
+    ./config/nvim/plugins/lsp-nixos.lua;
+  home.file.".config/nvim/lua/plugins/treesitter.lua".source =
+    ./config/nvim/plugins/treesitter.lua;
+  home.file.".config/nvim/lua/plugins/ui-enhancements.lua".source =
+    ./config/nvim/plugins/ui-enhancements.lua;
+  home.file.".config/nvim/lua/plugins/vue-fix.lua".source =
+    ./config/nvim/plugins/vue-fix.lua;
+  home.file.".config/nvim/lua/plugins/window-focus.lua".source =
+    ./config/nvim/plugins/window-focus.lua;
 
   programs.ssh = {
     enable = true;
@@ -262,11 +251,6 @@ in {
     icons = "auto";
     extraOptions = [ "--group-directories-first" "--header" ];
   };
-
-
-
-
-
 
   programs.direnv = {
     enable = true;

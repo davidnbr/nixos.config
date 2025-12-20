@@ -283,12 +283,20 @@
   #
   programs.git = {
     enable = true;
-    config = {
-      push = {
-        autoSetupRemote = true;
-      };
-    };
+    config = { push = { autoSetupRemote = true; }; };
   };
+
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc
+    zlib
+    fuse3
+    icu
+    nss
+    openssl
+    curl
+    expat
+  ];
 
   fonts.packages = with pkgs; [
     ubuntu_font_family
