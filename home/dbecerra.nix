@@ -100,6 +100,9 @@ in {
     xclip
 
     gcc
+    cmake
+    gnumake
+    pkg-config
     tree-sitter
     ripgrep
     wget
