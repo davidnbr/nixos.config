@@ -184,6 +184,12 @@ in {
   };
 
   home.file.".bashrc".source = ./config/bashrc;
+  home.file.".bash_profile".text = ''
+    # Source bashrc for login shells
+    if [ -f ~/.bashrc ]; then
+      source ~/.bashrc
+    fi
+  '';
   home.file.".config/.aliases/aliases.sh".source = ./config/aliases.sh;
 
   # LazyVim configuration
