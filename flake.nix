@@ -23,7 +23,7 @@
       #url = "github:davidnbr/claude-desktop-linux-flake/bc43951f8409dd6e461a037b82ca4765b9f1f40d"; ## Workaround graphics with uv fix
       #url = "github:davidnbr/claude-desktop-linux-flake/dc16836f2770e3dc6ae6387dec5fd4722f9bcf94"; # # Fixed graphics
       #url = "github:davidnbr/claude-desktop-linux-flake/edfb86f47b191f31e00c35aa3f71ebef3789e786"; # # Fixed python3 tkinter
-      url = "github:davidnbr/claude-desktop-linux-flake/adc722925469241652f44fd21e23efe0705f0dc5"; # Aded wayland flags
+      url = "github:davidnbr/claude-desktop-linux-flake"; # Aded wayland flags
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
