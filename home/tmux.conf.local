@@ -380,6 +380,15 @@ set -g mouse on
 set -g status-keys vi
 set -g mode-keys vi
 
+# Enable keys so shift/ctrl modifiers pass correctly
+set -g xterm-keys on
+
+# Ref: tmux Wiki - Clipboard integration
+set -s set-clipboard on
+
+# Increase display time for messages (optional, helps debugging)
+set -g display-time 2000
+
 # replace C-b by C-a instead of using both prefixes
 # set -gu prefix2
 # unbind C-a
@@ -389,7 +398,7 @@ set -g mode-keys vi
 
 # if you don't want Oh my tmux! to alter a binding or a setting, use #!important
 # bind c new-window -c '#{pane_current_path}' #!important
-bind n new-window -c '#{pane_current_path}' #!important 
+bind n new-window -c '#{pane_current_path}' #!important
 
 # move status line to top
 #set -g status-position top
@@ -497,7 +506,7 @@ set -g @catppuccin_flavor 'frappe'
 
 # Configure the catppuccin plugin
 set -g @catppuccin_window_status_style "basic"
-set -g @catppuccin_window_text "" 
+set -g @catppuccin_window_text ""
 set -g @catppuccin_window_current_text "#{pretty_pane_current_path}"
 # Load catppuccin
 run ~/.config/tmux/plugins/catppuccin/catppuccin.tmux
