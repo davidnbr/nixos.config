@@ -92,18 +92,6 @@
 
     pkgs-unstable.awscli2
     pkgs-unstable.aws-vault
-    #pkgs-unstable.azure-cli
-    #pkgs-unstable.azure-cli-extensions.containerapp
-    #pkgs-unstable.azure-cli-extensions.ad
-    #pkgs-unstable.azure-cli-extensions.vme
-    #pkgs-unstable.azure-cli-extensions.fzf
-    #pkgs-unstable.azure-cli-extensions.alb
-    #pkgs-unstable.azure-cli-extensions.portal
-    #pkgs-unstable.azure-cli-extensions.terraform
-    #pkgs-unstable.azure-cli-extensions.azure-devops
-    #pkgs-unstable.azure-cli-extensions.rdbms-connect
-    #pkgs-unstable.azure-cli-extensions.log-analytics
-    #pkgs-unstable.azure-cli-extensions.network-analytics
     pkgs-unstable.tmux
     pkgs-unstable.starship
     pkgs-unstable.neovim
@@ -121,13 +109,6 @@
 
     # Language servers (LazyVim will find them)
     pkgs-unstable.nil # Nix LSP
-    #pkgs-unstable.lua-language-server # Lua LSP
-    #pkgs-unstable.nodePackages.typescript-language-server # JS/TS LSP
-    #pkgs-unstable.gopls              # Go LSP
-    #pkgs-unstable.pyright            # Python LSP
-    #pkgs-unstable.terraform-ls       # Terraform LSP
-    #pkgs-unstable.yaml-language-server # YAML LSP
-    #pkgs-unstable.erlang-ls # Erlang LSP
   ];
 
   # Font configuration
