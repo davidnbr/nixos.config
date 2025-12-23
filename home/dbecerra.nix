@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   lib,
   ...
@@ -12,20 +13,20 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    coreutils
-    findutils
-    gnused
-    gnugrep
-    gnutar
+    pkgs-unstable.coreutils
+    pkgs-unstable.findutils
+    pkgs-unstable.gnused
+    pkgs-unstable.gnugrep
+    pkgs-unstable.gnutar
 
     # Fonts
-    nerd-fonts.hack
+    pkgs-unstable.nerd-fonts.hack
 
     # GUI Applications
-    vscode
+    pkgs-unstable.vscode
 
     # Languages and Runtimes
-    (python313.withPackages (
+    (pkgs-unstable.python313.withPackages (
       ps: with ps; [
         pip
         pip-audit
@@ -35,83 +36,83 @@
         mcp
       ]
     ))
-    uv
-    go
-    nodejs_22
-    nodePackages.pnpm
-    volta
-    yarn
-    ruby_3_4
-    elixir_1_18
+    pkgs-unstable.uv
+    pkgs-unstable.go
+    pkgs-unstable.nodejs_22
+    pkgs-unstable.nodePackages.pnpm
+    pkgs-unstable.volta
+    pkgs-unstable.yarn
+    pkgs-unstable.ruby_3_4
+    pkgs-unstable.elixir_1_18
 
     # DevOps Tools
-    awscli2
-    ssm-session-manager-plugin
-    gh
-    act
-    terraform
-    terraform-local
+    pkgs-unstable.awscli2
+    pkgs-unstable.ssm-session-manager-plugin
+    pkgs-unstable.gh
+    pkgs-unstable.act
+    pkgs-unstable.terraform
+    pkgs-unstable.terraform-local
     terragrunt
     ansible
     ansible-lint
-    nginx
+    pkgs-unstable.nginx
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
     # Development Tools
-    lazydocker
-    mqttui
-    tcpdump
-    trivy
-    smem
-    ripgrep
-    htop
-    fzf
-    bat
-    jq
-    tree
-    xclip
-    git
-    gcc
-    unzip
-    wget
-    curl
-    fd
-    graphviz
-    ffmpeg
-    imagemagick
+    pkgs-unstable.lazydocker
+    pkgs-unstable.mqttui
+    pkgs-unstable.tcpdump
+    pkgs-unstable.trivy
+    pkgs-unstable.smem
+    pkgs-unstable.ripgrep
+    pkgs-unstable.htop
+    pkgs-unstable.fzf
+    pkgs-unstable.bat
+    pkgs-unstable.jq
+    pkgs-unstable.tree
+    pkgs-unstable.xclip
+    pkgs-unstable.git
+    pkgs-unstable.gcc
+    pkgs-unstable.unzip
+    pkgs-unstable.wget
+    pkgs-unstable.curl
+    pkgs-unstable.fd
+    pkgs-unstable.graphviz
+    pkgs-unstable.ffmpeg
+    pkgs-unstable.imagemagick
 
     shfmt
     tflint
     tfsec
     shellcheck
-    nixfmt-rfc-style
+    pkgs-unstable.nixfmt-rfc-style
     statix # Nix linter
     sqlfluff
-    hadolint
+    pkgs-unstable.hadolint
 
-    awscli2
-    aws-vault
-    #unazure-cli
-    #unazure-cli-extensions.containerapp
-    #unazure-cli-extensions.ad
-    #unazure-cli-extensions.vme
-    #unazure-cli-extensions.fzf
-    #unazure-cli-extensions.alb
-    #unazure-cli-extensions.portal
-    #unazure-cli-extensions.terraform
-    #unazure-cli-extensions.azure-devops
-    #unazure-cli-extensions.rdbms-connect
-    #unazure-cli-extensions.log-analytics
-    #unazure-cli-extensions.network-analytics
-    tmux
-    starship
-    neovim
-    pre-commit
-    tldr
+    pkgs-unstable.awscli2
+    pkgs-unstable.aws-vault
+    #pkgs-unstable.azure-cli
+    #pkgs-unstable.azure-cli-extensions.containerapp
+    #pkgs-unstable.azure-cli-extensions.ad
+    #pkgs-unstable.azure-cli-extensions.vme
+    #pkgs-unstable.azure-cli-extensions.fzf
+    #pkgs-unstable.azure-cli-extensions.alb
+    #pkgs-unstable.azure-cli-extensions.portal
+    #pkgs-unstable.azure-cli-extensions.terraform
+    #pkgs-unstable.azure-cli-extensions.azure-devops
+    #pkgs-unstable.azure-cli-extensions.rdbms-connect
+    #pkgs-unstable.azure-cli-extensions.log-analytics
+    #pkgs-unstable.azure-cli-extensions.network-analytics
+    pkgs-unstable.tmux
+    pkgs-unstable.starship
+    pkgs-unstable.neovim
+    pkgs-unstable.pre-commit
+    pkgs-unstable.tldr
     nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
     inputs.iecs.packages.${system}.default
-    claude-code
+    pkgs-unstable.claude-code
     asdf2nix-wrapper
 
     # Build tools for Mason LSPs
@@ -119,14 +120,14 @@
     rustc
 
     # Language servers (LazyVim will find them)
-    nil # Nix LSP
-    #lua-language-server # Lua LSP
-    #nodePackages.typescript-language-server # JS/TS LSP
-    #gopls              # Go LSP
-    #pyright            # Python LSP
-    #terraform-ls       # Terraform LSP
-    #yaml-language-server # YAML LSP
-    #erlang-ls # Erlang LSP
+    pkgs-unstable.nil # Nix LSP
+    #pkgs-unstable.lua-language-server # Lua LSP
+    #pkgs-unstable.nodePackages.typescript-language-server # JS/TS LSP
+    #pkgs-unstable.gopls              # Go LSP
+    #pkgs-unstable.pyright            # Python LSP
+    #pkgs-unstable.terraform-ls       # Terraform LSP
+    #pkgs-unstable.yaml-language-server # YAML LSP
+    #pkgs-unstable.erlang-ls # Erlang LSP
   ];
 
   # Font configuration

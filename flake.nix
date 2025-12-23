@@ -52,29 +52,34 @@
     }@inputs:
     let
       system = "x86_64-linux";
+
+      # Create stable pkgs
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-
-        terraform-local = pkgs.callPackage ./pkgs/terraform-local.nix { };
-
         overlays = [
           (final: prev: {
-            unstable = import nixpkgs-unstable {
-              inherit system;
-              config.allowUnfree = true;
-            };
             asdf2nix-wrapper = prev.writeShellScriptBin "asdf2nix" ''
               exec ${final.nix}/bin/nix run github:brokenpip3/asdf2nix -- "$@"
             '';
+            terraform-local = prev.callPackage ./pkgs/terraform-local.nix { };
           })
         ];
+      };
+
+      # Create unstable pkgs separately to avoid dependency conflicts
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
       };
     in
     {
       homeConfigurations.dbecerra = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit pkgs-unstable;
+        };
         modules = [ ./home/dbecerra.nix ];
       };
     };
