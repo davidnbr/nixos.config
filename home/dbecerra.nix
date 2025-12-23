@@ -38,6 +38,7 @@
     uv
     go
     nodejs_22
+    nodePackages.pnpm
     volta
     yarn
     ruby_3_4
@@ -51,8 +52,8 @@
     terraform
     terraform-local
     terragrunt
-    stable.ansible
-    stable.ansible-lint
+    ansible
+    ansible-lint
     nginx
     inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
 
@@ -79,43 +80,43 @@
     ffmpeg
     imagemagick
 
-    stable.shfmt
-    stable.tflint
-    stable.tfsec
-    stable.shellcheck
+    shfmt
+    tflint
+    tfsec
+    shellcheck
     nixfmt-rfc-style
-    stable.statix # Nix linter
-    stable.sqlfluff
+    statix # Nix linter
+    sqlfluff
     hadolint
 
     awscli2
     aws-vault
-    #unstable.azure-cli
-    #unstable.azure-cli-extensions.containerapp
-    #unstable.azure-cli-extensions.ad
-    #unstable.azure-cli-extensions.vme
-    #unstable.azure-cli-extensions.fzf
-    #unstable.azure-cli-extensions.alb
-    #unstable.azure-cli-extensions.portal
-    #unstable.azure-cli-extensions.terraform
-    #unstable.azure-cli-extensions.azure-devops
-    #unstable.azure-cli-extensions.rdbms-connect
-    #unstable.azure-cli-extensions.log-analytics
-    #unstable.azure-cli-extensions.network-analytics
+    #unazure-cli
+    #unazure-cli-extensions.containerapp
+    #unazure-cli-extensions.ad
+    #unazure-cli-extensions.vme
+    #unazure-cli-extensions.fzf
+    #unazure-cli-extensions.alb
+    #unazure-cli-extensions.portal
+    #unazure-cli-extensions.terraform
+    #unazure-cli-extensions.azure-devops
+    #unazure-cli-extensions.rdbms-connect
+    #unazure-cli-extensions.log-analytics
+    #unazure-cli-extensions.network-analytics
     tmux
     starship
     neovim
     pre-commit
     tldr
-    stable.nix-prefetch-github
+    nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
     inputs.iecs.packages.${system}.default
     claude-code
     asdf2nix-wrapper
 
     # Build tools for Mason LSPs
-    stable.cargo
-    stable.rustc
+    cargo
+    rustc
 
     # Language servers (LazyVim will find them)
     nil # Nix LSP

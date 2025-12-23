@@ -2,8 +2,8 @@
   description = "Home Manager for Ubuntu - dbecerra";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -46,7 +46,7 @@
   outputs =
     {
       nixpkgs,
-      nixpkgs-stable,
+      nixpkgs-unstable,
       home-manager,
       ...
     }@inputs:
@@ -60,11 +60,7 @@
 
         overlays = [
           (final: prev: {
-            unstable = import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-            };
-            stable = import nixpkgs-stable {
+            unstable = import nixpkgs-unstable {
               inherit system;
               config.allowUnfree = true;
             };
