@@ -8,11 +8,11 @@
 
 # If not running interactively, don't do anything
 case $- in
-*i*) ;; 
-*) return ;; 
+*i*) ;;
+*) return ;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history. 
+# don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
@@ -24,7 +24,7 @@ shopt -s cmdhist # save multi-line as one command for tmux
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary, 
+# check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
@@ -70,11 +70,10 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm* | rxvt*) 
+xterm* | rxvt*)
   PS1="[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a]$PS1"
   ;;
-*)
-  ;;
+*) ;;
 esac
 
 # enable color support of ls and also add handy aliases
@@ -208,6 +207,8 @@ alias cdNix='cd ~/Documents/Nix/'
 # Add Terraform alias
 alias tf='terraform'
 
+# Add zoxide
+eval "$(zoxide init bash)"
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
