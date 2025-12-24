@@ -298,6 +298,12 @@
     expat
   ];
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   fonts.packages = with pkgs; [
     ubuntu_font_family
     liberation_ttf
