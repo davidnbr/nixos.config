@@ -209,6 +209,11 @@ alias tf='terraform'
 
 # Add zoxide
 eval "$(zoxide init bash)"
+
+# Aliases for Ubuntu container
+alias ubuntu-root='sudo podman exec -it ubuntu /bin/bash'
+alias ubuntu-user='sudo podman exec -it -u dbecerra ubuntu /bin/bash'
+
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach

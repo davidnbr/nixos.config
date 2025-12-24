@@ -333,6 +333,20 @@
 
   virtualisation.docker.enable = true;
 
+  # Enable Podman, the runtime for OCI containers
+  virtualisation.podman.enable = true;
+
+  # Declaratively define an OCI container for Ubuntu
+  virtualisation.oci-containers.containers.ubuntu = {
+    image = "ubuntu:22.04";
+    # Keep the container running in the background
+    cmd = [ "/bin/sleep" "infinity" ];
+    # Optional: Mount your home directory inside the container for easy file access
+    volumes = [
+      "/home/dbecerra:/home/dbecerra:rw"
+    ];
+  };
+
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
