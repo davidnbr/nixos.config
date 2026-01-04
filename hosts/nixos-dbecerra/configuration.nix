@@ -93,6 +93,13 @@
     };
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
+  hardware.xpadneo.enable = true;
+
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
@@ -167,6 +174,9 @@
 
     # Emulator
     dolphin-emu
+    usbutils
+    evtest
+    linuxConsoleTools
   ];
 
   programs.dconf = {
