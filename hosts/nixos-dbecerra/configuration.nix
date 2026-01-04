@@ -164,6 +164,9 @@
     #gnomeExtensions.pop-shell           # Tiling (optional)
     gnomeExtensions.caffeine # Prevent sleep
     gnomeExtensions.vitals # System monitor
+
+    # Emulator
+    dolphin-emu
   ];
 
   programs.dconf = {
