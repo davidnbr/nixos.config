@@ -84,10 +84,15 @@
   hardware.nvidia = {
     open = false;
     nvidiaSettings = true;
+    modesetting.enable = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
       sync.enable = true;
+      offload = {
+        enable = false;
+        enableOffloadCmd = false;
+      };
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
     };
@@ -177,6 +182,8 @@
     usbutils
     evtest
     linuxConsoleTools
+    vulkan-loader
+    vulkan-tools
   ];
 
   programs.dconf = {
