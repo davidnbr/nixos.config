@@ -12,7 +12,7 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    devenv.url = "github:cachix/devenv";
+    devenv.url = "github:cachix/devenv/latest";
     oh-my-tmux = {
       url = "github:gpakosz/.tmux";
       flake = false;

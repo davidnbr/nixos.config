@@ -84,6 +84,7 @@
     shfmt
     tflint
     tfsec
+    pkgs-unstable.checkov
     shellcheck
     pkgs-unstable.nixfmt-rfc-style
     statix # Nix linter
