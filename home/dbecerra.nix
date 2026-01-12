@@ -73,6 +73,7 @@ in {
     pkgs-unstable.nodejs_20
     pkgs-unstable.ruby_3_4
     pkgs-unstable.elixir_1_18
+    pkgs-unstable.bun
 
     pkgs-unstable.awscli2
     pkgs-unstable.ssm-session-manager-plugin
