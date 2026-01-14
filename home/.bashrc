@@ -230,7 +230,11 @@ mkdir -p "$XDG_DATA_HOME"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
+# Claude Code Templates - Global Agents
+export PATH="/home/dbecerra/.claude-code-templates/bin:$PATH"
+
+alias claude-mem='/home/dbecerra/.bun/bin/bun "/home/dbecerra/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
-
