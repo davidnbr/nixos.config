@@ -44,6 +44,7 @@
     pkgs-unstable.yarn
     pkgs-unstable.ruby_3_4
     pkgs-unstable.elixir_1_18
+    pkgs-unstable.bun
 
     # DevOps Tools
     pkgs-unstable.awscli2
