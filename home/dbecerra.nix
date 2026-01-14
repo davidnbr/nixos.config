@@ -103,6 +103,7 @@
     inputs.devenv.packages.${pkgs.system}.devenv
     inputs.iecs.packages.${system}.default
     pkgs-unstable.claude-code
+    pkgs-unstable.gemini-cli
     asdf2nix-wrapper
 
     # Build tools for Mason LSPs
