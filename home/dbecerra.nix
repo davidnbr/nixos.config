@@ -130,7 +130,6 @@ in {
     pkgs-unstable.claude-code
     asdf2nix-wrapper
     pkgs-unstable.gemini-cli
-    pkgs-unstable.fabric-ai
     pkgs-unstable.neovim
 
     # Build tools for LSPs
