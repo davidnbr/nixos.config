@@ -189,10 +189,6 @@ spf() {
 # Add nix PATH
 export PATH="$PATH:~/.nix-profile/bin"
 
-# Add cursor alias
-#alias cursor='/usr/bin/cursor --user-data-dir=/opt/.config/cursor --extensions-dir=/opt/.config/extensions --crash-reporter-directory=/opt/.config/crashes'
-#'~/apps/cursor-0.48.9.AppImage --no-sandbox &' #--user-data-dir=/opt/.config/cursor --extensions-dir=/opt/.config/extensions --crash-reporter-directory=/opt/.config/crashes &'
-
 # Add aliases to PROJECTS
 alias cdGRC='cd ~/Documents/Stackbuilders/Projects/GRC/'
 alias cdSW='cd ~/Documents/Stackbuilders/Projects/Spireworks/'
@@ -223,17 +219,13 @@ export XDG_DATA_HOME="$HOME/nd"
 mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_DATA_HOME"
 
-# Disable Lua compilation entirely
-#export NVIM_LUA_NOCOMPILE=1
-
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
 # Claude Code Templates - Global Agents
 export PATH="/home/dbecerra/.claude-code-templates/bin:$PATH"
 
 alias claude-mem='/home/dbecerra/.bun/bin/bun "/home/dbecerra/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
