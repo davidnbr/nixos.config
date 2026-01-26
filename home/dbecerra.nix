@@ -144,6 +144,7 @@ in
     pkgs-unstable.claude-code
     asdf2nix-wrapper
     pkgs-unstable.gemini-cli
+    pkgs-unstable.opencode
     pkgs-unstable.neovim
 
     # Build tools for LSPs
