@@ -1,0 +1,25 @@
+{
+  "respectGitignore": true,
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./credentials.json)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Read(./**/*.der)",
+      "Read(./**/*.p12)",
+      "Read(./**/*.pfx)",
+      "Read(./secrets/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(./config/credentials.json)"
+    ],
+    "defaultMode": "default"
+  },
+  "enabledPlugins": {
+    "claude-mem@thedotmack": true
+  }
+}

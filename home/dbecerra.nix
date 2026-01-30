@@ -206,8 +206,33 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-
   };
+
+  # Claude Code configuration (agents, commands, skills as read-only symlinks)
+  home.file.".claude/agents" = {
+    source = ./config/claude/agents;
+    recursive = true;
+  };
+
+  home.file.".claude/commands" = {
+    source = ./config/claude/commands;
+    recursive = true;
+  };
+
+  home.file.".claude/skills" = {
+    source = ./config/claude/skills;
+    recursive = true;
+  };
+
+  # Claude Code settings.json — seed once as writable copy
+  home.activation.claudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -f "$HOME/.claude/settings.json" ]; then
+      $VERBOSE_ECHO "Seeding Claude Code settings..."
+      $DRY_RUN_CMD mkdir -p "$HOME/.claude"
+      $DRY_RUN_CMD cp ${./config/claude/settings.json} "$HOME/.claude/settings.json"
+      $DRY_RUN_CMD chmod 600 "$HOME/.claude/settings.json"
+    fi
+  '';
 
   home.file.".bashrc".source = ./config/bashrc;
   home.file.".bash_profile".text = ''
