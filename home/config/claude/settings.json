@@ -15,7 +15,15 @@
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.config/gcloud/**)",
-      "Read(./config/credentials.json)"
+      "Read(./config/credentials.json)",
+      "Read(./node_modules/**)",
+      "Read(./target/**)",
+      "Read(./build/**)",
+      "Read(./dist/**)",
+      "Read(./out/**)",
+      "Read(./vendor/**)",
+      "Read(./.git/**)",
+      "Read(./coverage/**)"
     ],
     "defaultMode": "default"
   },

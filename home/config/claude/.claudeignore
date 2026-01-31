@@ -1,0 +1,6 @@
+.claude/history.jsonl
+.claude/stats-cache.json
+.claude/file-history/
+.claude/session-env/
+node_modules/
+
