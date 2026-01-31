@@ -18,7 +18,9 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
 
-    devenv = { url = "github:cachix/devenv"; };
+    devenv = {
+      url = "github:cachix/devenv";
+    };
 
     oh-my-tmux = {
       url = "github:gpakosz/.tmux";
@@ -36,8 +38,8 @@
       #url = "github:k3d3/claude-desktop-linux-flake";
       #url = "github:davidnbr/claude-desktop-linux-flake/9a573471258aca69020ebad798cbe3ed736bd3a5"; ## Fixed graphics
       #url = "github:davidnbr/claude-desktop-linux-flake/e11a21013f35dd44a1b88e82b41b4e39abbc00d4"; # # Fixed python3 tkinter
-      url =
-        "github:davidnbr/claude-desktop-linux-flake/adc722925469241652f44fd21e23efe0705f0dc5"; # Aded wayland flags
+      #url = "github:davidnbr/claude-desktop-linux-flake/adc722925469241652f44fd21e23efe0705f0dc5"; # Aded wayland flags
+      url = "github:davidnbr/claude-desktop-linux-flake";
 
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
@@ -57,7 +59,14 @@
     ];
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ...
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nixos-hardware,
+      ...
     }@inputs:
     let
       system = "x86_64-linux";
@@ -73,7 +82,8 @@
         inherit system;
         config.allowUnfree = true;
       };
-    in {
+    in
+    {
       # NixOS system configurations
       nixosConfigurations = {
         ${hostname} = nixpkgs.lib.nixosSystem {
@@ -95,10 +105,18 @@
             # Global configuration
             {
               networking.hostName = hostname;
-              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nix.settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
               nixpkgs.config.allowUnfree = true;
 
-              environment.systemPackages = with pkgs; [ git vim wget curl ];
+              environment.systemPackages = with pkgs; [
+                git
+                vim
+                wget
+                curl
+              ];
             }
           ];
         };
