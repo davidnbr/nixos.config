@@ -146,6 +146,7 @@ in
     pkgs-unstable.gemini-cli
     pkgs-unstable.opencode
     pkgs-unstable.neovim
+    #inputs.antigravity.packages.${pkgs.system}.default
 
     # Build tools for LSPs
     cargo

@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "antigravity": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770196631,
+        "narHash": "sha256-neRXwIILc8BUFHeT0UM2Mj8Wt1oo4UPpmm4NkfBwQOY=",
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "rev": "acc9baf089a67ef7456117ef31285e34c3294984",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "type": "github"
+      }
+    },
     "cachix": {
       "inputs": {
         "devenv": [
@@ -432,6 +455,7 @@
     },
     "root": {
       "inputs": {
+        "antigravity": "antigravity",
         "claude-desktop": "claude-desktop",
         "devenv": "devenv",
         "flake-utils": "flake-utils",
