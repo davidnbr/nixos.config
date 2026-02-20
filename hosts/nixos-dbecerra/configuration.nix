@@ -169,6 +169,7 @@
 
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
+    cudaPackages.cudatoolkit # CUDA NVIDIA
     autokey # For Alt+numpad automation
     espanso # Alternative text expander
     xdotool # X11 automation tool
@@ -353,6 +354,8 @@
     openssl
     curl
     expat
+    linuxPackages.nvidia_x11 # Crucial: Allows unpatched binaries to find libcuda.so
+    cudaPackages.cudatoolkit # Allows tools to find nvcc
   ];
 
   programs.steam = {
