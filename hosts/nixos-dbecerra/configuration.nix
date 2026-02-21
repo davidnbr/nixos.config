@@ -50,10 +50,6 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod = {
@@ -199,7 +195,6 @@
     gnomeExtensions.user-themes # Themes
 
     # Additional useful extensions
-    #gnomeExtensions.pop-shell           # Tiling (optional)
     gnomeExtensions.caffeine # Prevent sleep
     gnomeExtensions.vitals # System monitor
 
@@ -274,12 +269,6 @@
               #require-pressure-to-show = false;
             };
 
-            #"org/gnome/shell/extensions/pop-shell" = {
-            #  tile-by-default = false;
-            #  show-title = true;
-            #  active-hint = true;
-            #};
-
             # AppIndicator settings
             "org/gnome/shell/extensions/appindicator" = {
               icon-size = lib.gvariant.mkInt32 22;
@@ -320,21 +309,6 @@
     };
   };
 
-  #environment.etc."dconf/db/local.d/02-keybindings".text = ''
-  #  [org/gnome/desktop/wm/keybindings]
-  #  move-to-side-w=@as []
-  #  move-to-side-e=@as []
-  #  maximize=['<Super>Up']
-  #  unmaximize=['<Super>Down']
-  #  toggle-maximized=['<Super>Up']
-  #  move-to-workspace-left = ["<Super><Shift>Left"];
-  #  move-to-workspace-right = ["<Super><Shift>Right"];
-  #
-  #  [org/gnome/mutter/keybindings]
-  #  toggle-tiled-left=['<Super>Left']
-  #  toggle-tiled-right=['<Super>Right']
-  #'';
-  #
   programs.git = {
     enable = true;
     config = {
@@ -380,16 +354,9 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
   # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";     # Copy the NixOS configuration file and link it from the resulting system
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  #system.copySystemConfiguration = true;
 
   virtualisation.docker.enable = true;
 
