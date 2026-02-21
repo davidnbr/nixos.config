@@ -146,7 +146,7 @@ in
     pkgs-unstable.gemini-cli
     pkgs-unstable.opencode
     pkgs-unstable.neovim
-    pkgs-unstable.ollama
+    (pkgs-unstable.ollama.override { acceleration = "cuda"; })
     #inputs.antigravity.packages.${pkgs.system}.default
 
     # Build tools for LSPs

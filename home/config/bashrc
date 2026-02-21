@@ -207,6 +207,9 @@ alias cdNix='cd ~/Documents/Nix/'
 # Add Terraform alias
 alias tf='terraform'
 
+# Add Ollama GPU alias
+alias ollama-gpu='OLLAMA_NUM_GPU=15 ollama'
+
 # Add zoxide
 eval "$(zoxide init bash)"
 
