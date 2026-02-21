@@ -210,6 +210,9 @@ alias tf='terraform'
 # Add Ollama GPU alias
 alias ollama-gpu='OLLAMA_NUM_GPU=15 ollama'
 
+# Add Claude Ollama alias
+alias claude-ollama='ANTHROPIC_BASE_URL="http://localhost:11434/" ANTHROPIC_AUTH_TOKEN="ollama" claude'
+
 # Add zoxide
 eval "$(zoxide init bash)"
 
