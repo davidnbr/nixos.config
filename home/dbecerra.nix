@@ -94,9 +94,6 @@ in
     pkgs-unstable.act
     pkgs-unstable.terraform
     pkgs-unstable.terragrunt
-    pkgs-unstable.azure-cli
-    ansible
-    ansible-lint
     pkgs-unstable.aws-vault
 
     lazydocker
