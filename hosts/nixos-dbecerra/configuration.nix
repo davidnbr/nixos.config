@@ -355,6 +355,7 @@
 
   # Open ports in the firewall.
   networking.firewall.enable = true;
+  networking.firewall.interfaces."docker0".allowedTCPPorts = [ 11434 ];
 
   # Configure network proxy if necessary
 
