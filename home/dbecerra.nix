@@ -171,6 +171,16 @@
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
+  home.file.".config/tmux/tmux.conf.local".source = ./config/tmux.conf.local;
+  home.file.".config/tmux/plugins/catppuccin" = {
+    source = pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "tmux";
+      rev = "v2.1.2";
+      hash = "sha256-vBYBvZrMGLpMU059a+Z4SEekWdQD0GrDqBQyqfkEHPg=";
+    };
+    recursive = true;
+  };
 
   # Neovim configuration
   home.file.".config/nvim/lua/plugins".source = ./config/nvim/plugins;
