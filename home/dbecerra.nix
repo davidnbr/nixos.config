@@ -167,7 +167,7 @@
   '';
 
   home.file.".bashrc".source = ./config/.bashrc;
-  home.file.".config/.aliases/.aliases.sh".source = ./config/.aliases.sh;
+  home.file.".config/.aliases/aliases.sh".source = ./config/aliases.sh;
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
