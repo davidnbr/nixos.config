@@ -7,8 +7,8 @@
   ...
 }:
 {
-  home.username = "dbecerra";
-  home.homeDirectory = "/home/dbecerra";
+  home.username = "davidnbr98";
+  home.homeDirectory = "/home/davidnbr98";
   home.stateVersion = "25.05";
   nixpkgs.config.allowUnfree = true;
 
@@ -152,6 +152,7 @@
     localstack-logs = "docker logs -f localstack";
   };
 
+
   home.file.".local/share/applications/claude-desktop.desktop".text = ''
     [Desktop Entry]
     Version=1.0
@@ -164,6 +165,8 @@
     Categories=Office;Development;
     StartupWMClass=Claude Desktop
   '';
+
+  home.file.".bashrc".source = ./.bashrc;
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
