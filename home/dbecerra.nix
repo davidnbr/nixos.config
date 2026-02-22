@@ -72,7 +72,6 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
-    pkgs-unstable.git
     pkgs-unstable.gcc
     pkgs-unstable.unzip
     pkgs-unstable.wget
@@ -217,10 +216,6 @@
   };
 
   # Neovim configuration
-  home.file.".config/nvim" = {
-    source = inputs.lazy-nvim;
-    recursive = true;
-  };
   home.file.".config/nvim/lua/plugins" = {
     source = ./config/nvim/plugins;
     recursive = true;

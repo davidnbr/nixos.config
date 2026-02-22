@@ -19,11 +19,6 @@
       flake = false;
     };
 
-    lazy-nvim = {
-      url = "github:LazyVim/starter";
-      flake = false;
-    };
-
     iecs.url = "github:sestrella/iecs";
 
     claude-desktop = {
