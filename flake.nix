@@ -13,11 +13,19 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     devenv.url = "github:cachix/devenv/latest";
+
     oh-my-tmux = {
       url = "github:gpakosz/.tmux";
       flake = false;
     };
+
+    lazy-nvim = {
+      url = "github:LazyVim/starter";
+      flake = false;
+    };
+
     iecs.url = "github:sestrella/iecs";
+
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";
       url = "github:davidnbr/claude-desktop-linux-flake";

@@ -95,7 +95,6 @@
     pkgs-unstable.awscli2
     pkgs-unstable.aws-vault
     pkgs-unstable.tmux
-    pkgs-unstable.starship
     pkgs-unstable.neovim
     pkgs-unstable.pre-commit
     pkgs-unstable.tldr
@@ -137,6 +136,41 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+  };
+
+  programs.ssh = {
+    enable = true;
+
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519"; # Path to your existing key
+        identitiesOnly = true; # Only use the specified key
+      };
+    };
+    extraConfig = ''
+      AddKeysToAgent yes
+    '';
+  };
+  services.ssh-agent.enable = true;
+
+  programs.git = {
+    enable = true;
+    hooks = {
+      pre-commit-custom = pkgs.writeShellScript "pre-commit-custom" ''
+        #!/usr/bin/env bash
+        set -ex
+
+        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
+      '';
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = import ./starship.nix;
   };
 
   programs.direnv = {
@@ -183,8 +217,18 @@
   };
 
   # Neovim configuration
-  home.file.".config/nvim/lua/plugins".source = ./config/nvim/plugins;
-  home.file.".config/nvim/lua/config".source = ./config/nvim/config;
+  home.file.".config/nvim" = {
+    source = inputs.lazy-nvim;
+    recursive = true;
+  };
+  home.file.".config/nvim/lua/plugins" = {
+    source = ./config/nvim/plugins;
+    recursive = true;
+  };
+  home.file.".config/nvim/lua/config" = {
+    source = ./config/nvim/config;
+    recursive = true;
+  };
 
   programs.zoxide = {
     enable = true;
