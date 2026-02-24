@@ -72,7 +72,6 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
-    pkgs-unstable.gcc
     pkgs-unstable.unzip
     pkgs-unstable.wget
     pkgs-unstable.curl
