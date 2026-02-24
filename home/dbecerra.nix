@@ -104,10 +104,6 @@
     pkgs-unstable.gemini-cli
     asdf2nix-wrapper
 
-    # Build tools for Mason LSPs
-    cargo
-    rustc
-
     # Language servers (LazyVim will find them)
     pkgs-unstable.nil # Nix LSP
   ];
@@ -184,7 +180,6 @@
     localstack-stop = "docker stop localstack && docker rm localstack";
     localstack-logs = "docker logs -f localstack";
   };
-
 
   home.file.".local/share/applications/claude-desktop.desktop".text = ''
     [Desktop Entry]
