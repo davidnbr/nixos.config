@@ -22,9 +22,6 @@
     # Fonts
     pkgs-unstable.nerd-fonts.hack
 
-    # GUI Applications
-    pkgs-unstable.vscode
-
     # Languages and Runtimes
     (pkgs-unstable.python313.withPackages (
       ps: with ps; [
