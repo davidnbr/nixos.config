@@ -84,7 +84,7 @@
     tfsec
     pkgs-unstable.checkov
     shellcheck
-    pkgs-unstable.nixfmt-rfc-style
+    pkgs-unstable.nixfmt
     statix # Nix linter
     sqlfluff
     pkgs-unstable.hadolint
