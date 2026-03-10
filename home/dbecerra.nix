@@ -54,7 +54,7 @@
     ansible
     ansible-lint
     pkgs-unstable.nginx
-    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
+    inputs.claude-desktop.packages.${stdenv.hostPlatform.system}.claude-desktop-with-fhs
 
     # Development Tools
     pkgs-unstable.lazydocker
@@ -97,8 +97,8 @@
     pkgs-unstable.pre-commit
     pkgs-unstable.tldr
     nix-prefetch-github
-    inputs.devenv.packages.${pkgs.system}.devenv
-    inputs.iecs.packages.${system}.default
+    pkgs-unstable.devenv
+    inputs.iecs.packages.${stdenv.hostPlatform.system}.default
     pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
     asdf2nix-wrapper
@@ -155,7 +155,9 @@
     Type=Application
     Name=Claude Desktop
     Comment=AI assistant by Anthropic
-    Exec=${inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs}/bin/claude-desktop %F
+    Exec=${
+      inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs
+    }/bin/claude-desktop %F
     Icon=claude-desktop
     StartupNotify=true
     Categories=Office;Development;
