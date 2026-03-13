@@ -79,14 +79,14 @@
     pkgs-unstable.ffmpeg
     pkgs-unstable.imagemagick
 
-    shfmt
-    tflint
-    tfsec
+    pkgs-unstable.shfmt
+    pkgs-unstable.tflint
+    pkgs-unstable.tfsec
     pkgs-unstable.checkov
-    shellcheck
+    pkgs-unstable.shellcheck
     pkgs-unstable.nixfmt
-    statix # Nix linter
-    sqlfluff
+    pkgs-unstable.statix # Nix linter
+    pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
 
     pkgs-unstable.awscli2
