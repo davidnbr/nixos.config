@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766358947,
-        "narHash": "sha256-1T/zVVF4UMtrxo4toC1TsI/leenP2oJGkbIUZXve0Wg=",
+        "lastModified": 1769823007,
+        "narHash": "sha256-g843g7rQdn5aSOLWFXGnu5lXce0+gK4maQOXp63/NnQ=",
         "owner": "davidnbr",
         "repo": "claude-desktop-linux-flake",
-        "rev": "603b2e9e15999f327566bf11759340418ea24595",
+        "rev": "6699b0a39aaef18bd107710bcd3ecbf2bd2e590c",
         "type": "github"
       },
       "original": {
@@ -110,11 +110,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1753583575,
-        "narHash": "sha256-WLFyE+flJ/uKuTUqg5OSBK2GEEN8RcRPoyLuTX5XrEU=",
+        "lastModified": 1770952999,
+        "narHash": "sha256-i1CBweR8g/Xm3urHifcOaGN2CFBeSi1FxQuOH9yMsXU=",
         "owner": "sestrella",
         "repo": "iecs",
-        "rev": "257dcef8336fc5fe5d80dfde3e21378cc25589bb",
+        "rev": "c1169004b1f7ca855a1f909f7619a3ceadff63b8",
         "type": "github"
       },
       "original": {
@@ -189,11 +189,11 @@
     "oh-my-tmux": {
       "flake": false,
       "locked": {
-        "lastModified": 1757141121,
-        "narHash": "sha256-XXiyPSvrrtZgQ1IN797O1vgZDkwppKImgL+OQE507Fs=",
+        "lastModified": 1771712748,
+        "narHash": "sha256-nXm664l84YSwZeRM4Hsweqgz+OlpyfwXcgEdyNGhaGA=",
         "owner": "gpakosz",
         "repo": ".tmux",
-        "rev": "124f5fc36dbca79a840d14f898d751c96ed9a1e7",
+        "rev": "af33f07134b76134acca9d01eacbdecca9c9cda6",
         "type": "github"
       },
       "original": {
