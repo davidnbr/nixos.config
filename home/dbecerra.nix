@@ -45,6 +45,7 @@
 
     # DevOps Tools
     pkgs-unstable.awscli2
+    pkgs-unstable.aws-vault
     pkgs-unstable.ssm-session-manager-plugin
     pkgs-unstable.gh
     pkgs-unstable.act
@@ -89,8 +90,6 @@
     pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
 
-    pkgs-unstable.awscli2
-    pkgs-unstable.aws-vault
     pkgs-unstable.tmux
     pkgs-unstable.starship
     pkgs-unstable.neovim
