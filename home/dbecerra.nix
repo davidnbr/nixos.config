@@ -99,7 +99,8 @@
     nix-prefetch-github
     inputs.devenv.packages.${pkgs.system}.devenv
     inputs.iecs.packages.${system}.default
-    pkgs-unstable.claude-code
+    inputs.claude-code.packages.${system}.claude-code
+    #pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
     asdf2nix-wrapper
 
