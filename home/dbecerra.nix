@@ -73,7 +73,6 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
-    pkgs-unstable.git
     pkgs-unstable.unzip
     pkgs-unstable.wget
     pkgs-unstable.curl
@@ -97,9 +96,9 @@
     pkgs-unstable.pre-commit
     pkgs-unstable.tldr
     nix-prefetch-github
-    inputs.devenv.packages.${pkgs.system}.devenv
-    inputs.iecs.packages.${system}.default
-    inputs.claude-code.packages.${system}.claude-code
+    inputs.devenv.packages.${stdenv.hostPlatform.system}.devenv
+    inputs.iecs.packages.${stdenv.hostPlatform.system}.default
+    inputs.claude-code.packages.${stdenv.hostPlatform.system}.claude-code
     #pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
     asdf2nix-wrapper
@@ -153,7 +152,7 @@
   programs.git = {
     enable = true;
     hooks = {
-      pre-commit-custom = pkgs.writeShellScript "pre-commit-custom" ''
+      pre-commit = pkgs.writeShellScript "pre-commit" ''
         #!/usr/bin/env bash
         set -ex
 
@@ -187,7 +186,9 @@
     Type=Application
     Name=Claude Desktop
     Comment=AI assistant by Anthropic
-    Exec=${inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs}/bin/claude-desktop %F
+    Exec=${
+      inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs
+    }/bin/claude-desktop %F
     Icon=claude-desktop
     StartupNotify=true
     Categories=Office;Development;
