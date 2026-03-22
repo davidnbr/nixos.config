@@ -151,15 +151,27 @@
 
   programs.git = {
     enable = true;
+    userName = "David";
+    userEmail = "davidnbr_98@hotmail.com";
     hooks = {
       pre-commit = pkgs.writeShellScript "pre-commit" ''
         #!/usr/bin/env bash
-        set -ex
+        set -e
 
-        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
+        # If the repo has its own hook, delegate to it
+        local_hook="$(git rev-parse --git-dir)/hooks/pre-commit"
+        if [ -x "$local_hook" ]; then
+          exec "$local_hook" "$@"
+        fi
+
+        # Global fallback: run pre-commit with shared config
+        set -x
+        ${pkgs.pre-commit}/bin/pre-commit run --config "$HOME/.config/pre-commit/pre-commit-config.yaml" "$@"
       '';
     };
   };
+
+  home.file.".config/pre-commit/pre-commit-config.yaml".source = ./pre-commit-config.yaml;
 
   programs.starship = {
     enable = true;
