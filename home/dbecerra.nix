@@ -136,6 +136,41 @@
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
   };
 
+  programs.ssh = {
+    enable = true;
+
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519";
+        identitiesOnly = true;
+      };
+    };
+    extraConfig = ''
+      AddKeysToAgent yes
+    '';
+  };
+  services.ssh-agent.enable = true;
+
+  programs.git = {
+    enable = true;
+    hooks = {
+      pre-commit-custom = pkgs.writeShellScript "pre-commit-custom" ''
+        #!/usr/bin/env bash
+        set -ex
+
+        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
+      '';
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = import ./starship.nix;
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -164,12 +199,31 @@
     StartupWMClass=Claude Desktop
   '';
 
+  home.file.".bashrc".source = ./config/.bashrc;
+  home.file.".config/.aliases/aliases.sh".source = ./config/aliases.sh;
+
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
+  home.file.".config/tmux/tmux.conf.local".source = ./config/tmux.conf.local;
+  home.file.".config/tmux/plugins/catppuccin" = {
+    source = pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "tmux";
+      rev = "v2.1.2";
+      hash = "sha256-vBYBvZrMGLpMU059a+Z4SEekWdQD0GrDqBQyqfkEHPg=";
+    };
+    recursive = true;
+  };
 
   # Neovim configuration
-  home.file.".config/nvim/lua/plugins".source = ./config/nvim/plugins;
-  home.file.".config/nvim/lua/config".source = ./config/nvim/config;
+  home.file.".config/nvim/lua/plugins" = {
+    source = ./config/nvim/plugins;
+    recursive = true;
+  };
+  home.file.".config/nvim/lua/config" = {
+    source = ./config/nvim/config;
+    recursive = true;
+  };
 
   programs.zoxide = {
     enable = true;

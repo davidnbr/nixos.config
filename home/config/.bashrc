@@ -227,6 +227,9 @@ alias claude-mem='/home/dbecerra/.bun/bin/bun "/home/dbecerra/.claude/plugins/ma
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# Add rust/cargo bins to path
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
