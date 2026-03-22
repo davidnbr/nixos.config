@@ -48,6 +48,7 @@
 
     # DevOps Tools
     pkgs-unstable.awscli2
+    pkgs-unstable.aws-vault
     pkgs-unstable.ssm-session-manager-plugin
     pkgs-unstable.gh
     pkgs-unstable.act
@@ -57,7 +58,7 @@
     ansible
     ansible-lint
     pkgs-unstable.nginx
-    inputs.claude-desktop.packages.${pkgs.system}.claude-desktop-with-fhs
+    inputs.claude-desktop.packages.${stdenv.hostPlatform.system}.claude-desktop-with-fhs
 
     # Development Tools
     pkgs-unstable.lazydocker
@@ -72,6 +73,7 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
+    pkgs-unstable.git
     pkgs-unstable.unzip
     pkgs-unstable.wget
     pkgs-unstable.curl
@@ -80,18 +82,16 @@
     pkgs-unstable.ffmpeg
     pkgs-unstable.imagemagick
 
-    shfmt
-    tflint
-    tfsec
+    pkgs-unstable.shfmt
+    pkgs-unstable.tflint
+    pkgs-unstable.tfsec
     pkgs-unstable.checkov
-    shellcheck
-    pkgs-unstable.nixfmt-rfc-style
-    statix # Nix linter
-    sqlfluff
+    pkgs-unstable.shellcheck
+    pkgs-unstable.nixfmt
+    pkgs-unstable.statix # Nix linter
+    pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
 
-    pkgs-unstable.awscli2
-    pkgs-unstable.aws-vault
     pkgs-unstable.tmux
     pkgs-unstable.neovim
     pkgs-unstable.pre-commit
