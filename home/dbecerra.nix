@@ -70,7 +70,7 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
-    pkgs-unstable.git
+    #pkgs-unstable.git
     pkgs-unstable.gcc
     pkgs-unstable.unzip
     pkgs-unstable.wget
@@ -83,7 +83,8 @@
     pkgs-unstable.shfmt
     pkgs-unstable.tflint
     pkgs-unstable.tfsec
-    pkgs-unstable.checkov
+    # TODO: Update when stable
+    pkgs.checkov
     pkgs-unstable.shellcheck
     pkgs-unstable.nixfmt
     pkgs-unstable.statix # Nix linter
@@ -91,7 +92,7 @@
     pkgs-unstable.hadolint
 
     pkgs-unstable.tmux
-    pkgs-unstable.starship
+    #pkgs-unstable.starship
     pkgs-unstable.neovim
     pkgs-unstable.pre-commit
     pkgs-unstable.tldr
