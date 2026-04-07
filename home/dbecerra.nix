@@ -36,7 +36,7 @@
     pkgs-unstable.uv
     pkgs-unstable.go
     pkgs-unstable.nodejs_22
-    pkgs-unstable.nodePackages.pnpm
+    pkgs-unstable.pnpm
     pkgs-unstable.volta
     pkgs-unstable.yarn
     pkgs-unstable.ruby_3_4
