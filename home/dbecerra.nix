@@ -155,6 +155,11 @@
       name = "David";
       email = "davidnbr_98@hotmail.com";
     };
+    extraConfig = {
+      push = {
+        autoSetupRemote = true;
+      };
+    };
     hooks = {
       pre-commit = pkgs.writeShellScript "pre-commit" ''
         #!/usr/bin/env bash
