@@ -60,7 +60,6 @@
     # Development Tools
     pkgs-unstable.lazydocker
     pkgs-unstable.mqttui
-    pkgs-unstable.tcpdump
     pkgs-unstable.trivy
     pkgs-unstable.smem
     pkgs-unstable.ripgrep
@@ -70,6 +69,9 @@
     pkgs-unstable.jq
     pkgs-unstable.tree
     pkgs-unstable.xclip
+    pkgs-unstable.tcpdump
+    pkgs-unstable.nmap
+    pkgs-unstable.traceroute
     #pkgs-unstable.git
     pkgs-unstable.gcc
     pkgs-unstable.unzip
