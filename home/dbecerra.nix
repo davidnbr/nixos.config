@@ -18,6 +18,8 @@
     pkgs-unstable.gnused
     pkgs-unstable.gnugrep
     pkgs-unstable.gnutar
+    pkgs-unstable.nmap
+    pkgs-unstable.traceroute
 
     # Fonts
     pkgs-unstable.nerd-fonts.hack
