@@ -245,5 +245,8 @@
     enableBashIntegration = true;
   };
 
+  # For npm global installs
+  home.sessionPath = [ "/home/davidnbr98/.npm-global/bin" ];
+
   programs.home-manager.enable = true;
 }
