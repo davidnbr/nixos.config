@@ -230,6 +230,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Add rust/cargo bins to path
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Spaced repetition capture — feeds ~/.learning/inbox.md
+function learn() {
+  local concept="$*"
+  local date=$(date +%Y-%m-%d)
+  local project=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "general")
+  mkdir -p ~/.learning
+  echo "[$date] [project:$project] $concept" >> ~/.learning/inbox.md
+  echo "Captured: $concept (project: $project)"
+}
+
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
