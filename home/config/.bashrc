@@ -233,6 +233,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Openclaw completions
 source ~/.openclaw/completion.bash
 
+# OpenCode
+export PATH=/home/davidnbr98/.opencode/bin:$PATH
+
 # Ble.sh initialization configuration for interactive sessions
 # Add this line at the end of .bashrc:
 [[ ! ${BLE_VERSION-} ]] || ble-attach
