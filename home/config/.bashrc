@@ -219,6 +219,9 @@ export XDG_DATA_HOME="$HOME/nd"
 mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_DATA_HOME"
 
+# Node global
+export PATH="~/.npm-global/bin/:$PATH"
+
 # Claude Code Templates - Global Agents
 export PATH="/home/dbecerra/.claude-code-templates/bin:$PATH"
 
