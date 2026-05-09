@@ -103,6 +103,7 @@
     inputs.claude-code.packages.${stdenv.hostPlatform.system}.claude-code
     #pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
+    pkgs-unstable.codex
     asdf2nix-wrapper
 
     # Language servers (LazyVim will find them)
