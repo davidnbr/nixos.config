@@ -101,6 +101,7 @@
     nix-prefetch-github
     pkgs-unstable.devenv
     inputs.iecs.packages.${stdenv.hostPlatform.system}.default
+    inputs.openspec.packages.${stdenv.hostPlatform.system}.default
     pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
     asdf2nix-wrapper
