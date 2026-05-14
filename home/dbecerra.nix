@@ -92,6 +92,10 @@
     pkgs-unstable.statix # Nix linter
     pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
+    #OPA
+    pkgs-unstable.open-policy-agent
+    pkgs-unstable.conftest
+    pkgs-unstable.regal
 
     pkgs-unstable.tmux
     #pkgs-unstable.starship
