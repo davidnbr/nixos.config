@@ -233,6 +233,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Add rust/cargo bins to path
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Add Claude to path
+export PATH="$HOME/.local/bin/claude:$PATH"
+
 # Openclaw completions
 source ~/.openclaw/completion.bash
 
