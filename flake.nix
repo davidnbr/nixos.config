@@ -21,7 +21,7 @@
 
     iecs.url = "github:sestrella/iecs";
 
-    claude-code.url = "github:sadjow/claude-code-nix";
+    #claude-code.url = "github:sadjow/claude-code-nix";
 
     claude-desktop = {
       #url = "github:k3d3/claude-desktop-linux-flake";

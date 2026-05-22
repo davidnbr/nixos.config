@@ -99,7 +99,7 @@
     nix-prefetch-github
     inputs.devenv.packages.${stdenv.hostPlatform.system}.devenv
     inputs.iecs.packages.${stdenv.hostPlatform.system}.default
-    inputs.claude-code.packages.${stdenv.hostPlatform.system}.claude-code
+    #inputs.claude-code.packages.${stdenv.hostPlatform.system}.claude-code
     #pkgs-unstable.claude-code
     pkgs-unstable.gemini-cli
     pkgs-unstable.codex
