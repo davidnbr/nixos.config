@@ -1,0 +1,7 @@
+# curl-managed tools
+# Format: name | install_url | pinned_version
+# Restore: scripts/install-curl-tools.sh
+# pinned_version is informational only — installers fetch latest unless pinned
+
+claude | https://claude.ai/install.sh | 2.1.148
+rtk | https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | 0.40.0
