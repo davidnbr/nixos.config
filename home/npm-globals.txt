@@ -2,5 +2,4 @@
 # Maintain this list manually. To restore: scripts/install-npm-globals.sh
 @anthropic-ai/sandbox-runtime
 oh-my-claude-sisyphus
-openclaw
 socket
