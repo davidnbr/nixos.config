@@ -219,6 +219,9 @@ export XDG_DATA_HOME="$HOME/nd"
 mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_DATA_HOME"
 
+# Node global
+export PATH="$HOME/.npm-global/bin/:$PATH"
+
 # Claude Code Templates - Global Agents
 export PATH="/home/dbecerra/.claude-code-templates/bin:$PATH"
 
@@ -230,13 +233,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Add rust/cargo bins to path
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Add Claude to path
+export PATH="$HOME/.local/bin/claude:$PATH"
+
 # Spaced repetition capture — feeds ~/.learning/inbox.md
 function learn() {
   local concept="$*"
   local date=$(date +%Y-%m-%d)
   local project=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "general")
   mkdir -p ~/.learning
-  echo "[$date] [project:$project] $concept" >> ~/.learning/inbox.md
+  echo "[$date] [project:$project] $concept" >>~/.learning/inbox.md
   echo "Captured: $concept (project: $project)"
 }
 

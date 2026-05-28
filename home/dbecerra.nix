@@ -35,7 +35,6 @@
     ))
     pkgs-unstable.uv
     pkgs-unstable.go
-    pkgs-unstable.nodejs_22
     pkgs-unstable.pnpm
     pkgs-unstable.volta
     pkgs-unstable.yarn
@@ -231,6 +230,8 @@
     source = ./config/nvim/config;
     recursive = true;
   };
+
+  home.sessionPath = [ "${config.home.homeDirectory}/.npm-global/bin" ];
 
   programs.zoxide = {
     enable = true;
