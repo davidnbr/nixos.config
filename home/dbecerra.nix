@@ -161,14 +161,18 @@
 
   programs.git = {
     enable = true;
-    hooks = {
-      pre-commit-custom = pkgs.writeShellScript "pre-commit-custom" ''
-        #!/usr/bin/env bash
-        set -ex
+    extraConfig.init.templateDir = "${config.home.homeDirectory}/.git-template";
+  };
 
-        ${pkgs.pre-commit}/bin/pre-commit run --config "pre-commit-config.yaml" "$@"
-      '';
-    };
+  # Fallback pre-commit hook for repos that don't manage their own hooks.
+  home.file.".git-template/hooks/pre-commit" = {
+    source = pkgs.writeShellScript "pre-commit-custom" ''
+      #!/usr/bin/env bash
+      set -ex
+
+      ${pkgs.pre-commit}/bin/pre-commit run --config "${./pre-commit-config.yaml}" "$@"
+    '';
+    executable = true;
   };
 
   programs.starship = {
