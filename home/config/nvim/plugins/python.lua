@@ -1,30 +1,75 @@
--- Python configuration that extends LazyVim's lang.python extra
--- This overrides specific settings while keeping LazyVim's defaults
+-- Python configuration that extends LazyVim's lang.python extra.
+--
+-- nvim-lint requires `args` to be a LIST (string|fun():string)[] and `cwd` to be
+-- a STRING (lint.lua:368/381). The previous version set both to whole functions,
+-- which crashed with "expected table, got function". Here we recompute concrete
+-- string lists + cwd per python buffer via an autocmd, which also fixes the stale
+-- linter selection (the old opts ran once at startup against whatever buffer was
+-- active then).
 
--- Helper to find project root
-local function find_root(fname)
-	local root_markers = { ".git", "pyproject.toml", "setup.py", ".pylintrc", "requirements.txt" }
-	local path = vim.fs.dirname(fname)
-	return vim.fs.find(root_markers, { path = path, upward = true })[1]
+local root_markers = { ".git", "pyproject.toml", "setup.py", ".pylintrc", "requirements.txt" }
+
+-- Project root DIRECTORY for the given buffer (falls back to cwd).
+local function find_root(buf)
+	local fname = vim.api.nvim_buf_get_name(buf)
+	if fname == "" then
+		return vim.fn.getcwd()
+	end
+	local marker = vim.fs.find(root_markers, { path = vim.fs.dirname(fname), upward = true })[1]
+	return marker and vim.fs.dirname(marker) or vim.fn.getcwd()
 end
 
--- Helper to check if a tool is configured in pyproject.toml
+-- True if [tool.<name>] is configured in <root>/pyproject.toml.
 local function has_tool_in_pyproject(root, tool_name)
-	if not root then
+	local pyproject_path = root .. "/pyproject.toml"
+	if vim.fn.filereadable(pyproject_path) ~= 1 then
 		return false
 	end
-
-	local pyproject_path = vim.fs.dirname(root) .. "/pyproject.toml"
-	if vim.fn.filereadable(pyproject_path) == 1 then
-		local content = vim.fn.readfile(pyproject_path)
-		for _, line in ipairs(content) do
-			-- Check for tool configuration sections like [tool.mypy], [tool.pylint], [tool.black]
-			if line:match("%[tool%." .. tool_name .. "%]") or line:match("%[tool%." .. tool_name .. "%.") then
-				return true
-			end
+	for _, line in ipairs(vim.fn.readfile(pyproject_path)) do
+		if line:match("%[tool%." .. tool_name .. "%]") or line:match("%[tool%." .. tool_name .. "%.") then
+			return true
 		end
 	end
 	return false
+end
+
+local function pylint_args(root)
+	-- No surrounding single quotes: nvim-lint passes args directly (no shell),
+	-- so quotes would become part of the template literal.
+	local args = {
+		"--output-format=text",
+		"--score=no",
+		"--msg-template={path}:{line}:{column}: {msg_id} {msg} ({symbol})",
+	}
+	for _, rc in ipairs({
+		root .. "/pyproject.toml",
+		root .. "/.pylintrc",
+		root .. "/server/.pylintrc",
+		root .. "/pylintrc",
+	}) do
+		if vim.fn.filereadable(rc) == 1 then
+			table.insert(args, "--rcfile=" .. rc)
+			break
+		end
+	end
+	return args
+end
+
+local function mypy_args(root)
+	local args = {
+		"--show-column-numbers",
+		"--show-error-end",
+		"--hide-error-codes",
+		"--hide-error-context",
+		"--no-color-output",
+		"--no-error-summary",
+		"--no-pretty",
+	}
+	local pyproject_path = root .. "/pyproject.toml"
+	if vim.fn.filereadable(pyproject_path) == 1 then
+		table.insert(args, "--config-file=" .. pyproject_path)
+	end
+	return args
 end
 
 return {
@@ -48,131 +93,60 @@ return {
 		},
 	},
 
-	-- Configure linting: Check pyproject.toml for configured linters
+	-- Configure linting: pick linters from pyproject.toml and feed pylint/mypy
+	-- valid (list) args + (string) cwd, recomputed per python buffer.
 	{
 		"mfussenegger/nvim-lint",
 		opts = function(_, opts)
-			-- Determine which linters to use based on pyproject.toml
 			opts.linters_by_ft = opts.linters_by_ft or {}
+			-- Sensible default until the autocmd refines it for the active buffer.
+			opts.linters_by_ft.python = { "pylint" }
 
-			local fname = vim.api.nvim_buf_get_name(0)
-			local root = find_root(fname)
-			local linters = {}
+			local function refresh(buf)
+				if vim.bo[buf].filetype ~= "python" then
+					return
+				end
+				local lint = require("lint")
+				local root = find_root(buf)
 
-			-- Check pyproject.toml for configured tools
-			if has_tool_in_pyproject(root, "mypy") then
-				table.insert(linters, "mypy")
+				local selected = {}
+				if has_tool_in_pyproject(root, "mypy") then
+					table.insert(selected, "mypy")
+				end
+				if has_tool_in_pyproject(root, "pylint") then
+					table.insert(selected, "pylint")
+				end
+				if #selected == 0 then
+					selected = { "pylint" }
+				end
+				lint.linters_by_ft.python = selected
+
+				-- Lint the file on disk from the project root. Direct assignment
+				-- replaces the builtin's args/stdin wholesale (no merge artifacts).
+				local pylint = lint.linters.pylint
+				pylint.cwd = root
+				pylint.stdin = false
+				pylint.append_fname = true
+				pylint.args = pylint_args(root)
+
+				local mypy = lint.linters.mypy
+				mypy.cwd = root
+				mypy.stdin = false
+				mypy.append_fname = true
+				mypy.args = mypy_args(root)
 			end
-			if has_tool_in_pyproject(root, "pylint") then
-				table.insert(linters, "pylint")
-			end
 
-			-- Default to pylint if no tools found in pyproject.toml
-			if #linters == 0 then
-				linters = { "pylint" }
-			end
-
-			opts.linters_by_ft.python = linters
-
-			-- Configure pylint to run from project root
-			opts.linters = opts.linters or {}
-			opts.linters.pylint = {
-				cmd = "pylint",
-				stdin = false,
-				args = function()
-					local fname = vim.api.nvim_buf_get_name(0)
-					local root = find_root(fname)
-
-					if not root then
-						root = vim.fn.getcwd()
-					else
-						root = vim.fs.dirname(root)
-					end
-
-					-- Build args
-					local args = {
-						"--output-format=text",
-						"--score=no",
-						"--msg-template='{path}:{line}:{column}: {msg_id} {msg} ({symbol})'",
-					}
-
-					-- Look for config files: prioritize pyproject.toml, then .pylintrc
-					local config_paths = {
-						root .. "/pyproject.toml",
-						root .. "/.pylintrc",
-						root .. "/server/.pylintrc",
-						root .. "/pylintrc",
-					}
-
-					for _, rc in ipairs(config_paths) do
-						if vim.fn.filereadable(rc) == 1 then
-							table.insert(args, "--rcfile=" .. rc)
-							break
-						end
-					end
-
-					-- Add the file to lint
-					table.insert(args, fname)
-
-					return args
+			vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+				group = vim.api.nvim_create_augroup("PythonLintRoot", { clear = true }),
+				callback = function(ev)
+					refresh(ev.buf)
 				end,
-				-- CRITICAL: Set working directory to project root
-				cwd = function()
-					local fname = vim.api.nvim_buf_get_name(0)
-					local root = find_root(fname)
-
-					if not root then
-						return vim.fn.getcwd()
-					end
-
-					return vim.fs.dirname(root)
-				end,
-			}
-
-			-- Configure mypy to use pyproject.toml
-			opts.linters.mypy = {
-				cmd = "mypy",
-				stdin = false,
-				args = function()
-					local fname = vim.api.nvim_buf_get_name(0)
-					local root = find_root(fname)
-
-					if not root then
-						root = vim.fn.getcwd()
-					else
-						root = vim.fs.dirname(root)
-					end
-
-					local args = {
-						"--show-column-numbers",
-						"--show-error-end",
-						"--hide-error-codes",
-						"--hide-error-context",
-						"--no-color-output",
-						"--no-error-summary",
-						"--no-pretty",
-					}
-
-					-- mypy automatically reads from pyproject.toml if present
-					table.insert(args, fname)
-					return args
-				end,
-				cwd = function()
-					local fname = vim.api.nvim_buf_get_name(0)
-					local root = find_root(fname)
-
-					if not root then
-						return vim.fn.getcwd()
-					end
-
-					return vim.fs.dirname(root)
-				end,
-			}
+			})
 
 			return opts
 		end,
 	},
 
-	-- Black formatting is already handled by lazyvim.plugins.extras.formatting.black
-	-- Black automatically reads configuration from pyproject.toml if present
+	-- Black formatting is handled by lazyvim.plugins.extras.formatting.black,
+	-- which reads configuration from pyproject.toml automatically.
 }
