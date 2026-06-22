@@ -241,6 +241,8 @@
     source = ./config/nvim/config;
     recursive = true;
   };
+  # Global markdownlint config (read-only; markdownlint never writes it).
+  home.file.".config/nvim/markdownlint.jsonc".source = ./config/nvim/markdownlint.jsonc;
 
   programs.zoxide = {
     enable = true;

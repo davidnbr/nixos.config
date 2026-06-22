@@ -1,0 +1,10 @@
+{
+  // Global markdownlint defaults for Neovim. Project-local .markdownlint* files
+  // take precedence (see plugins/markdown.lua).
+  // MD013 line-length: too noisy for prose, long URLs, and tables.
+  "MD013": false,
+  // MD033 no-inline-html: badges, <details>, <br>, <img> are common in docs.
+  "MD033": false,
+  // MD041 first-line-heading: false-positives on files with front matter/badges.
+  "MD041": false
+}
