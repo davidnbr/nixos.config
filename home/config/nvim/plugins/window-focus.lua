@@ -54,20 +54,25 @@ return {
       local ignore_filetypes = { "neo-tree", "TelescopePrompt" }
       local ignore_buftypes = { "nofile", "prompt", "popup" }
 
-      vim.api.nvim_create_autocmd("WinEnter", {
-        callback = function()
-          if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
-            vim.w.focus_disable = true
-          else
-            vim.w.focus_disable = false
-          end
+      -- Exclude side panels / prompts from focus.nvim. Set focus_disable on the
+      -- BUFFER (not the window): window-vars race focus.nvim's own WinEnter
+      -- handler, which only checks focus_disable and would flip `number` on for
+      -- e.g. neo-tree before our setter runs. A buffer-var is set once and is
+      -- read on every WinEnter, so it wins reliably. Also hard-clear line
+      -- numbers, since neo-tree windows otherwise inherit the global `number`.
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = ignore_filetypes,
+        callback = function(ev)
+          vim.b[ev.buf].focus_disable = true
+          vim.api.nvim_set_option_value("number", false, { scope = "local" })
+          vim.api.nvim_set_option_value("relativenumber", false, { scope = "local" })
         end,
       })
 
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-            vim.w.focus_disable = true
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        callback = function(ev)
+          if vim.tbl_contains(ignore_buftypes, vim.bo[ev.buf].buftype) then
+            vim.b[ev.buf].focus_disable = true
           end
         end,
       })
