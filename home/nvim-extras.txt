@@ -1,0 +1,27 @@
+# LazyVim extras (state lives in ~/.config/nvim/lazyvim.json, which is NOT
+# nix-managed because LazyVim writes to it at runtime — symlinking it read-only
+# breaks LazyVim). Maintain this list manually; one extra per line.
+# Telescope intentionally omitted: fzf-lua is the sole picker.
+# To restore: scripts/install-nvim-state.sh
+lazyvim.plugins.extras.editor.neo-tree
+lazyvim.plugins.extras.formatting.black
+lazyvim.plugins.extras.formatting.prettier
+lazyvim.plugins.extras.lang.ansible
+lazyvim.plugins.extras.lang.docker
+lazyvim.plugins.extras.lang.git
+lazyvim.plugins.extras.lang.go
+lazyvim.plugins.extras.lang.json
+lazyvim.plugins.extras.lang.markdown
+lazyvim.plugins.extras.lang.nix
+lazyvim.plugins.extras.lang.python
+lazyvim.plugins.extras.lang.sql
+lazyvim.plugins.extras.lang.terraform
+lazyvim.plugins.extras.lang.vue
+lazyvim.plugins.extras.lang.yaml
+lazyvim.plugins.extras.linting.eslint
+lazyvim.plugins.extras.lsp.neoconf
+lazyvim.plugins.extras.ui.treesitter-context
+lazyvim.plugins.extras.util.dot
+lazyvim.plugins.extras.util.gh
+lazyvim.plugins.extras.util.gitui
+lazyvim.plugins.extras.vscode
