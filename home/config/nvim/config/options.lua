@@ -28,18 +28,7 @@ opt.winhl = "Normal:Normal,NormalNC:NormalNC" -- Different highlight for inactiv
 -- Better completion menu
 opt.completeopt = "menu,menuone,noselect"
 
--- Borders for floating windows
-vim.diagnostic.config({
-  float = {
-    border = "rounded",
-  },
-})
-
--- Make hover windows have borders
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "rounded",
-})
+-- Rounded borders for ALL floating windows (hover, signature, diagnostics,
+-- completion). Native global option in nvim 0.11+, replaces the deprecated
+-- vim.lsp.with()/vim.lsp.handlers[...] overrides.
+opt.winborder = "rounded"

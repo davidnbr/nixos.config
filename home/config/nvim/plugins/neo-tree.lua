@@ -109,11 +109,10 @@ return {
 
 			window = {
 				position = "left",
+				-- Terminal nvim renders one fixed-size cell per glyph; per-window
+				-- font sizing (VSCode-style) is not possible. Panel width is the
+				-- only lever. Kept narrow to save horizontal room.
 				width = 20,
-				font = {
-					name = "Hack Nerd Font Mono",
-					size = 8,
-				},
 				mapping_options = {
 					noremap = true,
 					nowait = true,
