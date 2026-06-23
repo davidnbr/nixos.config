@@ -60,19 +60,34 @@ return {
       -- e.g. neo-tree before our setter runs. A buffer-var is set once and is
       -- read on every WinEnter, so it wins reliably. Also hard-clear line
       -- numbers, since neo-tree windows otherwise inherit the global `number`.
+      local function silence_panel(buf, win)
+        vim.b[buf].focus_disable = true
+        -- Window-scoped: neo-tree reuses its buffer but spawns a NEW window on
+        -- every toggle, which inherits the global `number=true`. FileType only
+        -- fires once per buffer (not on reuse) and focus.nvim skips disabled
+        -- buffers, so without this the fresh window keeps its line numbers.
+        -- Re-apply on every WinEnter to cover that path.
+        vim.api.nvim_set_option_value("number", false, { scope = "local", win = win })
+        vim.api.nvim_set_option_value("relativenumber", false, { scope = "local", win = win })
+      end
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = ignore_filetypes,
         callback = function(ev)
-          vim.b[ev.buf].focus_disable = true
-          vim.api.nvim_set_option_value("number", false, { scope = "local" })
-          vim.api.nvim_set_option_value("relativenumber", false, { scope = "local" })
+          silence_panel(ev.buf, vim.api.nvim_get_current_win())
         end,
       })
 
-      vim.api.nvim_create_autocmd("BufWinEnter", {
+      vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
         callback = function(ev)
-          if vim.tbl_contains(ignore_buftypes, vim.bo[ev.buf].buftype) then
-            vim.b[ev.buf].focus_disable = true
+          local win = vim.api.nvim_get_current_win()
+          if vim.api.nvim_win_get_buf(win) ~= ev.buf then
+            return
+          end
+          if vim.tbl_contains(ignore_filetypes, vim.bo[ev.buf].filetype)
+            or vim.tbl_contains(ignore_buftypes, vim.bo[ev.buf].buftype)
+          then
+            silence_panel(ev.buf, win)
           end
         end,
       })
