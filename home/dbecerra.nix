@@ -81,7 +81,6 @@
     pkgs-unstable.graphviz
     pkgs-unstable.ffmpeg
     pkgs-unstable.imagemagick
-
     pkgs-unstable.shfmt
     pkgs-unstable.tflint
     pkgs-unstable.tfsec
@@ -151,6 +150,16 @@
   };
   services.ssh-agent.enable = true;
 
+  programs.delta = {
+    enable = true;
+    package = pkgs-unstable.delta;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      dark = true;
+    };
+  };
+
   programs.git = {
     enable = true;
     settings.user = {
@@ -160,6 +169,9 @@
     extraConfig = {
       push = {
         autoSetupRemote = true;
+      };
+      merge = {
+        conflictStyle = "zdiff3";
       };
     };
     hooks = {
