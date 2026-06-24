@@ -71,7 +71,6 @@
     pkgs-unstable.tcpdump
     pkgs-unstable.nmap
     pkgs-unstable.traceroute
-    #pkgs-unstable.git
     pkgs-unstable.gcc
     pkgs-unstable.unzip
     pkgs-unstable.wget
@@ -159,9 +158,27 @@
   };
   services.ssh-agent.enable = true;
 
+  programs.delta = {
+    enable = true;
+    package = pkgs-unstable.delta;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      dark = true;
+    };
+  };
+
   programs.git = {
     enable = true;
-    extraConfig.init.templateDir = "${config.home.homeDirectory}/.git-template";
+    extraConfig = {
+      init.templateDir = "${config.home.homeDirectory}/.git-template";
+      push = {
+        autoSetupRemote = true;
+      };
+      merge = {
+        conflictStyle = "zdiff3";
+      };
+    };
   };
 
   # Fallback pre-commit hook for repos that don't manage their own hooks.
