@@ -90,6 +90,7 @@
     pkgs-unstable.statix # Nix linter
     pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
+    pkgs-unstable.argocd
     #OPA
     pkgs-unstable.open-policy-agent
     pkgs-unstable.conftest
