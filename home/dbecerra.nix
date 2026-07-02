@@ -90,6 +90,10 @@
     pkgs-unstable.statix # Nix linter
     pkgs-unstable.sqlfluff
     pkgs-unstable.hadolint
+    pkgs-unstable.kubernetes-helm
+    pkgs-unstable.helm-docs
+    pkgs-unstable.kustomize
+    pkgs-unstable.kubeconform
     pkgs-unstable.argocd
     #OPA
     pkgs-unstable.open-policy-agent
