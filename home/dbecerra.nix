@@ -228,8 +228,12 @@
     StartupWMClass=Claude Desktop
   '';
 
-  home.file.".bashrc".source = ./config/.bashrc;
-  home.file.".config/.aliases/aliases.sh".source = ./config/aliases.sh;
+  # Shell config lives in the shellrc submodule (./../shell)
+  home.file.".config/shellrc".source = ../shell;
+  home.file.".bashrc".text = ''
+    . "$HOME/.config/shellrc/bashrc"
+  '';
+  home.file.".config/shell/local.sh".source = ./config/shell.local.sh;
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
