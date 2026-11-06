@@ -4,17 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a NixOS configuration repository using Home Manager for user environment management on Ubuntu. It uses Nix flakes to manage dependencies and configurations for a development environment.
+This is a Home Manager configuration repository for Ubuntu 24.04 (NixOS is no longer supported). It uses Nix flakes to manage dependencies and configurations for a development environment.
 
 ## Architecture
 
 - **Entry Point**: `flake.nix` - Defines the flake inputs, outputs, and system configuration
 - **User Configuration**: `home/dbecerra.nix` - Main Home Manager configuration with packages and settings
+- **Shell Config**: `shell/` - git submodule ([shellrc](https://github.com/davidnbr/shellrc)) with `bashrc` and `lib/*.sh`, shared with WSL and Mac. Machine-specific lines go in `home/config/shell.local.sh` (linked to `~/.config/shell/local.sh`)
 - **Shell Prompt**: `home/starship.nix` - Starship prompt configuration with Catppuccin theming
 - **Code Quality**: `home/pre-commit-config.yaml` - Pre-commit hooks for various linters and security checks
 - **Python Tooling**: `pyproject.toml` - Python project configuration including linting and formatting tools
 
 ## Common Commands
+
+Clone with `git clone --recurse-submodules`, or run `git submodule update --init` after a plain clone. The build fails without the `shell/` submodule.
 
 ### Building and Applying Configuration
 ```bash
