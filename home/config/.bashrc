@@ -223,9 +223,9 @@ mkdir -p "$XDG_DATA_HOME"
 export PATH="~/.npm-global/bin/:$PATH"
 
 # Claude Code Templates - Global Agents
-export PATH="/home/dbecerra/.claude-code-templates/bin:$PATH"
+export PATH="/home/davidnbr98/.claude-code-templates/bin:$PATH"
 
-alias claude-mem='/home/dbecerra/.bun/bin/bun "/home/dbecerra/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+alias claude-mem='/home/davidnbr98/.bun/bin/bun "/home/davidnbr98/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
