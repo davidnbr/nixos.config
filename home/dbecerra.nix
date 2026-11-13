@@ -13,6 +13,7 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
+    starship
     pkgs-unstable.coreutils
     pkgs-unstable.findutils
     pkgs-unstable.gnused
@@ -194,23 +195,10 @@
 
   home.file.".config/pre-commit/pre-commit-config.yaml".source = ./pre-commit-config.yaml;
 
-  programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
-    settings = import ./starship.nix;
-  };
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    enableBashIntegration = true;
-  };
-
-  # For terraform-local
-  programs.bash.shellAliases = {
-    localstack-start = "docker run -d -p 4566:4566 -p 4571:4571 --name localstack localstack/localstack";
-    localstack-stop = "docker stop localstack && docker rm localstack";
-    localstack-logs = "docker logs -f localstack";
+    enableBashIntegration = false; # oh-my-zsh direnv plugin hooks zsh
   };
 
   home.file.".local/share/applications/claude-desktop.desktop".text = ''
@@ -230,8 +218,8 @@
 
   # Shell config lives in the shellrc submodule (./../shell)
   home.file.".config/shellrc".source = ../shell;
-  home.file.".bashrc".text = ''
-    . "$HOME/.config/shellrc/bashrc"
+  home.file.".zshrc".text = ''
+    . "$HOME/.config/shellrc/zshrc"
   '';
   home.file.".config/shell/local.sh".source = ./config/shell.local.sh;
 

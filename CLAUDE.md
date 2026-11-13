@@ -10,8 +10,8 @@ This is a Home Manager configuration repository for Ubuntu 24.04 (NixOS is no lo
 
 - **Entry Point**: `flake.nix` - Defines the flake inputs, outputs, and system configuration
 - **User Configuration**: `home/dbecerra.nix` - Main Home Manager configuration with packages and settings
-- **Shell Config**: `shell/` - git submodule ([shellrc](https://github.com/davidnbr/shellrc)) with `bashrc` and `lib/*.sh`, shared with WSL and Mac. Machine-specific lines go in `home/config/shell.local.sh` (linked to `~/.config/shell/local.sh`)
-- **Shell Prompt**: `home/starship.nix` - Starship prompt configuration with Catppuccin theming
+- **Shell Config**: `shell/` - git submodule ([shellrc](https://github.com/davidnbr/shellrc)) with `zshrc`, `starship.toml` and `lib/*.sh`, shared with WSL and Mac. Machine-specific lines go in `home/config/shell.local.sh` (linked to `~/.config/shell/local.sh`)
+- **Shell Prompt**: starship, config in the shell submodule (`shell/starship.toml`); `starship` package in `home/dbecerra.nix`
 - **Code Quality**: `home/pre-commit-config.yaml` - Pre-commit hooks for various linters and security checks
 - **Python Tooling**: `pyproject.toml` - Python project configuration including linting and formatting tools
 
@@ -69,12 +69,11 @@ nix flake show
 ### Key Package Categories
 - **Languages**: Python 3.11, Go, Node.js 20, Ruby 3.4, Elixir 1.18
 - **DevOps**: AWS CLI, Terraform, Terragrunt, Ansible
-- **Development**: Neovim, Tmux with oh-my-tmux, Starship prompt
+- **Development**: Neovim, Tmux with oh-my-tmux, zsh + oh-my-zsh + starship
 - **Build Tools**: Cargo, Rust compiler (for Mason LSPs)
 
 ### Configuration Files
 - Tmux configuration sourced from oh-my-tmux input
-- Starship uses Catppuccin Mocha color scheme
 - Pre-commit hooks cover Terraform, shell scripts, Docker, and security scanning
 
 ## Python Development
