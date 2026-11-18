@@ -225,7 +225,7 @@
 
   # Tmux with oh-my-tmux
   home.file.".config/tmux/tmux.conf".source = "${inputs.oh-my-tmux}/.tmux.conf";
-  home.file.".config/tmux/tmux.conf.local".source = ./config/tmux.conf.local;
+  home.file.".config/tmux/tmux.conf.local".source = ../shell/tmux/tmux.conf.local;
   home.file.".config/tmux/plugins/catppuccin" = {
     source = pkgs.fetchFromGitHub {
       owner = "catppuccin";

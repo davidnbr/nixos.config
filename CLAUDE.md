@@ -73,7 +73,7 @@ nix flake show
 - **Build Tools**: Cargo, Rust compiler (for Mason LSPs)
 
 ### Configuration Files
-- Tmux configuration sourced from oh-my-tmux input
+- Tmux: `tmux.conf` comes from the oh-my-tmux input. `tmux.conf.local` comes from the shell submodule (`shell/tmux/tmux.conf.local`), shared with WSL and Mac
 - Pre-commit hooks cover Terraform, shell scripts, Docker, and security scanning
 
 ## Python Development
