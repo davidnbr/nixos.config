@@ -74,6 +74,8 @@ nix flake show
 
 ### Configuration Files
 - Tmux: `tmux.conf` comes from the oh-my-tmux input. `tmux.conf.local` comes from the shell submodule (`shell/tmux/tmux.conf.local`), shared with WSL and Mac
+- Neovim and pre-commit: files come from the shell submodule (`shell/nvim/*`, `shell/pre-commit/pre-commit-config.yaml`). `lazyvim.json` and `lazy-lock.json` are out-of-store symlinks to `~/nixos.config/shell/nvim/`, because nvim writes them
+- Git settings stay in `home/dbecerra.nix`. `shell/git/gitconfig` is the copy for machines without Home Manager
 - Pre-commit hooks cover Terraform, shell scripts, Docker, and security scanning
 
 ## Python Development

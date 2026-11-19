@@ -193,7 +193,7 @@
     };
   };
 
-  home.file.".config/pre-commit/pre-commit-config.yaml".source = ./pre-commit-config.yaml;
+  home.file.".config/pre-commit/pre-commit-config.yaml".source = ../shell/pre-commit/pre-commit-config.yaml;
 
   programs.direnv = {
     enable = true;
@@ -236,17 +236,25 @@
     recursive = true;
   };
 
-  # Neovim configuration
+  # Neovim configuration, shared through the shellrc submodule
   home.file.".config/nvim/lua/plugins" = {
-    source = ./config/nvim/plugins;
+    source = ../shell/nvim/plugins;
     recursive = true;
   };
   home.file.".config/nvim/lua/config" = {
-    source = ./config/nvim/config;
+    source = ../shell/nvim/config;
     recursive = true;
   };
+  home.file.".config/nvim/init.lua".source = ../shell/nvim/init.lua;
+  home.file.".config/nvim/stylua.toml".source = ../shell/nvim/stylua.toml;
+  home.file.".config/nvim/.neoconf.json".source = ../shell/nvim/.neoconf.json;
   # Global markdownlint config (read-only; markdownlint never writes it).
-  home.file.".config/nvim/markdownlint.jsonc".source = ./config/nvim/markdownlint.jsonc;
+  home.file.".config/nvim/markdownlint.jsonc".source = ../shell/nvim/markdownlint.jsonc;
+  # nvim writes these two files, so link to the writable checkout instead of /nix/store.
+  home.file.".config/nvim/lazyvim.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos.config/shell/nvim/lazyvim.json";
+  home.file.".config/nvim/lazy-lock.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos.config/shell/nvim/lazy-lock.json";
 
   programs.zoxide = {
     enable = true;
